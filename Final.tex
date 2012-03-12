@@ -1,14 +1,32 @@
-
 \documentclass{article}
 \usepackage{graphicx}
+\setlength{\topmargin}{0in}
+
+\setlength{\headheight}{0in}
+
+\setlength{\headsep}{0in}
+
+\setlength{\textheight}{9.9in}
+
+\setlength{\textwidth}{6.5in}
+
+\setlength{\oddsidemargin}{0in}
+
+\setlength{\evensidemargin}{0in}
+
+\setlength{\parindent}{0.25in}
+
+\setlength{\parskip}{0.10in}
 \begin{document}
 \tableofcontents
 
 \title{ THE ENGINE BEHIND MODEL CHECKING}
 \maketitle
-
-\section{Abstract}
+\begin{abstract}
 In order to ensure the safety and quality of a system, it is necessary to undergo a process of system validation which checks the correctness of specifications, designs and products. The various validation techniques are peer reviewing, simulation, formal verification, and model checking, etc. Of all the techniques, model checking has become the most popular approach in the both hardware and software areas due to the availability of various support tools and its success in the project. This report gives a brief introduction about the fundamentals of model checking. Various terminologies used related to model checking is also described. It also provides the fundamental approaches to model checking along with their examples. It will also introduce some of the model checkers. SAT-Technology is emerging as a central engine used in model checking tools. The principle behind it is very simple: formulate everything at the (logical) gate-level, and then run a SAT solver. The devil is then in the details. This project is about exploring this fascinating and recent connection. Either gaining some overview, or exploring a concrete application. The model, the logical side of it, the SAT side of it is a planned task for the initial document to write.
+
+\end{abstract}
+
 \section{Introduction}
 Describing what a system is required to do is known as system specification. By doing so, we will be able to understand the system. Various validation techniques are used to check the correctness of specification. It guarantees the quality of the system and also its safety [6]. Model checking is one of the most popular validation techniques. For a system defined in finite state model and a property defined in terms of logical formalism, model checking techniques could systematically check the validity of this property [10]. A finite-state model is used to design computer programs and digital logic circuits. It is as an abstract machine that can be in one of a finite number of states. It will be only in one state at a time; the state it is in at any given time is called the current state. When initiated by a triggering event or condition, the state changes, this is called a transition. 
 Roughly, M is an abstract model of a system whose structure is defined as finite-automata and ф is a logical formula specifying a desirable property such that M satisfies ф abbreviated as M ╞ ф. 
@@ -18,42 +36,68 @@ Describing a system is called specification. Specification helps in finding erro
 It helps in developing the explicit model of a system which is clear, precise and unambiguous. Mathematics is used as a basic tool to achieve this. Here, reading the accompanying words in order to understand the relation between the equations is a bit tedious. In order to overcome this shortcoming using mathematics as a basic tool, logicians have temporal logic which is precise and completely formal mathematics. This temporal logic is used in such a way so as to describe the system behaviour.  
 \subsection{Temporal Logic}
 There are various interpretations of temporal logic depends on the individual as how to consider the system with time. It is the logic for expressing mathematics. It supports formulating the properties of the system behaviour with respect to time. \newline There are various types of temporal logics: \newline
-•	Temporal Logics used to specify the reactive systems are: \newline
-	Linear temporal logic:  It allows the statement of properties of execution sequences of a system. \newline
-	Branching temporal logic: It allows the user to write formulas which include some sensitivity to the choices available to a system during its execution.\newline
+
+
+
+\begin{enumerate}
+\item Temporal Logics used to specify the reactive systems are: \newline
+ Linear temporal logic:  It allows the statement of properties of execution sequences of a system. \newline
+ Branching temporal logic: It allows the user to write formulas which include some sensitivity to the choices available to a system during its execution.\newline
+ 
 These two kinds of temporal logic are characterized by a continuous interaction with the environment [10].\newline
-•	Temporal Logics used to specify the time-critical systems: \newline
-	Real-Time temporal logic: It allows statement of properties of multiple concurrent processes and supports relative time references.\newline
+\item	Temporal Logics used to specify the time-critical systems: \newline
+Real-Time temporal logic: It allows statement of properties of multiple concurrent processes and supports relative time references.\newline
+\end{enumerate}
+
 It is characterized by quantitative timing properties relating occurrences of events [10].
 In order to avoid the errors we write specifications. Validation techniques are used to checking the correctness of the system. 
 \section{Model Checking}
 The technique used for validating a system is Model checking. The design process and the validation process are the must to ensure the correctness of specifications, designs and products of the system. Validation is done to see that whether the system meets all its requirements. 
 The two types of validation techniques are: 
-	Informal ones which include peer testing and testing.
-	Formal ones which include formal verification, simulation and model checking. 
+\begin{itemize}
+\item[\textbf{.}]Informal ones which include peer testing and testing.
+
+\end{itemize}	
+\begin{itemize}
+\item[\textbf{.}]Formal ones which include formal verification, simulation and model checking. 
+
+\end{itemize}	
 This report focuses on the Formal validation technique – Model Checking. 
 Model checking systematically checks the validity of a given finite-state model of a system and properties stated in the form of logical formalism such as temporal logic. It uses algorithms which are executed by the computer tools. The inputs to such model checkers are the description of the model and the description of the properties. Once these files are fed as an input, the model checker performs the verification. If error occurs, then the model checker provides the counter-example to explain under which circumstances the error can be generated. This counter-example helps in finding the error and repairing the specifications of the model. This can be shown with help of the following diagram. It shows us how the verification process takes place in the model checking.                                                  
 \subsection{Specified Property}
-•	Liveness: The properties, at any particular instance, which can’t be violated.
-•	Fairness: If this step is enabled continuously then property asserts the step eventually.
-•	Safeness: The system requirements which do nothing.
-•	Deadlock: It checks if the system is freed from dead locks.
-•	State properties: It checks if the model has some state.
-•	Time requirement: The property specifying time requirements of the system. 
+\begin{itemize}
+\item[\textbf{.}]Liveness: The properties, at any particular instance, which can’t be violated.
+\item[\textbf{.}]Fairness: If this step is enabled continuously then property asserts the step eventually.
+\item[\textbf{.}]Safeness: The system requirements which do nothing.
+\item[\textbf{.}]Deadlock: It checks if the system is freed from dead locks.
+\item[\textbf{.}]State properties: It checks if the model has some state.
+\item[\textbf{.}]Time requirement: The property specifying time requirements of the system. 
+
+\end{itemize}
+
 \subsection{Model Checking Algorithm}
 Model checking uses exhaustive state space search of the system model as 	algorithm: The desired properties satisfied for each state of the model. 	Reachability property is used to check whether the system can reach a state without any deadlocks. Reachability is considered as one of the important property which uses Reachability analysis technique. It starts from initial system state and see to it that it reaches all the possible system states which can be reached. For instance, in a traffic signal model, yellow, red and green are the three states. Model checking proves if it can reach some state, all the states are eventually got by the model, or if the model could never get some state.
 \subsection{Approaches of Model Checking}
-•	Logic based approach: Here the system is modelled as finite-state automaton representing the states as values of variables and control location, and changes of a system from one state to other state is represented by transition. If a system satisfying the desired behaviour given in some logic with the initial set of states, then the system is said to be correct.
-•	Behaviour based approach: Given the desired and the possible behaviour with the same notation, the equivalence relations are used as criteria for the correctness. Hence, if the desired and the possible state behaviour are equivalent then the system is said to be correct.  
+\begin{itemize}
+\item[\textbf{.}] Logic based approach: Here the system is modelled as finite-state automaton representing the states as values of variables and control location, and changes of a system from one state to other state is represented by transition. If a system satisfying the desired behaviour given in some logic with the initial set of states, then the system is said to be correct.
+
+\end{itemize}
+\begin{itemize}
+\item[\textbf{.}]	Behaviour based approach: Given the desired and the possible behaviour with the same notation, the equivalence relations are used as criteria for the correctness. Hence, if the desired and the possible state behaviour are equivalent then the system is said to be correct. 
+\end{itemize} 
 \section{Model Checkers}
 In verifying a system, model checking techniques uses tools known as model checkers. Due to the progress of model checking, industries are developing their own model checkers. 
 Few of the lists of tools are:\newline
-1. Blast model checker: Berkeley Lazy Abstraction Software Verification Tool abbreviated as BLAST. It is a model checking tool used for C programs.\newline
-2. Java path finder: The executable java byte code programs are verified by this java pathfinder system. It does the model checking for the concurrent programs .As using this it helps in detecting the deadlocks and data races. It can also be used to model check the distributed applications and user interfaces.\newline
-3. Moon Walker: It model checks for .Net applications by detecting the errors. Also it is able to find the deadlocks and assertion violations as well.\newline
-4. Spin Model Checker: It verifies the correctness of the models in automated fashion. This is one of the biggest achievements. It avoids preconstruction of the states.\newline
-5. UPPAAL: It is used for real-time systems for modelling, validation and verification.\newline
-6. TLA+: It is commonly called as Temporal Logic of Actions. It combines logic of actions with temporal logic. In concurrent systems TLA+ is used in describing its behaviour.\newline
+\begin{enumerate}
+\item  Blast model checker: Berkeley Lazy Abstraction Software Verification Tool abbreviated as BLAST. It is a model checking tool used for C programs.\newline
+\item Java path finder: The executable java byte code programs are verified by this java pathfinder system. It does the model checking for the concurrent programs .As using this it helps in detecting the deadlocks and data races. It can also be used to model check the distributed applications and user interfaces.\newline
+\item Moon Walker: It model checks for .Net applications by detecting the errors. Also it is able to find the deadlocks and assertion violations as well.\newline
+\item Spin Model Checker: It verifies the correctness of the models in automated fashion. This is one of the biggest achievements. It avoids preconstruction of the states.\newline
+item UPPAAL: It is used for real-time systems for modelling, validation and verification.\newline
+\item TLA+: It is commonly called as Temporal Logic of Actions. It combines logic of actions with temporal logic. In concurrent systems TLA+ is used in describing its behaviour.\newline
+
+\end{enumerate}
+
 \section{Technology}
 Model checking then, used explicit state traversal where the reachable state space was traversed to find the errors violating the safety properties. It consumed lot of space in the computer memory because each state of the system was stored in large hash table. In order to improve this space consumption in explicit state model checker various techniques came into existence. SPIN model checker was the most successful explicit model checker. The goal of this was to overcome the state explosion problem where the states of the model were represented symbolically. 
 Later in mid-80’s Binary Decision Diagrams as a new data structure came into existence for symbolical representation and manipulating Boolean functions efficiently [4] known as Symbolic model checking with BDDs. BDDs could handle much larger designs with hundreds of state variables representing Boolean functions. There existed some shortcoming in BDDs as well. They became too large to handle as they used canonical representation. BDDs required uniform variable ordering along the paths and it sometimes happened that no space efficient variable ordering existed. This was time consuming and needed manual intervention. 
@@ -95,11 +139,14 @@ ALWAYS (IF Button THEN (Coffee AND NEXT Tea))
 Here NEXT is a connective formalising the "immediately after" English expression. As for the previous example it is possible to check whether the automaton satisfies the property. In this case we can see that it is not the case, since from the state "Button" one can reach the state "Coffee" and "Tea", but from the "Coffee" state it is not possible to go immediately after to the "Tea" state. This property guarantees that the machine will never allow to get coffee and then tea by paying only once.
 
 \section{Challenges facing}
-•	Learning the usage of Github: It is a website used for storing and presenting our files. Git is a decentralized version control system that is used by a number of open source projects, most notably perhaps the Linux kernel. GitHub is a new hosted Git repository service that's being called a "social network" for programmers and with good reason. In my project it helps in communication between me and my supervisor by providing information to assist in evaluating the tools and making an informed decision.
+\begin{enumerate}
 
+\item Learning the usage of Github: It is a website used for storing and presenting our files. Git is a decentralized version control system that is used by a number of open source projects, most notably perhaps the Linux kernel. GitHub is a new hosted Git repository service that's being called a "social network" for programmers and with good reason. In my project it helps in communication between me and my supervisor by providing information to assist in evaluating the tools and making an informed decision.
 
+\item Learning the usage of LATEX: It is a document preparation system similar to that of a Microsoft word where the similarities end here. Preparing a document with LATEX consists of using a text editor to edit a Latex source file with the .tex extension. And then running a latex program to convert the source file to a document interchange format like PDF etc. Doing in LATEX provides a good typography which provides a good impression on the content of the document and is platform independent unlike MS word which runs only on windows. It's much better than copy+paste since it can be changed by changing just the definition. Even more, Latex allows people to write programs in their documents. 
 
-•	Learning the usage of LATEX: It is a document preparation system similar to that of a Microsoft word where the similarities end here. Preparing a document with LATEX consists of using a text editor to edit a Latex source file with the .tex extension. And then running a latex program to convert the source file to a document interchange format like PDF etc. Doing in LATEX provides a good typography which provides a good impression on the content of the document and is platform independent unlike MS word which runs only on windows. It's much better than copy+paste since it can be changed by changing just the definition. Even more, Latex allows people to write programs in their documents. 
+\end{enumerate}
+
 
 
 \section{Conclusion}
@@ -119,7 +166,7 @@ There are shortcomings that still need to be answered:
 
 
 Despites these shortcomings the model checking is an important and successful area in verifying the models by early detection of the errors [3].
-\section{References}
+
 \begin{thebibliography}{}
 \bibitem{McMillan,K} McMillan, K. (n.d.), \emph{Exploiting SAT solvers in unbounded model checking}, tutorial presented at CAV'03.
 \bibitem{Havelund et al.} Havelund et al \emph{"Formal Analysis of a Space-Craft Controller using SPIN," . IEEE Transactions on Software Engineering},27, 2001, pp. 749-765.
