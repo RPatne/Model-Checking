@@ -17,13 +17,13 @@ Model checking helps from preventing the bugs even before penning down the code 
 Describing a system is called specification. Specification helps in finding errors and    understanding a system. So, it is a good practise to have a clear idea about the design and improve it before the implementation. The specification of the system can be functional or non-functional i.e. what a system is supposed to do or performance properties. These specifications are written in formal language with proper syntax and semantics which can be verified and validated with respect to requirements. 
 It helps in developing the explicit model of a system which is clear, precise and unambiguous. Mathematics is used as a basic tool to achieve this. Here, reading the accompanying words in order to understand the relation between the equations is a bit tedious. In order to overcome this shortcoming using mathematics as a basic tool, logicians have temporal logic which is precise and completely formal mathematics. This temporal logic is used in such a way so as to describe the system behaviour.  
 \subsection{Temporal Logic}
-There are various interpretations of temporal logic depends on the individual as how to consider the system with time. It is the logic for expressing mathematics. It supports formulating the properties of the system behaviour with respect to time. There are various types of temporal logics: 
-•	Temporal Logics used to specify the reactive systems are: 
-	Linear temporal logic:  It allows the statement of properties of execution sequences of a system. 
-	Branching temporal logic: It allows the user to write formulas which include some sensitivity to the choices available to a system during its execution.
-These two kinds of temporal logic are characterized by a continuous interaction with the environment [10].
-•	Temporal Logics used to specify the time-critical systems: 
-	Real-Time temporal logic: It allows statement of properties of multiple concurrent processes and supports relative time references.
+There are various interpretations of temporal logic depends on the individual as how to consider the system with time. It is the logic for expressing mathematics. It supports formulating the properties of the system behaviour with respect to time. \newline There are various types of temporal logics: \newline
+•	Temporal Logics used to specify the reactive systems are: \newline
+	Linear temporal logic:  It allows the statement of properties of execution sequences of a system. \newline
+	Branching temporal logic: It allows the user to write formulas which include some sensitivity to the choices available to a system during its execution.\newline
+These two kinds of temporal logic are characterized by a continuous interaction with the environment [10].\newline
+•	Temporal Logics used to specify the time-critical systems: \newline
+	Real-Time temporal logic: It allows statement of properties of multiple concurrent processes and supports relative time references.\newline
 It is characterized by quantitative timing properties relating occurrences of events [10].
 In order to avoid the errors we write specifications. Validation techniques are used to checking the correctness of the system. 
 \section{Model Checking}
@@ -47,13 +47,13 @@ Model checking uses exhaustive state space search of the system model as 	algori
 •	Behaviour based approach: Given the desired and the possible behaviour with the same notation, the equivalence relations are used as criteria for the correctness. Hence, if the desired and the possible state behaviour are equivalent then the system is said to be correct.  
 \section{Model Checkers}
 In verifying a system, model checking techniques uses tools known as model checkers. Due to the progress of model checking, industries are developing their own model checkers. 
-Few of the lists of tools are:
-1) Blast model checker: Berkeley Lazy Abstraction Software Verification Tool abbreviated as BLAST. It is a model checking tool used for C programs.
-2) Java path finder: The executable java byte code programs are verified by this java pathfinder system. It does the model checking for the concurrent programs .As using this it helps in detecting the deadlocks and data races. It can also be used to model check the distributed applications and user interfaces.
-3) Moon Walker: It model checks for .Net applications by detecting the errors. Also it is able to find the deadlocks and assertion violations as well.
-4) Spin Model Checker: It verifies the correctness of the models in automated fashion. This is one of the biggest achievements. It avoids preconstruction of the states.
-5) UPPAAL: It is used for real-time systems for modelling, validation and verification.
-6) TLA+: It is commonly called as Temporal Logic of Actions. It combines logic of actions with temporal logic. In concurrent systems TLA+ is used in describing its behaviour.
+Few of the lists of tools are:\newline
+1. Blast model checker: Berkeley Lazy Abstraction Software Verification Tool abbreviated as BLAST. It is a model checking tool used for C programs.\newline
+2. Java path finder: The executable java byte code programs are verified by this java pathfinder system. It does the model checking for the concurrent programs .As using this it helps in detecting the deadlocks and data races. It can also be used to model check the distributed applications and user interfaces.\newline
+3. Moon Walker: It model checks for .Net applications by detecting the errors. Also it is able to find the deadlocks and assertion violations as well.\newline
+4. Spin Model Checker: It verifies the correctness of the models in automated fashion. This is one of the biggest achievements. It avoids preconstruction of the states.\newline
+5. UPPAAL: It is used for real-time systems for modelling, validation and verification.\newline
+6. TLA+: It is commonly called as Temporal Logic of Actions. It combines logic of actions with temporal logic. In concurrent systems TLA+ is used in describing its behaviour.\newline
 \section{Technology}
 Model checking then, used explicit state traversal where the reachable state space was traversed to find the errors violating the safety properties. It consumed lot of space in the computer memory because each state of the system was stored in large hash table. In order to improve this space consumption in explicit state model checker various techniques came into existence. SPIN model checker was the most successful explicit model checker. The goal of this was to overcome the state explosion problem where the states of the model were represented symbolically. 
 Later in mid-80’s Binary Decision Diagrams as a new data structure came into existence for symbolical representation and manipulating Boolean functions efficiently [4] known as Symbolic model checking with BDDs. BDDs could handle much larger designs with hundreds of state variables representing Boolean functions. There existed some shortcoming in BDDs as well. They became too large to handle as they used canonical representation. BDDs required uniform variable ordering along the paths and it sometimes happened that no space efficient variable ordering existed. This was time consuming and needed manual intervention. 
