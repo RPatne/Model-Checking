@@ -1,7 +1,6 @@
 \documentclass{article}
 \usepackage{graphicx}
 \begin{document}
-\tableofcontents
 
 \title{ THE ENGINE BEHIND MODEL CHECKING}
 \maketitle
@@ -9,6 +8,10 @@
 In order to ensure the safety and quality of a system, it is necessary to undergo a process of system validation which checks the correctness of specifications, designs and products. The various validation techniques are peer reviewing, simulation, formal verification, and model checking, etc. Of all the techniques, model checking has become the most popular approach in the both hardware and software areas due to the availability of various support tools and its success in the project. This report gives a brief introduction about the fundamentals of model checking. Various terminologies used related to model checking is also described. It also provides the fundamental approaches to model checking along with their examples. It will also introduce some of the model checkers. SAT-Technology is emerging as a central engine used in model checking tools. The principle behind it is very simple: formulate everything at the (logical) gate-level, and then run a SAT solver. The devil is then in the details. This project is about exploring this fascinating and recent connection. Either gaining some overview, or exploring a concrete application. The model, the logical side of it, the SAT side of it is a planned task for the initial document to write.
 
 \end{abstract}
+
+\tableofcontents
+
+
 
 \section{Introduction}
 Describing what a system is required to do is known as system specification. By doing so, we will be able to understand the system. Various validation techniques are used to check the correctness of specification. It guarantees the quality of the system and also its safety [6]. Model checking is one of the most popular validation techniques. For a system defined in finite state model and a property defined in terms of logical formalism, model checking techniques could systematically check the validity of this property [10]. A finite-state model is used to design computer programs and digital logic circuits. It is as an abstract machine that can be in one of a finite number of states. It will be only in one state at a time; the state it is in at any given time is called the current state. When initiated by a triggering event or condition, the state changes, this is called a transition. 
