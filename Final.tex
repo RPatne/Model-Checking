@@ -22,9 +22,13 @@ In order to ensure the safety and quality of a system, it is necessary to underg
 \label{sec:intro}
 
 Describing what a system is required to do is known as system specification. By doing so, we will be able to understand the system. Various validation techniques are used to check the correctness of specification. It guarantees the quality of the system and also its safety [6]. Model checking is one of the most popular validation techniques. For a system defined in finite state model and a property defined in terms of logical formalism, model checking techniques could systematically check the validity of this property [10]. A finite-state model is used to design computer programs and digital logic circuits. It is as an abstract machine that can be in one of a finite number of states. It will be only in one state at a time; the state it is in at any given time is called the current state. When initiated by a triggering event or condition, the state changes, this is called a transition.
-Roughly, M is an abstract model of a system whose structure is defined as finite-automata and ф is a logical formula specifying a desirable property such that M satisfies ф abbreviated as M ╞ ф.
+Roughly, M is an abstract model of a system whose structure is defined as finite-automata and $\Phi$ is a logical formula specifying a desirable property such that M satisfies $\Phi$ abbreviated as $M \models \Phi$.
 Model checking helps from preventing the bugs even before penning down the code of the project i.e., during the requirement and the design phase itself. It prevents the further breed of the bugs and hence it makes sense by being cost effective [5]. The errors which are not been able to find by simulation is done by model checking by considering all possible behaviours of the system [2].
+
+
 \subsection{Systems and their Specifications}
+\label{sec:SystemsSpec}
+
 Describing a system is called specification. Specification helps in finding errors and    understanding a system. So, it is a good practise to have a clear idea about the design and improve it before the implementation. The specification of the system can be functional or non-functional i.e. what a system is supposed to do or performance properties. These specifications are written in formal language with proper syntax and semantics which can be verified and validated with respect to requirements.
 It helps in developing the explicit model of a system which is clear, precise and unambiguous. Mathematics is used as a basic tool to achieve this. Here, reading the accompanying words in order to understand the relation between the equations is a bit tedious. In order to overcome this shortcoming using mathematics as a basic tool, logicians have temporal logic which is precise and completely formal mathematics. This temporal logic is used in such a way so as to describe the system behaviour.
 
