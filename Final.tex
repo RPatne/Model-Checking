@@ -32,23 +32,27 @@ It helps in developing the explicit model of a system which is clear, precise an
 \subsection{Temporal Logic}
 \label{sec:templog}
 
-There are various interpretations of temporal logic depends on the individual as how to consider the system with time. It is the logic for expressing mathematics. It supports formulating the properties of the system behaviour with respect to time. \newline There are various types of temporal logics: \newline
-
-
-
+There are various interpretations of temporal logic depends on the individual as how to consider the system with time. It is the logic for expressing mathematics. It supports formulating the properties of the system behaviour with respect to time. There are various types of temporal logics:
 \begin{enumerate}
-\item Temporal Logics used to specify the reactive systems are: \newline
- Linear temporal logic:  It allows the statement of properties of execution sequences of a system. \newline
- Branching temporal logic: It allows the user to write formulas which include some sensitivity to the choices available to a system during its execution.\newline
+\item Temporal Logics used to specify the reactive systems are:
+  \begin{enumerate}
+  \item Linear temporal logic:  It allows the statement of properties of execution sequences of a system.
+  \item Branching temporal logic: It allows the user to write formulas which include some sensitivity to the choices available to a system during its execution.
+  \end{enumerate}
+These two kinds o`f temporal logic are characterized by a continuous interaction with the environment [10].
+\item Temporal Logics used to specify the time-critical systems:
 
-These two kinds of temporal logic are characterized by a continuous interaction with the environment [10].\newline
-\item	Temporal Logics used to specify the time-critical systems: \newline
-Real-Time temporal logic: It allows statement of properties of multiple concurrent processes and supports relative time references.\newline
+Real-Time temporal logic: It allows statement of properties of multiple concurrent processes and supports relative time references.
 \end{enumerate}
 
 It is characterized by quantitative timing properties relating occurrences of events [10].
 In order to avoid the errors we write specifications. Validation techniques are used to checking the correctness of the system.
+
+
+
 \section{Model Checking}
+\label{sec:modelchecking}
+
 The technique used for validating a system is Model checking. The design process and the validation process are the must to ensure the correctness of specifications, designs and products of the system. Validation is done to see that whether the system meets all its requirements.
 The two types of validation techniques are:
 \begin{itemize}
@@ -98,15 +102,14 @@ Model checking uses exhaustive state space search of the system model as 	algori
 \label{sec:modelcheckers}
 
 In verifying a system, model checking techniques uses tools known as model checkers. Due to the progress of model checking, industries are developing their own model checkers.
-Few of the lists of tools are:\newline
+Few of the lists of tools are:
 \begin{enumerate}
-\item  Blast model checker: Berkeley Lazy Abstraction Software Verification Tool abbreviated as BLAST. It is a model checking tool used for C programs.\newline
-\item Java path finder: The executable java byte code programs are verified by this java pathfinder system. It does the model checking for the concurrent programs .As using this it helps in detecting the deadlocks and data races. It can also be used to model check the distributed applications and user interfaces.\newline
-\item Moon Walker: It model checks for .Net applications by detecting the errors. Also it is able to find the deadlocks and assertion violations as well.\newline
-\item Spin Model Checker: It verifies the correctness of the models in automated fashion. This is one of the biggest achievements. It avoids preconstruction of the states.\newline
-item UPPAAL: It is used for real-time systems for modelling, validation and verification.\newline
-\item TLA+: It is commonly called as Temporal Logic of Actions. It combines logic of actions with temporal logic. In concurrent systems TLA+ is used in describing its behaviour.\newline
-
+\item  Blast model checker: Berkeley Lazy Abstraction Software Verification Tool abbreviated as BLAST. It is a model checking tool used for C programs.
+\item Java path finder: The executable java byte code programs are verified by this java pathfinder system. It does the model checking for the concurrent programs .As using this it helps in detecting the deadlocks and data races. It can also be used to model check the distributed applications and user interfaces.
+\item Moon Walker: It model checks for .Net applications by detecting the errors. Also it is able to find the deadlocks and assertion violations as well.
+\item Spin Model Checker: It verifies the correctness of the models in automated fashion. This is one of the biggest achievements. It avoids preconstruction of the states.
+item UPPAAL: It is used for real-time systems for modelling, validation and verification.
+\item TLA+: It is commonly called as Temporal Logic of Actions. It combines logic of actions with temporal logic. In concurrent systems TLA+ is used in describing its behaviour.
 \end{enumerate}
 
 
