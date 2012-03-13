@@ -62,7 +62,7 @@ The two types of validation techniques are:
 \begin{itemize}
 \item Informal ones which include peer testing and testing.
 \item Formal ones which include formal verification, simulation and model checking.
-\end{itemize}	
+\end{itemize}
 This report focuses on the Formal validation technique – Model Checking.
 Model checking systematically checks the validity of a given finite-state model of a system and properties stated in the form of logical formalism such as temporal logic. It uses algorithms which are executed by the computer tools. The inputs to such model checkers are the description of the model and the description of the properties. Once these files are fed as an input, the model checker performs the verification. If error occurs, then the model checker provides the counter-example to explain under which circumstances the error can be generated. This counter-example helps in finding the error and repairing the specifications of the model. This can be shown with help of the following diagram. It shows us how the verification process takes place in the model checking.
 
@@ -83,7 +83,7 @@ Model checking systematically checks the validity of a given finite-state model 
 \subsection{Model Checking Algorithm}
 \label{sec:modcheckalg}
 
-Model checking uses exhaustive state space search of the system model as 	algorithm: The desired properties satisfied for each state of the model. 	Reachability property is used to check whether the system can reach a state without any deadlocks. Reachability is considered as one of the important property which uses Reachability analysis technique. It starts from initial system state and see to it that it reaches all the possible system states which can be reached. For instance, in a traffic signal model, yellow, red and green are the three states. Model checking proves if it can reach some state, all the states are eventually got by the model, or if the model could never get some state.
+Model checking uses exhaustive state space search of the system model as  algorithm: The desired properties satisfied for each state of the model.  Reachability property is used to check whether the system can reach a state without any deadlocks. Reachability is considered as one of the important property which uses Reachability analysis technique. It starts from initial system state and see to it that it reaches all the possible system states which can be reached. For instance, in a traffic signal model, yellow, red and green are the three states. Model checking proves if it can reach some state, all the states are eventually got by the model, or if the model could never get some state.
 
 
 \subsection{Approaches of Model Checking}
