@@ -1,10 +1,10 @@
 \documentclass{article}
-<<<<<<< HEAD
+
 
 \usepackage{a4}
 
 \usepackage{graphicx}
-
+\usepackage{natbib}
 
 \begin{document}
 
@@ -16,7 +16,7 @@
 
 \end{center}
 \begin{abstract}
-In order to ensure the safety and quality of a system, it is necessary to undergo a process of system validation which checks the correctness of specifications, designs and products. The various validation techniques are peer reviewing, simulation, formal verification, and model checking etc. Of all the techniques, model checking has become the most popular approach in the both hardware and software areas due to the availability of various support tools and its success in the project. This report gives a brief introduction about the fundamentals of model checking. Various terminologies used related to model checking is also described. It also provides the fundamental approaches to model checking along with their examples. It will also introduce some of the model checkers.According to the project brochure ``SAT-Technology is emerging as a central engine used in model checking tools. The principle behind it is very simple: formulate everything at the (logical) gate-level, and then run a SAT solver. The devil is then in the details. This project is about exploring this fascinating and recent connection. Either gaining some overview, or exploring a concrete application. The model, the logical side of it, the SAT side of it is a planned task for the initial document to write."
+In order to ensure the safety and quality of a system, it is necessary to undergo a process of system validation which checks the correctness of specifications, designs and products. The various validation techniques are peer reviewing, simulation, formal verification, and model checking etc. Of all the techniques, model checking has become the most popular approach in the both hardware and software areas due to the availability of various support tools and its success in the project. This report gives a brief introduction about the fundamentals of model checking. Various terminologies used related to model checking is also described. It also provides the fundamental approaches to model checking along with their examples. It will also introduce some of the model checkers.According to the project brochure ``SAT-Technology is emerging as a central engine used in model checking tools. The principle behind it is very simple: formulate everything at the (logical) gate-level, and then run a SAT solver. The devil is then in the details. This project is about exploring this fascinating and recent connection. Either gaining some overview, or exploring a concrete application. The model, the logical side of it, the SAT side of it is a planned task for the initial document to write."\cite{Berardetall2001}
 
 
 \end{abstract}
@@ -38,7 +38,7 @@ In order to ensure the safety and quality of a system, it is necessary to underg
 
 \end{abstract}
 
->>>>>>> a93a88d0897442e01cddc23790d027425569c664
+
 \tableofcontents
 \newpage
 
@@ -349,37 +349,40 @@ There are shortcomings that still need to be answered:
 \end{itemize}
 Despites these shortcomings the model checking is an important and successful area in verifying the models by early detection of the errors [3].
 
+\newpage
+\bibliographystyle{te}
+\bibliography{literature}
 
 
-\begin{thebibliography}{}
-\bibitem{McMillan,K} McMillan, K. (n.d.), \emph{Exploiting SAT solvers in unbounded model checking}, tutorial presented at CAV'03. ??? where is this ???
-\bibitem{Havelund et al.} Havelund et al \emph{"Formal Analysis of a Space-Craft Controller using SPIN," . IEEE Transactions on Software Engineering},27, 2001, pp. 749-765.
-\bibitem{Berard et al.} Berard et al. \emph{"Systems and Software Verification: Model-Checking Techniques and Tools"} , Berlin-Heidelberg: Springer Verlag,2001.
-\bibitem{Bryant, R.} Bryant, R \emph{Graph Based Algorithms for Boolean Function Manipulation. . IEEE Trans. on Computers,c(35)} 1986.
->>>>>>> a93a88d0897442e01cddc23790d027425569c664
-\bibitem{City.academic.gr} City.academic.gr \emph{The University of Sheffield International Faculty, CITY College}, Available at: http://www.city.academic.gr [Accessed: 22 Feb 2012].
-\bibitem{ }
-Clarke, Edmund M., Orna Grumberg, and Doron A. Peled. \emph{Model Checking}, Cambridge, MA: MIT Press, 1999.
-\bibitem{}
-Eetimes.com \emph{An introduction to model checking}, 2004, Available at:http://www.eetimes.com/design/ embedded/4024929/An-introduction-to-model-checking [Accessed: 03 Mar 2012].
-\bibitem{Folk.uio.no} Folk.uio.no \emph{What is Model Checking} 1996, Available at: http://folk.uio.no/gerardo/model-checking/What-is-Model-Checking.html fig1 [Accessed: 03 Mar 2012].
-\bibitem{Kenmcmil.com} Kenmcmil.com (n.d.) Ken McMillan's Home Page. http://www.kenmcmil.com [Accessed: 05 Mar 2012].
-<<<<<<< HEAD
-\bibitem{Stanford.edu} Dawson Engler \emph{Stanford.edu}, 2008 Available at: http://www.stanford.edu/~engler/ [Accessed: 06 Mar 2012].  
-\bibitem{Strichman, O.} Strichman, o. (n.d.) 6.  \emph{``Tuning SAT-Checkers for Bounded Model-Checking” and ``Heuristics for Efficient SAT solving” .}
-\bibitem{Swerl.tudelft.nl} Swerl.tudelft.nl \emph{SERG$>$Main$>$BoWang.} ,2007 Available at: http://swerl.tudelft.nl/bin/view/Main/BoWang [Accessed: 09 Mar 2012]. 
+%\begin{thebibliography}{}
+%\bibitem{McMillan,K} McMillan, K. (n.d.), \emph{Exploiting SAT solvers in unbounded model checking}, %tutorial presented at CAV'03. ??? where is this ???
+%\bibitem{Havelund et al.} Havelund et al \emph{"Formal Analysis of a Space-Craft Controller using %SPIN," . IEEE Transactions on Software Engineering},27, 2001, pp. 749-765.
+%\bibitem{Berard et al.} Berard et al. \emph{"Systems and Software Verification: Model-Checking %Techniques and Tools"} , Berlin-Heidelberg: Springer Verlag,2001.
+%\bibitem{Bryant, R.} Bryant, R \emph{Graph Based Algorithms for Boolean Function Manipulation. . IEEE %Trans. on Computers,c(35)} 1986.
+%>>>>>>> a93a88d0897442e01cddc23790d027425569c664
+%\bibitem{City.academic.gr} City.academic.gr \emph{The University of Sheffield International Faculty, %CITY College}, Available at: http://www.city.academic.gr [Accessed: 22 Feb 2012].
+%\bibitem{ }
+%Clarke, Edmund M., Orna Grumberg, and Doron A. Peled. \emph{Model Checking}, Cambridge, MA: MIT Press, %1999.
+%\bibitem{}
+%Eetimes.com \emph{An introduction to model checking}, 2004, Available at:http://www.eetimes.com/design/ %embedded/4024929/An-introduction-to-model-checking [Accessed: 03 Mar 2012].
+%\bibitem{Folk.uio.no} Folk.uio.no \emph{What is Model Checking} 1996, Available at: %http://folk.uio.no/gerardo/model-checking/What-is-Model-Checking.html fig1 [Accessed: 03 Mar 2012].
+%\bibitem{Kenmcmil.com} Kenmcmil.com (n.d.) Ken McMillan's Home Page. http://www.kenmcmil.com [Accessed: %05 Mar 2012].
+%<<<<<<< HEAD
+%\bibitem{Stanford.edu} Dawson Engler \emph{Stanford.edu}, 2008 Available at: %http://www.stanford.edu/~engler/ [Accessed: 06 Mar 2012].  
+%\bibitem{Strichman, O.} Strichman, o. (n.d.) 6.  \emph{``Tuning SAT-Checkers for Bounded Model-Checking” and ``Heuristics for Efficient SAT solving” .}
+%\bibitem{Swerl.tudelft.nl} Swerl.tudelft.nl \emph{SERG$>$Main$>$BoWang.} ,2007 Available at: http://swerl.tudelft.nl/bin/view/Main/BoWang [Accessed: 09 Mar 2012]. 
 
 
-=======
-\bibitem{Stanford.edu} Dawson Engler \emph{Stanford.edu}, 2008 Available at: http://www.stanford.edu/~engler/ [Accessed: 06 Mar 2012].
-\bibitem{Strichman, O.} Strichman, o. (n.d.) 6.  \emph{“Tuning SAT-Checkers for Bounded Model-Checking” and “Heuristics for Efficient SAT solving” .}
-\bibitem{Swerl.tudelft.nl} Swerl.tudelft.nl \emph{SERG> Main > BoWang.} ,2007 Available at: http://swerl.tudelft.nl/bin/view/Main/BoWang [Accessed: 09 Mar 2012].
->>>>>>> a93a88d0897442e01cddc23790d027425569c664
+%=======
+%\bibitem{Stanford.edu} Dawson Engler \emph{Stanford.edu}, 2008 Available at: http://www.stanford.edu/~engler/ [Accessed: 06 Mar 2012].
+%\bibitem{Strichman, O.} Strichman, o. (n.d.) 6.  \emph{“Tuning SAT-Checkers for Bounded Model-Checking” and “Heuristics for Efficient SAT solving” .}
+%\bibitem{Swerl.tudelft.nl} Swerl.tudelft.nl \emph{SERG> Main > BoWang.} ,2007 Available at: http://swerl.tudelft.nl/bin/view/Main/BoWang [Accessed: 09 Mar 2012].
+%>>>>>>> a93a88d0897442e01cddc23790d027425569c664
 
 
 
 
-\end{thebibliography}
+%\end{thebibliography}
 
 
 \end{document}
