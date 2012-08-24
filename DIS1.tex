@@ -8,11 +8,11 @@
 \maketitle
 \begin{center}
 \textsf{
-PROJECT DISSERTATION SUBMITTED FOR PARTIAL FULFILMENT FOR THE DEGREE OF MASTER OF SCIENCE \\ by \\ 
+PROJECT DISSERTATION SUBMITTED FOR PARTIAL FULFILMENT FOR THE DEGREE OF MASTER OF SCIENCE \\ by \\
 }
 \textbf{Reema S Patne \\ MSc. In Computing and Software Technology \\ Swansea University}
 \end{center}
-\newpage  
+\newpage
 \begin{abstract}
 \textsf{In order to ensure the safety and quality of a system, it is necessary to undergo a process of system validation which checks the correctness of specifications, designs and products.\cite{Berardetall2001} We find post-completion errors which are a particular kind of error in interactive systems. When there is an incorrect sequencing of goals and sub-goals, this type of error occurs. Mainly because, the primary goal is achieved before all of the prerequisite sub-goals have been satisfied. This project shows how we can check for this property in a formal model of an interactive system. Of all the validation techniques, model checking has become the most popular approach in the both hardware and software areas due to the availability of various support tools and its success in the project. This project is to get a working understanding of a model checking tool that uses SAT solvers. Specifically, suggesting the lightweight formal methods, such as the Alloy structural modelling language, is particularly well suited for this task. As a case study we develop an example interactive system using ubiquitous coffee machine where both coffee and change must be delivered.}
 \end{abstract}
@@ -28,7 +28,7 @@ Swansea University\\
 September 2012.
 \end{flushright}
 
-\newpage 
+\newpage
 \tableofcontents
 \maketitle
 \newpage
@@ -43,7 +43,7 @@ The lightweight formal methods such as Alloy provide the user with many benefits
 \begin{itemize}
 \item   In order to develop an ongoing development, the formal basis provides an automatic feedback in a more focused way.
 \item   Tools provide a more ``programmer-friendly" interface and can be used by any developers who are not formal methods experts. [finally]
-\item • In software engineering, one of the great benefits of Alloy is that you can analyze a tiny model, write three lines, and analyze it, add few more lines and analyze again. This increment makes Alloy especially good for exploring design ideas. 
+\item • In software engineering, one of the great benefits of Alloy is that you can analyze a tiny model, write three lines, and analyze it, add few more lines and analyze again. This increment makes Alloy especially good for exploring design ideas.
 \end{itemize}
 These approaches are used much earlier in the development process to validate aspects of an evolving specification and to explore requirements. Here the focus is on post-completion errors as an example property but is chosen only to serve as an example and our models are not designed solely for any particular property. The models are general and able to be used to investigate many other properties.\\
 In this dissertation, the literature survey, specification, implementation of alloy Analyser, example using Alloy, conclusion of the model checking tool will be presented.
@@ -52,29 +52,29 @@ In this dissertation, the literature survey, specification, implementation of al
 This report mainly consists of three parts. Part I is the literature survey, Part II is the Specification and part III is the Final thesis.\\
 In Part I the concept of systems and their specifications and the basic theory of model checking technique will be presented. A simple example to illustrate the technique is mentioned. The various model checkers along with their uses are listed. The new challenges faced throughout the project are also mentioned along with the conclusion of the literature survey.\\
 In Part II the discussion of making the specifications executable will be found. The approach which is used to make the specification executable will be discussed. It introduces the declarative modelling language namely Alloy followed by development and analysis of a Alloy model which includes alloy interface walkthrough also introducing the Alloy's improved solution visualizer. It also includes the schedule of the project planned throughout the course.\\
-Finally the Part III examines an Alloy model which solves the coffee machine problem, using the module for modelling the ordered state. It will conclude with the method, result and refinement along with the references. 
-\pagebreak 
+Finally the Part III examines an Alloy model which solves the coffee machine problem, using the module for modelling the ordered state. It will conclude with the method, result and refinement along with the references.
+\pagebreak
 \part{LITERATURE SURVEY}
-\pagebreak 
+\pagebreak
 \section{Model Checking}
 \label{Model check}
 The technique used for validating a system is Model checking. The design process and the validation process are the must to ensure the correctness of specifications, designs and products of the system. Validation is done to see that whether the system meets all its requirements. \\
-The two types of validation techniques are: 
+The two types of validation techniques are:
 \begin{itemize}
 \item   Informal ones which include peer testing and testing.
-\item   Formal ones which include formal verification, simulation and model checking. 
+\item   Formal ones which include formal verification, simulation and model checking.
 \end{itemize}
 This report focuses on the Formal validation technique – Model Checking. \\
-Model checking systematically checks the validity of a given finite-state model of a system and properties stated in the form of logical formalism such as temporal logic. It uses algorithms which are executed by the computer tools. The inputs to such model checkers are the description of the model and the description of the properties. Once these files are fed as an input, the model checker performs the verification. If error occurs, then the model checker provides the counter-example to explain under which circumstances the error can be generated. This counter-example helps in finding the error and repairing the specifications of the model. This can be shown with help of the following diagram. It shows us how the verification process takes place in the model checking.  \\ 
+Model checking systematically checks the validity of a given finite-state model of a system and properties stated in the form of logical formalism such as temporal logic. It uses algorithms which are executed by the computer tools. The inputs to such model checkers are the description of the model and the description of the properties. Once these files are fed as an input, the model checker performs the verification. If error occurs, then the model checker provides the counter-example to explain under which circumstances the error can be generated. This counter-example helps in finding the error and repairing the specifications of the model. This can be shown with help of the following diagram. It shows us how the verification process takes place in the model checking.  \\
 Describing what a system is required to do is known as system specification. By doing so, we will be able to understand the system. Various validation techniques are used to check the correctness of specification. It guarantees the quality of the system and also its safety [8]. Model checking is one of the most popular validation techniques. For a system defined in finite state model and a property defined in terms of logical formalism, model checking techniques could systematically check the validity of this property [15]. A finite-state model is used to design computer programs and digital logic circuits. It is as an abstract machine that can be in one of a finite number of states. It will be only in one state at a time; the state it is in at any given time is called the current state. When initiated by a triggering event or condition, the state changes, this is called a transition. \\
 Roughly, M is an abstract model of a system whose structure is defined as finite-automata and $\phi$  is a logical formula specifying a desirable property such that M satisfies $\phi$  abbreviated as $M \models \phi$. \\
 Model checking helps from preventing the bugs even before penning down the code of the project i.e., during the requirement and the design phase itself. It prevents the further breed of the bugs and hence it makes sense by being cost effective [7]. The errors which are not been able to find by simulation is done by model checking by considering all possible behaviours of the system[3]. \\
 Model checking is the one of the foremost applications of logics which ranges from computer science to computer engineering. Since then, there has been a multiple breakthrough. The gap which was built between the theoretical computer science, hardware and software engineering was bridged by Model Checking. Now, model checking has been extensively used for verifying many Software and also used in hardware industry. It has virtually became a universal tool for the analysis of the systems. Henceforth, this project will focus on the state of the art of model of model checking.
 \subsection{Systems and their Specifications}
 \label{Sys and Spec}
-Describing a system is called specification. Specification helps in finding errors and    understanding a system. So, it is a good practise to have a clear idea about the design and improve it before the implementation. The specification of the system can be functional or non-functional i.e. what a system is supposed to do or performance properties. These specifications are written in formal language with proper syntax and semantics which can be verified and validated with respect to requirements.\\ 
-It helps in developing the explicit model of a system which is clear, precise and unambiguous. Mathematics is used as a basic tool to achieve this. Here, reading the accompanying words in order to understand the relation between the equations is a bit tedious. In order to overcome this shortcoming using mathematics as a basic tool, logicians have temporal logic which is precise and completely formal mathematics. This temporal logic is used in such a way so as to describe the system behaviour. 
-\subsection{Temporal Logic} 
+Describing a system is called specification. Specification helps in finding errors and    understanding a system. So, it is a good practise to have a clear idea about the design and improve it before the implementation. The specification of the system can be functional or non-functional i.e. what a system is supposed to do or performance properties. These specifications are written in formal language with proper syntax and semantics which can be verified and validated with respect to requirements.\\
+It helps in developing the explicit model of a system which is clear, precise and unambiguous. Mathematics is used as a basic tool to achieve this. Here, reading the accompanying words in order to understand the relation between the equations is a bit tedious. In order to overcome this shortcoming using mathematics as a basic tool, logicians have temporal logic which is precise and completely formal mathematics. This temporal logic is used in such a way so as to describe the system behaviour.
+\subsection{Temporal Logic}
 \label{Temp Logic}
 There are various interpretations of temporal logic depends on the individual as how to consider the system with time. It is the logic for expressing mathematics. It supports formulating the properties of the system behaviour with respect to time. There are various types of temporal logics:
 \begin{itemize}
@@ -96,10 +96,10 @@ Model checking uses exhaustive state space search of the system model as        
 \label{Appr to model check}
 \begin{itemize}
 \item Logic based approach: Here the system is modelled as finite-state automaton representing the states as values of variables and control location, and changes of a system from one state to other state is represented by transition. If a system satisfying the desired behaviour given in some logic with the initial set of states, then the system is said to be correct.
-\item Behaviour based approach: Given the desired and the possible behaviour with the same notation, the equivalence relations are used as criteria for the correctness. Hence, if the desired and the possible state behaviour are equivalent then the system is said to be correct.  
+\item Behaviour based approach: Given the desired and the possible behaviour with the same notation, the equivalence relations are used as criteria for the correctness. Hence, if the desired and the possible state behaviour are equivalent then the system is said to be correct.
 \end{itemize}
 \subsection{Model Checkers}
-In verifying a system, model checking techniques uses tools known as model checkers. Due to the progress of model checking, industries are developing their own model checkers. 
+In verifying a system, model checking techniques uses tools known as model checkers. Due to the progress of model checking, industries are developing their own model checkers.
 Exhaustible list of  Model Checkers are given below:
 \begin{description}
 \item[Blast model checker:]Berkeley Lazy Abstraction Software Verification Tool abbreviated as BLAST .It is a model checking tool used for C programs.
@@ -132,19 +132,19 @@ Exhaustible list of  Model Checkers are given below:
 \end{description}
 \subsection{Technology}
 \label{tech}
-Model checking then, used explicit state traversal where the reachable state space was traversed to find the errors violating the safety properties. It consumed lot of space in the computer memory because each state of the system was stored in large hash table. In order to improve this space consumption in explicit state model checker various techniques came into existence. SPIN model checker was the most successful explicit model checker. The goal of this was to overcome the state explosion problem where the states of the model were represented symbolically. 
-Later in mid-80's Binary Decision Diagrams as a new data structure came into existence for symbolical representation and manipulating Boolean functions efficiently [4] known as Symbolic model checking with BDDs. BDDs could handle much larger designs with hundreds of state variables representing Boolean functions. There existed some shortcoming in BDDs as well. They became too large to handle as they used canonical representation. BDDs required uniform variable ordering along the paths and it sometimes happened that no space efficient variable ordering existed. This was time consuming and needed manual intervention. 
-There came into existence the SAT procedures as an alternative approach to model checking. Unlike BDDs, it didn’t use the canonical representation. It became one of the most efficient implementation. It overcame the state explosion problem faced by BDDs. 
+Model checking then, used explicit state traversal where the reachable state space was traversed to find the errors violating the safety properties. It consumed lot of space in the computer memory because each state of the system was stored in large hash table. In order to improve this space consumption in explicit state model checker various techniques came into existence. SPIN model checker was the most successful explicit model checker. The goal of this was to overcome the state explosion problem where the states of the model were represented symbolically.
+Later in mid-80's Binary Decision Diagrams as a new data structure came into existence for symbolical representation and manipulating Boolean functions efficiently [4] known as Symbolic model checking with BDDs. BDDs could handle much larger designs with hundreds of state variables representing Boolean functions. There existed some shortcoming in BDDs as well. They became too large to handle as they used canonical representation. BDDs required uniform variable ordering along the paths and it sometimes happened that no space efficient variable ordering existed. This was time consuming and needed manual intervention.
+There came into existence the SAT procedures as an alternative approach to model checking. Unlike BDDs, it didn’t use the canonical representation. It became one of the most efficient implementation. It overcame the state explosion problem faced by BDDs.
 In late 90s, researchers came up with the idea of Bounded model checking which uses SAT solvers to the model checking problem. Bounded model checking technique do a fast exploration of state space overcoming the shortcomings of the previous approaches using the SAT procedures instead of BDDs where the SAT has a depth first search nature. This method is applicable for properties which include safety and liveness where it checks whether a given set of states is reachable, and detects loops in a system’s state transition graph.
 \subsection{Example to illustrate the new technique}
 \label{Example}
-Application of Model Checking ranges from simple coffee machines to nuclear plants which are undoubtedly critical and the failure of which may cause economical and physical damages. Considering an example of a coffee machine, where the system is fed with a sensitive data to check the behaviour of the system as it is supposed to behave. This is known as testing. 
+Application of Model Checking ranges from simple coffee machines to nuclear plants which are undoubtedly critical and the failure of which may cause economical and physical damages. Considering an example of a coffee machine, where the system is fed with a sensitive data to check the behaviour of the system as it is supposed to behave. This is known as testing.
  \begin{figure}[h!]
  \centering
  % \includegraphics[width= 0.5\textwidth]{flower.png}
 \caption{Finite states of a coffee machine.}
  \end{figure}
- A coffee machine consists of a set the following above states which are depicted in circles and relations as arrows between the states. Arrows are given with labels representing actions. The combination of this set of states and relations is known as ``automaton".  If the given action on an arrow connecting both the states is satisfied, then automaton in a given state changes to another state. 
+ A coffee machine consists of a set the following above states which are depicted in circles and relations as arrows between the states. Arrows are given with labels representing actions. The combination of this set of states and relations is known as ``automaton".  If the given action on an arrow connecting both the states is satisfied, then automaton in a given state changes to another state.
 Initially the machine is at state ``Start" and it ``waits" for a coin. If a coin is provided then the machine change state to the ``Button" state where two options are possible: to press the ``k" button and then go to the ``Coffee" state, or to press ``t" and go to the ``Tea" state. After serving the corresponding drink, the machine goes to the "Glass" state and it gives a glass with the chosen drink to then go back to the ``Start" state.
 \paragraph{Example 1}
 The property ``Always, after the machine gets a coin and the user press a button, it gives coffee or tea", can be written in temporal logic as:
@@ -161,7 +161,7 @@ Here NEXT is a connective formalising the ``immediately after" English expressio
 \label{challenge face}
 \begin{itemize}
 \item Learnt the usage of Github: It is a website used for storing and presenting our files. Git is a decentralized version control system that is used by a number of open source projects, most notably perhaps the Linux kernel. GitHub is a new hosted Git repository service that's being called a "social network" for programmers and with good reason. In my project it helps in communication between me and my supervisor by providing information to assist in evaluating the tools and making an informed decision.
-\item Learnt the usage of LATEX: It is a document preparation system similar to that of a Microsoft word where the similarities end here. Preparing a document with LATEX consists of using a text editor to edit a Latex source file with the .tex extension. And then running a latex program to convert the source file to a document interchange format like PDF etc. Doing in LATEX provides a good typography which provides a good impression on the content of the document and is platform independent unlike MS word which runs only on windows. It's much better than copy+paste since it can be changed by changing just the definition. Even more, Latex allows people to write programs in their documents. 
+\item Learnt the usage of LATEX: It is a document preparation system similar to that of a Microsoft word where the similarities end here. Preparing a document with LATEX consists of using a text editor to edit a Latex source file with the .tex extension. And then running a latex program to convert the source file to a document interchange format like PDF etc. Doing in LATEX provides a good typography which provides a good impression on the content of the document and is platform independent unlike MS word which runs only on windows. It's much better than copy+paste since it can be changed by changing just the definition. Even more, Latex allows people to write programs in their documents.
 \end{itemize}
 \section{Conclusion of literature survey}
 Model checking is used in many areas including both the hardware the software fields. It helps in considering only subset of the system requirements leading to the improved efficiency by supporting partial verifications. Compared to simulation and testing, model checking uses shorter time for verification as shown by many case studies. It can also deal with the states which are larger. \\
@@ -169,17 +169,17 @@ There are shortcomings that still need to be answered:
 \begin{itemize}
 \item   There is no way to translate automatically the requirements into its own modelling language defined by its model checking tool. This has to be done manually.
 \item   Some of the properties which are to be verified are difficult to express in the notation.
-\item Model checking involves much number of states consuming extra efforts in checking parts of the model separately. 
+\item Model checking involves much number of states consuming extra efforts in checking parts of the model separately.
 \end{itemize}
 Despites these shortcomings the model checking is an important and successful area in verifying the models by early detection of the errors [3].
-\newpage 
+\newpage
 \part{SPECIFICATIONS}
-\newpage 
+\newpage
 \section{Making the Specifications Executable}
 \label{Spec exec}
 It is difficult to validate the system with the specifications and requirements. The     validation task would be easier if we make the specifications executable, giving the immediate feedback of the behaviour of the future software to the user.\\
 The Boolean level of representation of the model-checking task with the   computation engine that supported the required set of operations gave rise to Symbolic model checking. Ordered Binary Decision Diagram (OBDD) was the first approach combining the efficiency and expressive power. Recently, based on Davis-Putnam-Logemann-Loveland (DPLL) algorithm, Boolean satisfiability (SAT) checkers have greatly extended the reach of bounded model checkers.\\
-OBDDs and DPLL –based checkers compliments each other. OBBDs readily deal with quantified Boolean formulas (QBF) where as DPLL cannot. SAT problem which are completely intractable for DPLL are trivial with OBDDs. SAT checkers are insensitive to the number of variables. 
+OBDDs and DPLL –based checkers compliments each other. OBBDs readily deal with quantified Boolean formulas (QBF) where as DPLL cannot. SAT problem which are completely intractable for DPLL are trivial with OBDDs. SAT checkers are insensitive to the number of variables.
 \subsection{A view from the Engine Room}
 \label{View from engine}
 The first symbolic model checkers used Ordered Binary Decision Diagrams (OBDDs) [5] to represent system transition relations and sets of system states [2]. All the steps required for a model checking is expressed as a series of operations on these representations, without enumerating individual states or transitions. Recently, Bounded and Inbounded model checking has been devised which use Boolean satisfiability (SAT) solvers as a computational engines. Combining the methods which have a SAT solver work on a detailed system model and OBDDs operate on a abstracted model, is more powerfull than operating on its own[8].\\
@@ -188,25 +188,25 @@ Model checkers are now able to handle the complex verification problems coming f
 \label{Expt in UnSAT}
 When the given task is to prove that the given formula is unsatisfiable, we find an error in the design by using the SAT solver which is typically used by verification problem. To prove that the formula is unsatisfiable, it is currently highly favourable to use DPPL method [13].for solving SAT problems by backtracking search among complete SAT algorithms. By doing so, it has gained a remarkable progress in speed and capacity[14].\\
 I would like to be working on the use of Alloy as the formalism used for the formal analysis of models.. Alloy is a lightweight modelling language for software design. By using the Alloy Analyzer, it is amenable to a fully automatic analysis. It also provides a visualizer for making sense of solutions and counterexamples it finds.\\
-Alloy can be considered as a natural choice for representation of interactive systems.  The remainder of the project will be structured as follows: Firstly, introducing the key concepts of Alloy. Then, describe the approach of analysing the model with the Alloy Analyser and applying it to an example. 
+Alloy can be considered as a natural choice for representation of interactive systems.  The remainder of the project will be structured as follows: Firstly, introducing the key concepts of Alloy. Then, describe the approach of analysing the model with the Alloy Analyser and applying it to an example.
 \section{Alloy Language and the Alloy Analyzer}
 \label{Alloy and its Analyzer}
 To facilitate the lightweight modelling object, Daniel Jackson, with the    assistance of others at the Software Design Group, a declarative modelling language was designed. It allows for writing Z-style specifications in ASCII, and, being close to first-order, is analyzable via translation into SAT . A platform is developed to perform this analysis which is known as Alloy Analyser.
-Specification of Alloy consists of signatures, facts, functions, predicates and assertions. 
+Specification of Alloy consists of signatures, facts, functions, predicates and assertions.
 Signatures declare the types used in the specification, and the definitions of the types fields. Types in Alloy are hierarchical in the form of a tree; a type may have multiple subtypes but at most one supertype. In addition, all types descend from a common ancestor, which is called univ. The types and fields defined in signatures form the set of relations that are used in the specification. \\
 Facts are logical formulae or constraints over relations. They may be nested via standard logical operators, such as disjunction , conjunction , and negation . The value of a formula is thus always Boolean. \\
 Predicates are logical formulae that are evaluated on zero or more arguments. They can be called within the model or used to run an analysis of the model. Given a predicate to analyze, the Analyzer finds a solution that satisfies both the facts and the predicate, or returns that no such solution exists (within the given scope bounds, which are discussed in the next section). \\
-Assertions are logical formulae whose validity we want to check. That is, given the signatures and facts, we want the Analyzer to help us determine whether an assertion always evaluates to true, and if not, provide a counterexample that demonstrates otherwise. The natural way to do this is to conjoin the facts of a specification with the negation of the assertion, and translate this compounded formula into SAT. If no solution can be found, then this means that the assertion is always true when the constraints are true (within the given scopes), or that the constraints are inconsistent and always false. The latter case implies a faulty specification. On the other hand, if a solution is found, then it illustrates a counterexample case in which the constraints are true, but the assertion is false. 
+Assertions are logical formulae whose validity we want to check. That is, given the signatures and facts, we want the Analyzer to help us determine whether an assertion always evaluates to true, and if not, provide a counterexample that demonstrates otherwise. The natural way to do this is to conjoin the facts of a specification with the negation of the assertion, and translate this compounded formula into SAT. If no solution can be found, then this means that the assertion is always true when the constraints are true (within the given scopes), or that the constraints are inconsistent and always false. The latter case implies a faulty specification. On the other hand, if a solution is found, then it illustrates a counterexample case in which the constraints are true, but the assertion is false.
 Describing some aspects of a system (but not the entire system), constraint it to exclude ill-formed examples and checking the properties about it is the main goal of writing a model. The property of allow always holds for problems up to size X or if the property does not hold good, it provides a counterexample. \\
 The two kinds of problems that may occur are:
 \begin{itemize}
 \item   Bugs: It occurs in the model itself. The problem of overconstraining and underconstraining our model will be discussed and how to eliminate those bugs.
-\item It occurs in the subject we are modelling. These are what we are after, and what the modelling is all about. The example will also show how to make and check assertions about our systems, and how to track down why a given assertion failed to hold. 
+\item It occurs in the subject we are modelling. These are what we are after, and what the modelling is all about. The example will also show how to make and check assertions about our systems, and how to track down why a given assertion failed to hold.
 \end{itemize}
 Apart from the similarities of Alloy with other existing languages and modelling techniques, there are several other differences as well:
 \begin{itemize}
-\item   Finite scope check: After analysing the model, the scope (size) must be specified to the model. The analysis is sound and it never returns false positives, but incomplete because it checks the things only upto a certain limit. However it is complete upto the scope. Counterexample being smaller than the specified scope is never missed. Smaller scope checks are extremely valuable for finding errors. 
-\item Infinite model: Unlike traditional model checking models written in alloy do not reflect that analysis is finite. That is, components of the system and how they interact will be described, but do not specify as to how many components there can be. 
+\item   Finite scope check: After analysing the model, the scope (size) must be specified to the model. The analysis is sound and it never returns false positives, but incomplete because it checks the things only upto a certain limit. However it is complete upto the scope. Counterexample being smaller than the specified scope is never missed. Smaller scope checks are extremely valuable for finding errors.
+\item Infinite model: Unlike traditional model checking models written in alloy do not reflect that analysis is finite. That is, components of the system and how they interact will be described, but do not specify as to how many components there can be.
 \item Declarative: As opposed to ``operational" or ``imperative" modeller which asks ``How can I accomplish X" , a declarative modeller answers the question ``How would I recognise that X has happened".
 \item   Automatic analysis: Alloy can be automatically analyzed unlike some other declarative modelling languages like Z and OCL, the object language of UML. Examples of the system and the counterexamples to claims made about the system can be generated automatically.
 \item Structured data: Alloy is a rich way to describe states by supporting the complex data structures, such as trees.
@@ -216,7 +216,7 @@ Apart from the similarities of Alloy with other existing languages and modelling
 By placing a bound on the universe of atoms, we will be able to solve the constraints in first-order logic. By doing so, the search space becomes finite and then translating the constraints into the Boolean form finally finding the solution with a SAT solver. The SAT solver finds a solution to the satisfiability (SAT) problem: \\
 Given a Boolean function f(x1,..,xn), return an assignment of Boolean values to xi such that f evaluates to true, or prove that no such assignment exists. The solution is mapped back to the original constraint problem in a manner comprehensible to the author of the constraints. \\
  For our project, it is only necessary to have a basic understanding of how the translation into Boolean logic works in Alloy. \\
-``The universe of atoms is bounded by a user-defined or inferred scope for each type used in the object model. Consider a binary relation 
+``The universe of atoms is bounded by a user-defined or inferred scope for each type used in the object model. Consider a binary relation
 \begin{equation}
 r : X->Y
 \end{equation} with the scopes of X and Y set to m and n, respectively. Then, r can be represented as an m-by-n Boolean matrix where a value of true in the i-th row and j-th column means that the i-th element of X is related to the j-th element of Y. To translate a constraint over r, one simply replaces the constants in the Boolean matrix with variables. The translations for most operations follow nicely; for example, union and intersection of relations can be translated as pairwise disjunction and conjunction of the variables, respectively." \\
@@ -325,21 +325,21 @@ Alloy 4 contains a number of utility modules that provide common operations on g
 \textbf{module util/sequniv} This module models each sequence of elements using a relation.\\
 (This module is imported automatically if your model uses the new seq keyword. \\
 \textbf{module util/ternary} Utilities for common operations and constraints on ternary relations.\\
-\subsection{Visualizer} 
+\subsection{Visualizer}
 \label{visualiser}
 The visualizer offers 3 views, which can be selected in its toolbar at the top.\\
-\textbf{Visualization Modes} 
+\textbf{Visualization Modes}
 \begin{itemize}
-\item \textbf{Viz} : Brings up the graphical view where each node is an atom (member of a signature) and arcs represent the relations between atoms. 
-The labels, colours, and various other settings can be configured by clicking the Theme button. 
-\item \textbf{Tree} : brings up the tree view. The nodes of the tree may be expanded/collapsed to reveal/hide the values of relations. A relation node (such as that for a signature or a field) is expanded to reveal its tuples, and an atom may be expanded to reveal the value of joining the atom with the fields defined in its correponding signature. 
+\item \textbf{Viz} : Brings up the graphical view where each node is an atom (member of a signature) and arcs represent the relations between atoms.
+The labels, colours, and various other settings can be configured by clicking the Theme button.
+\item \textbf{Tree} : brings up the tree view. The nodes of the tree may be expanded/collapsed to reveal/hide the values of relations. A relation node (such as that for a signature or a field) is expanded to reveal its tuples, and an atom may be expanded to reveal the value of joining the atom with the fields defined in its correponding signature.
 \item \textbf{XML} : Shows the instance as an XML document. As implied by its name, the XML view displays an instance in XML format. If you save the XML text, you can load the instance later from the visualizer.
-\end{itemize}  
+\end{itemize}
 \subsection{Skolemization Relations }
 \label{Skolemization relations}
 Often times, quantified formulas can be reduced to equivalent formulas without the use of quantifiers.\\
 This reduction is called \textbf{skolemization} and is based on the introduction of one or more \textbf{skolem constants or functions} that capture the constraint of the quantified formula in their values. \\
-Consider the following example: 
+Consider the following example:
 
 sig A \{ r: lone B \} \\
 
@@ -352,12 +352,12 @@ fact \{\\
 \}\\
 The ``some" formula may be equivalently expressed as: \\
     x' in A \&\& no x'.r \\
-x' is the skolem reation in this case. The existential quantifier ``some" is not needed because the analysis will search for the existence of the skolem realtion x'.  
+x' is the skolem reation in this case. The existential quantifier ``some" is not needed because the analysis will search for the existence of the skolem realtion x'.
 \subsection{Determining the names of skolem relations }
 \label{determine skolem relations}
 The Alloy Analyzer automatically generates and assigns names to skolem relations.
 The names can be determined by looking at the solved instance using any of the three (Text, Tree, Viz) views.\\
-For instance, in the above example, the name \$x may have been assigned to the skolem relation x'. 
+For instance, in the above example, the name \$x may have been assigned to the skolem relation x'.
 \subsection{Using skolem relations }
 \label{Use of skolem relations}
 Skolem relations are displayed in the output like any other relation in the original model. Hence, its visualization may be conspicuous.
@@ -365,7 +365,7 @@ Skolem relations are displayed in the output like any other relation in the orig
 \label{Features of Alloy}
 The syntax of Alloy 4 differs very slightly from the syntax of Alloy 3. Changes were made for three reasons: to make the syntax more uniform; to add some new features for greater convenience; to simplify the grammar to allow faster parsing and to make it easier for others to implement tools for Alloy. The grammar is now LALR(1), and compilation is instantaneous for all but the largest models. \\
 The changes are explained in detail below. For each change, the rationale is explained, and short comments highlight the small changes that users are likely to need to make to Alloy 3 models. We expect that, for most users, the only changes needed will be replacing round by square brackets in invocations, and adding aliases for imported modules. \\
-\textbf{1. To cast between integers and Int atoms, use Int[ ] and int[ ]} 
+\textbf{1. To cast between integers and Int atoms, use Int[ ] and int[ ]}
 \textit{Change}: To cast from integer to an Int atom, you must use the new "Int[ ]" function.\\
 Likewise, to cast from Int to integer, you should use the new "int[ ]" function. \\
 \textit{Rationale}: This simplifies the grammar by using the function invocation syntax to do type casts. \\
@@ -387,17 +387,17 @@ Impact: Inside a formula, the ``:" operator must be changed to the ``in" operato
 
 \textbf{Alloy 3}:     \begin{equation}
 bank.accounts : Person -> one Account
-\end{equation}  
+\end{equation}
 \textbf{Alloy 4}:    \begin{equation}
-bank.accounts in Person ->  one Account 
-\end{equation} 
+bank.accounts in Person ->  one Account
+\end{equation}
 \textbf{3. if-then-else is now written as \begin{equation}
 condition => x else y
 \end{equation} } \\
 In Alloy 3, if-then-else formulas are written as \begin{equation} condition => formula1,formula2 \end{equation} where as if-then-else expressions are written as ``if condition then x else y". \\
 In Alloy 4, both forms are now replaced by \begin{equation} condition => x else y \end{equation}
 \textbf{4. Function/predicate calls must use the same operators [ ] and . as relational joins. } \\
-To invoke \textbf{f(a,b)}, you must write it as \textbf{f[a,b], f[a][b], a.f[b], or b.(a.f)} \\ 
+To invoke \textbf{f(a,b)}, you must write it as \textbf{f[a,b], f[a][b], a.f[b], or b.(a.f)} \\
 To invoke \textbf{f(a)}, you must write it as \textbf{f[a]} or \textbf{a.f} \\
 To invoke \textbf{f()}, you must write it as \textbf{f[ ]} or simply \textbf{f} \\
 In particular, note that \textbf{a.add[b].sub[c]} is equivalent to \textbf{sub[add[a,b],c]} \\
@@ -409,7 +409,7 @@ Finally, the first argument can be declared using the receiver syntax:\\
     \textbf{pred} List.contains [ e:Element ] {...}\\
 is internally converted into\\
    \textbf{pred} contains [ this:List, e:Element ] {...}\\
-  \textbf{ Grammar for int expressions, set/relation expressions, and formulas are unified.}\\ 
+  \textbf{ Grammar for int expressions, set/relation expressions, and formulas are unified.}\\
 This means some expressions legal in Alloy 3 may require additional parentheses for it to parse. \\
 
 \textbf{5. You can no longer set a separate scope on the number of Int atoms. } \\
@@ -443,7 +443,7 @@ If the module line is omitted, then Alloy 4 assumes the main file has no path. T
 Instead of declaring an assertion X and then write check X,\\
 you can now combine them by just writing check {some formula}. \\
 Likewise, instead of declaring a predicate X and then write run X,\\
-you can now combine them by just writing run {some formula}. 
+you can now combine them by just writing run {some formula}.
 For example:\\
   check { A!=B } for 3\\
 is equivalent to\\
@@ -454,7 +454,7 @@ Alternatively, you can prepend an explcit label if you wish.\\
 For example: \\
 somelabel : check { A != B } for 3 \\
 somelabel : run { some a:A, b:B $|$ a=b } for 3  \\
-\textbf{11. predicates, functions, and fields can now overload each other.} \\ 
+\textbf{11. predicates, functions, and fields can now overload each other.} \\
 That is, you can declare functions, predicates, and fields with the same name. When there's an ambiguity, we'll use the following rule to determine whether each candidate is compatible: \\
 (a) First of all, its value must be relevant to the overall expression. \\
 (b) Furthermore, if it's a predicate or function, then the type of each parameter must have nonempty intersection with the type of each argument. \\
@@ -472,7 +472,7 @@ so Alloy4 will parse it as if the user wrote int[X] $<<$ 2 \\
   Note: When there are two ways to make an expression legal,
 by adding either Int-to-int cast or int-to-Int cast,
 then Alloy4 prefers the Int-to-int cast since it is cheaper. \\
-  
+
 For example, given an Int atom X, then the expression X+3 is illegal,
 since both operands of + must be of the same type.\\
 Alloy4 knows there are two ways for this to be legal:\\
@@ -480,29 +480,29 @@ Alloy4 knows there are two ways for this to be legal:\\
 2)   convert 3 to Int[3], and you get the union containing two atoms (``X" and ``3").\\
 Since Alloy4 prefers the Int-to-int cast since it is cheaper,\\
 so Alloy4 will parse it as if the user wrote int[X]+3 \\
-\textbf{13. Alloy4 now supports all the standard operations on int values.}\\ 
+\textbf{13. Alloy4 now supports all the standard operations on int values.}\\
 addition                a.add[b]        (If unambiguous, you can shorten this to be a+b) \\
 subtraction             a.sub[b]        (If unambiguous, you can shorten this to be a-b) \\
-multiplication          a.mul[b]        \\  
+multiplication          a.mul[b]        \\
 division                a.div[b]          \\
 remainder               a.rem[b]          \\
-negation                - a       \\ 
+negation                - a       \\
 equal           a $=$ b           \\
 not equal               a $!=$ b          \\
 less than               a $<$ b           \\
-greater than            a $>$ b          \\ 
+greater than            a $>$ b          \\
 less than or equal to           a $<=$ b          \\
-greater than or equal to                a $>=$ b         \\  
+greater than or equal to                a $>=$ b         \\
 left-shift              a $<<$ b          \\
 sign-extended right-shift               a $>>$ b          \\
-zero-extended right-shift               a $>>>$ b         
-  
+zero-extended right-shift               a $>>>$ b
+
 Note: The first five operators (add, sub, mul, div, and rem) requires that you add ``open util/integer" to your model. \\
 \textbf{Sequence of atoms} \\
 A new reserved keyword ``seq" has been added for declaring a field as a sequence of atoms.\\
 In the following example, for each person p, ``p.books" is a sequence of Book: \\
   sig Book \{  \} \\
-  
+
   sig Person \{ \\
       books: seq Book \\
   \}
@@ -580,7 +580,7 @@ Returns the subsequence between from and to, inclusively\\
 \section{Example: A Coffee Machine}
 \label{Ex: Coffee machine}
 It begins with a simple model of a Coffee machine. The Coffee machine is capable of accepting two pence coins and returning one pence coins. It dispenses only one type of Coffee costing one pence each. As the coin gets inserted the customer has to push a button to receive the Coffee and then must push another button to receive their change. The simplifying assumptions are made that the machine always has sufficient Coffee and change. The user when pushes a button for a Coffee he actually collects the Coffee from the coffee dispenser and similarly for the change. Even though the errors which occur when these tasks are interrupted problems occur could be considered, but these tasks could not be considered as a post-completion error. On the interaction with the Coffee machine, the primary goal is to retrieve the Coffee and our secondary goal, or sub-goal, is to retrieve the change. Here the post completion error occurs when the customer retrieves the Coffee but forgets to collect their change money. \\
-The Alloy based model of Coffee machine is shown in Appendix A. There is a post completion error in the model allowing the customer to retrieve the change only after retrieving the Coffee because the change is always returned after the Coffee. This error is discovered by examining the situation and also examining a model of scenario by using the Alloy Analyser. 
+The Alloy based model of Coffee machine is shown in Appendix A. There is a post completion error in the model allowing the customer to retrieve the change only after retrieving the Coffee because the change is always returned after the Coffee. This error is discovered by examining the situation and also examining a model of scenario by using the Alloy Analyser.
 \section{Dissecting the Coffee Machine model}
 \label{Dissecting Cooffee machine}
 A model is constructed which is considered as a representative of the Coffee machine described. Initially, the possible states of the Coffee machine must be decided. The machine can be either: waiting for the money to be inserted (labelling this as a `Reset’ state); having accepted the money and waiting for the Coffee button to be pushed (`Coin state’); after the Coffee has been dispensed (the ‘Coffee’ state); or having returned change to the customer (the `Change’ state). The signature declaration is as follows:\\
@@ -597,7 +597,7 @@ sig Cof {
 }
 \end{verbatim}
 The body of this signature declares four relations that Coffee machine needs: balance, state, op, and dispenser. Note that when multiple fields are declared within a single signature body, they are separated by commas. Where a lone indicated ``0 or 1", a one indicates ``exactly 1". The field labelled `op’ in the Coffee is not yet mentioned. So far, the model is considered with respect to Coffee machine and not with respect to the customer and their interaction with the Coffee machine. If considered the interaction of the customer with the Coffee machine, then we can identify various actions the customer can perform: Entering a coin, choosing a Coffee and requesting the change. Hence, an additional signature to record what the customer is doing to initiate the changes in the state of the Coffee machine is declared and is illustrated evolving scenario. The action of the customer is observed at each stage in the trace. This information is just an illustration which aids the understanding of examples produced by the analyser. \\
-        
+
 abstract sig OP \{ \}\\
 one sig ENTERCOIN, PUSHCOF, PUSHCHANGE, RESET extends OP \{ \}\\
 
@@ -605,7 +605,7 @@ To represent the evolving state of the Coffee machine we must constrain the poss
 \begin{algorithm}
 
 pred buycof[c, c': Cof] \{ \\
- 
+
 c.state = Coin \&\& \\
 INT/gte[c.balance,int(1)] \&\& \\
 c'.balance = INT/sub[c.balance, int(1)] \&\& \\
