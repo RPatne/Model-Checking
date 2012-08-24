@@ -41,9 +41,9 @@ The Alloy Analyzer is a compiler which translates the problem to be analyzed int
 Although the analysis can be performed by a traditional formal method, there is a lower barrier to entry afforded by lightweight formal methods.\\
 The lightweight formal methods such as Alloy provide the user with many benefits:
 \begin{itemize}
-\item 	In order to develop an ongoing development, the formal basis provides an automatic feedback in a more focused way.
-\item	Tools provide a more ``programmer-friendly" interface and can be used by any developers who are not formal methods experts. [finally]
-\item •	In software engineering, one of the great benefits of Alloy is that you can analyze a tiny model, write three lines, and analyze it, add few more lines and analyze again. This increment makes Alloy especially good for exploring design ideas. 
+\item   In order to develop an ongoing development, the formal basis provides an automatic feedback in a more focused way.
+\item   Tools provide a more ``programmer-friendly" interface and can be used by any developers who are not formal methods experts. [finally]
+\item • In software engineering, one of the great benefits of Alloy is that you can analyze a tiny model, write three lines, and analyze it, add few more lines and analyze again. This increment makes Alloy especially good for exploring design ideas. 
 \end{itemize}
 These approaches are used much earlier in the development process to validate aspects of an evolving specification and to explore requirements. Here the focus is on post-completion errors as an example property but is chosen only to serve as an example and our models are not designed solely for any particular property. The models are general and able to be used to investigate many other properties.\\
 In this dissertation, the literature survey, specification, implementation of alloy Analyser, example using Alloy, conclusion of the model checking tool will be presented.
@@ -61,8 +61,8 @@ Finally the Part III examines an Alloy model which solves the coffee machine pro
 The technique used for validating a system is Model checking. The design process and the validation process are the must to ensure the correctness of specifications, designs and products of the system. Validation is done to see that whether the system meets all its requirements. \\
 The two types of validation techniques are: 
 \begin{itemize}
-\item 	Informal ones which include peer testing and testing.
-\item 	Formal ones which include formal verification, simulation and model checking. 
+\item   Informal ones which include peer testing and testing.
+\item   Formal ones which include formal verification, simulation and model checking. 
 \end{itemize}
 This report focuses on the Formal validation technique – Model Checking. \\
 Model checking systematically checks the validity of a given finite-state model of a system and properties stated in the form of logical formalism such as temporal logic. It uses algorithms which are executed by the computer tools. The inputs to such model checkers are the description of the model and the description of the properties. Once these files are fed as an input, the model checker performs the verification. If error occurs, then the model checker provides the counter-example to explain under which circumstances the error can be generated. This counter-example helps in finding the error and repairing the specifications of the model. This can be shown with help of the following diagram. It shows us how the verification process takes place in the model checking.  \\ 
@@ -78,20 +78,20 @@ It helps in developing the explicit model of a system which is clear, precise an
 \label{Temp Logic}
 There are various interpretations of temporal logic depends on the individual as how to consider the system with time. It is the logic for expressing mathematics. It supports formulating the properties of the system behaviour with respect to time. There are various types of temporal logics:
 \begin{itemize}
-\item •	Temporal Logics used to specify the reactive systems are: \\
+\item • Temporal Logics used to specify the reactive systems are: \\
 \textbf{Linear temporal logic:}It allows the statement of properties of execution sequences of a system. \\
  \textbf{Branching temporal logic:}It allows the user to write formulas which include some sensitivity to the choices available to a system during its execution.
 \end{itemize}
 These two kinds of temporal logic are characterized by a continuous interaction with the environment [15].
 \begin{itemize}
-\item •	Temporal Logics used to specify the time-critical systems:\\
+\item • Temporal Logics used to specify the time-critical systems:\\
  \textbf{Real-Time temporal logic:}  It allows statement of properties of multiple concurrent processes and supports relative time references.
 \end{itemize}
 It is characterized by quantitative timing properties relating occurrences of events [15].
 In order to avoid the errors we write specifications. Validation techniques are used to checking the correctness of the system.  \\
 \subsection{Model-Checking Algorithm}
 \label{Model chec Algo}
-Model checking uses exhaustive state space search of the system model as 	algorithm: The desired properties satisfied for each state of the model. 	Reachability property is used to check whether the system can reach a state without any deadlocks. Reachability is considered as one of the important property which uses Reachability analysis technique. It starts from initial system state and see to it that it reaches all the possible system states which can be reached. For instance, in a traffic signal model, yellow, red and green are the three states. Model checking proves if it can reach some state, all the states are eventually got by the model, or if the model could never get some state.
+Model checking uses exhaustive state space search of the system model as        algorithm: The desired properties satisfied for each state of the model.        Reachability property is used to check whether the system can reach a state without any deadlocks. Reachability is considered as one of the important property which uses Reachability analysis technique. It starts from initial system state and see to it that it reaches all the possible system states which can be reached. For instance, in a traffic signal model, yellow, red and green are the three states. Model checking proves if it can reach some state, all the states are eventually got by the model, or if the model could never get some state.
 \subsection{Approaches Of Model Checking}
 \label{Appr to model check}
 \begin{itemize}
@@ -167,8 +167,8 @@ Here NEXT is a connective formalising the ``immediately after" English expressio
 Model checking is used in many areas including both the hardware the software fields. It helps in considering only subset of the system requirements leading to the improved efficiency by supporting partial verifications. Compared to simulation and testing, model checking uses shorter time for verification as shown by many case studies. It can also deal with the states which are larger. \\
 There are shortcomings that still need to be answered:
 \begin{itemize}
-\item 	There is no way to translate automatically the requirements into its own modelling language defined by its model checking tool. This has to be done manually.
-\item 	Some of the properties which are to be verified are difficult to express in the notation.
+\item   There is no way to translate automatically the requirements into its own modelling language defined by its model checking tool. This has to be done manually.
+\item   Some of the properties which are to be verified are difficult to express in the notation.
 \item Model checking involves much number of states consuming extra efforts in checking parts of the model separately. 
 \end{itemize}
 Despites these shortcomings the model checking is an important and successful area in verifying the models by early detection of the errors [3].
@@ -200,15 +200,15 @@ Assertions are logical formulae whose validity we want to check. That is, given 
 Describing some aspects of a system (but not the entire system), constraint it to exclude ill-formed examples and checking the properties about it is the main goal of writing a model. The property of allow always holds for problems up to size X or if the property does not hold good, it provides a counterexample. \\
 The two kinds of problems that may occur are:
 \begin{itemize}
-\item 	Bugs: It occurs in the model itself. The problem of overconstraining and underconstraining our model will be discussed and how to eliminate those bugs.
+\item   Bugs: It occurs in the model itself. The problem of overconstraining and underconstraining our model will be discussed and how to eliminate those bugs.
 \item It occurs in the subject we are modelling. These are what we are after, and what the modelling is all about. The example will also show how to make and check assertions about our systems, and how to track down why a given assertion failed to hold. 
 \end{itemize}
 Apart from the similarities of Alloy with other existing languages and modelling techniques, there are several other differences as well:
 \begin{itemize}
-\item 	Finite scope check: After analysing the model, the scope (size) must be specified to the model. The analysis is sound and it never returns false positives, but incomplete because it checks the things only upto a certain limit. However it is complete upto the scope. Counterexample being smaller than the specified scope is never missed. Smaller scope checks are extremely valuable for finding errors. 
+\item   Finite scope check: After analysing the model, the scope (size) must be specified to the model. The analysis is sound and it never returns false positives, but incomplete because it checks the things only upto a certain limit. However it is complete upto the scope. Counterexample being smaller than the specified scope is never missed. Smaller scope checks are extremely valuable for finding errors. 
 \item Infinite model: Unlike traditional model checking models written in alloy do not reflect that analysis is finite. That is, components of the system and how they interact will be described, but do not specify as to how many components there can be. 
 \item Declarative: As opposed to ``operational" or ``imperative" modeller which asks ``How can I accomplish X" , a declarative modeller answers the question ``How would I recognise that X has happened".
-\item 	Automatic analysis: Alloy can be automatically analyzed unlike some other declarative modelling languages like Z and OCL, the object language of UML. Examples of the system and the counterexamples to claims made about the system can be generated automatically.
+\item   Automatic analysis: Alloy can be automatically analyzed unlike some other declarative modelling languages like Z and OCL, the object language of UML. Examples of the system and the counterexamples to claims made about the system can be generated automatically.
 \item Structured data: Alloy is a rich way to describe states by supporting the complex data structures, such as trees.
 \end{itemize}
 \section{Boolean translation of the Alloy constraint}
@@ -257,8 +257,8 @@ The main toolbar of the Alloy Analyser provides quick access to the most commonl
 The user interface consists of the editor panel and the message panel.\\
 The relative sizes of panels may be adjusted by clicking and dragging the split bars that separate the panels.
 \begin{itemize}
-\item 	Editor panel: Contains a tabbed text editor for modifying Alloy models. It supports tabbing so you can edit multiple text files simultaneously. It also supports error highlighting during model compilation.
-\item 	Message panel: Displays the results of analysis. Each counterexample and each satisfying instance will have a clickable hyperlink. Clicking on it will launch the Alloy Visualizer to display the counterexample or instance.
+\item   Editor panel: Contains a tabbed text editor for modifying Alloy models. It supports tabbing so you can edit multiple text files simultaneously. It also supports error highlighting during model compilation.
+\item   Message panel: Displays the results of analysis. Each counterexample and each satisfying instance will have a clickable hyperlink. Clicking on it will launch the Alloy Visualizer to display the counterexample or instance.
 \end{itemize}
 The message panel is also used for general status messages and error messages.\\
 For example, if a model cannot be compiled, an error message is displayed, and the error will be highlighted in the source Alloy model.
@@ -481,21 +481,21 @@ Alloy4 knows there are two ways for this to be legal:\\
 Since Alloy4 prefers the Int-to-int cast since it is cheaper,\\
 so Alloy4 will parse it as if the user wrote int[X]+3 \\
 \textbf{13. Alloy4 now supports all the standard operations on int values.}\\ 
-addition 	  	a.add[b] 	(If unambiguous, you can shorten this to be a+b) \\
-subtraction 	  	a.sub[b] 	(If unambiguous, you can shorten this to be a-b) \\
-multiplication 	  	a.mul[b] 	\\  
-division 	  	a.div[b] 	  \\
-remainder 	  	a.rem[b] 	  \\
-negation 	  	- a 	  \\ 
-equal 	  	a $=$ b 	  \\
-not equal 	  	a $!=$ b 	  \\
-less than 	  	a $<$ b 	  \\
-greater than 	  	a $>$ b 	 \\ 
-less than or equal to 	  	a $<=$ b 	  \\
-greater than or equal to 	  	a $>=$ b 	 \\  
-left-shift 	  	a $<<$ b 	  \\
-sign-extended right-shift 	  	a $>>$ b 	  \\
-zero-extended right-shift 	  	a $>>>$ b 	  
+addition                a.add[b]        (If unambiguous, you can shorten this to be a+b) \\
+subtraction             a.sub[b]        (If unambiguous, you can shorten this to be a-b) \\
+multiplication          a.mul[b]        \\  
+division                a.div[b]          \\
+remainder               a.rem[b]          \\
+negation                - a       \\ 
+equal           a $=$ b           \\
+not equal               a $!=$ b          \\
+less than               a $<$ b           \\
+greater than            a $>$ b          \\ 
+less than or equal to           a $<=$ b          \\
+greater than or equal to                a $>=$ b         \\  
+left-shift              a $<<$ b          \\
+sign-extended right-shift               a $>>$ b          \\
+zero-extended right-shift               a $>>>$ b         
   
 Note: The first five operators (add, sub, mul, div, and rem) requires that you add ``open util/integer" to your model. \\
 \textbf{Sequence of atoms} \\
@@ -597,7 +597,7 @@ sig Cof {
 }
 \end{verbatim}
 The body of this signature declares four relations that Coffee machine needs: balance, state, op, and dispenser. Note that when multiple fields are declared within a single signature body, they are separated by commas. Where a lone indicated ``0 or 1", a one indicates ``exactly 1". The field labelled `op’ in the Coffee is not yet mentioned. So far, the model is considered with respect to Coffee machine and not with respect to the customer and their interaction with the Coffee machine. If considered the interaction of the customer with the Coffee machine, then we can identify various actions the customer can perform: Entering a coin, choosing a Coffee and requesting the change. Hence, an additional signature to record what the customer is doing to initiate the changes in the state of the Coffee machine is declared and is illustrated evolving scenario. The action of the customer is observed at each stage in the trace. This information is just an illustration which aids the understanding of examples produced by the analyser. \\
-	
+        
 abstract sig OP \{ \}\\
 one sig ENTERCOIN, PUSHCOF, PUSHCHANGE, RESET extends OP \{ \}\\
 
@@ -795,24 +795,24 @@ The field has advanced considerably due to both clever ideas and careful enginee
 \newpage
 
 \begin{thebibliography} {}
-\bibitem{}	McMillan, K. (n.d.) \emph{``Exploiting SAT solvers in unbounded model checking" }. tutorial presented at CAV'03:.
-\bibitem{}	 McMillan,K \emph{``Symbolic Model Checking"}. Kluwer Academic Publishers, 1992.
-\bibitem{}	Havelund et al. (2001) \emph{``Formal Analysis of a Space-Craft Controller using SPIN"} . IEEE Transactions on Software Engineering, 27, (8), p.749-765.
-\bibitem{}	Berard et al. (2001)\emph{ ``Systems and Software Verification": Model-Checking Techniques and Tools}. Berlin-Heidelberg: Springer Verlag.
-\bibitem{}	Bryant, R. (1986) \emph{ ``Graph Based Algorithms for Boolean Function Manipulation."}  IEEE Trans. on Computers, c(35).
-\bibitem{}	 Bryant,R. \emph{ On the complexity of VLSI implementations and graph representations of
+\bibitem{}      McMillan, K. (n.d.) \emph{``Exploiting SAT solvers in unbounded model checking" }. tutorial presented at CAV'03:.
+\bibitem{}       McMillan,K \emph{``Symbolic Model Checking"}. Kluwer Academic Publishers, 1992.
+\bibitem{}      Havelund et al. (2001) \emph{``Formal Analysis of a Space-Craft Controller using SPIN"} . IEEE Transactions on Software Engineering, 27, (8), p.749-765.
+\bibitem{}      Berard et al. (2001)\emph{ ``Systems and Software Verification": Model-Checking Techniques and Tools}. Berlin-Heidelberg: Springer Verlag.
+\bibitem{}      Bryant, R. (1986) \emph{ ``Graph Based Algorithms for Boolean Function Manipulation."}  IEEE Trans. on Computers, c(35).
+\bibitem{}       Bryant,R. \emph{ On the complexity of VLSI implementations and graph representations of
 Boolean functions with application to integer multiplication.} IEEE Transactions on Computers,40(2):205–213, February 1991.
-\bibitem{}	City.academic.gr (n.d.) The University of Sheffield International Faculty, CITY College. [online] Available at: http://www.city.academic.gr/ [Accessed: 12 Mar 2012].
-\bibitem{}	Clarke et al. (1999) Model Checking. Cambridge: MA:MIT press.
-\bibitem{}	Eetimes.com (2004) An introduction to model checking. [online] Available at: http://www.eetimes.com/design/embedded/4024929/An-introduction-to-model-checking [Accessed: 12 Mar 2012].
-\bibitem{}	Folk.uio.no (1996) What is Model Checking. [online] Available at: http://folk.uio.no/gerardo/model-checking/What-is-Model-Checking.html\#fig1 [Accessed: 12 Mar 2012].
-\bibitem{}	Kenmcmi I. Mironov and L. Zhang.\emph{`` Applications of SAT solvers to cryptanalysis of hash functions"}.In A. Biere and C. P. Gomes, editors, Proceedings of Ninth International Symposium on the Theory and Applications of Satisfiability Testing (SAT 2006), LNCS 4121, pages 102–115,2006.
-\bibitem{}	l.com (n.d.) Ken McMillan's Home Page. [online] Available at: http://www.kenmcmil.com [Accessed: 12 Mar 2012].
-\bibitem{}	M. Davis, G. Logemann, and D. Loveland. \emph{``A machine program for theorem proving."} Communcations of the ACM, 5(7):394–397, 1962.
-\bibitem{}	M.Moskewicz, C.Madigan, Y. Zhao, L. Zhang, and S.Malik. Chaff: \emph{``Engineering an efficient SAT solver."} In 38th Design Automation Conference (DAC ’01), pages 530–535, 2001.
-\bibitem{}	Stanford.edu (2008) Dawson Engler. [online] Available at: http://www.stanford.edu/~engler/ [Accessed: 12 Mar 2012].
-\bibitem{}	Strichman, o. (n.d.) 6. \emph{``Tuning SAT-Checkers for Bounded Model-Checking"} and ``Heuristics for Efficient SAT solving" .
-\bibitem{}	Swerl.tudelft.nl (2007) SERG \textgreater Main \textgreater BoWang. [online] Available at: http://swerl.tudelft.nl/bin/view/Main/BoWang [Accessed: 12 Mar 2012].
+\bibitem{}      City.academic.gr (n.d.) The University of Sheffield International Faculty, CITY College. [online] Available at: http://www.city.academic.gr/ [Accessed: 12 Mar 2012].
+\bibitem{}      Clarke et al. (1999) Model Checking. Cambridge: MA:MIT press.
+\bibitem{}      Eetimes.com (2004) An introduction to model checking. [online] Available at: http://www.eetimes.com/design/embedded/4024929/An-introduction-to-model-checking [Accessed: 12 Mar 2012].
+\bibitem{}      Folk.uio.no (1996) What is Model Checking. [online] Available at: http://folk.uio.no/gerardo/model-checking/What-is-Model-Checking.html\#fig1 [Accessed: 12 Mar 2012].
+\bibitem{}      Kenmcmi I. Mironov and L. Zhang.\emph{`` Applications of SAT solvers to cryptanalysis of hash functions"}.In A. Biere and C. P. Gomes, editors, Proceedings of Ninth International Symposium on the Theory and Applications of Satisfiability Testing (SAT 2006), LNCS 4121, pages 102–115,2006.
+\bibitem{}      l.com (n.d.) Ken McMillan's Home Page. [online] Available at: http://www.kenmcmil.com [Accessed: 12 Mar 2012].
+\bibitem{}      M. Davis, G. Logemann, and D. Loveland. \emph{``A machine program for theorem proving."} Communcations of the ACM, 5(7):394–397, 1962.
+\bibitem{}      M.Moskewicz, C.Madigan, Y. Zhao, L. Zhang, and S.Malik. Chaff: \emph{``Engineering an efficient SAT solver."} In 38th Design Automation Conference (DAC ’01), pages 530–535, 2001.
+\bibitem{}      Stanford.edu (2008) Dawson Engler. [online] Available at: http://www.stanford.edu/~engler/ [Accessed: 12 Mar 2012].
+\bibitem{}      Strichman, o. (n.d.) 6. \emph{``Tuning SAT-Checkers for Bounded Model-Checking"} and ``Heuristics for Efficient SAT solving" .
+\bibitem{}      Swerl.tudelft.nl (2007) SERG \textgreater Main \textgreater BoWang. [online] Available at: http://swerl.tudelft.nl/bin/view/Main/BoWang [Accessed: 12 Mar 2012].
 
 \end{thebibliography}
 
