@@ -587,17 +587,15 @@ A model is constructed which is considered as a representative of the Coffee mac
 abstract sig CofState \{ \}\\
 one sig Reset, Coin, Coffee, Change extends CoffeeState \{ \}\\
 It defines a set named CoffeeState. Here we can define relations that have this signature as their domain. Relations defined here behave like fields of an object in the OO paradigm. Another way to enforce that constraint would be to mark CoffeeState as abstract. An abstract signature only contains atoms which are also contained in one of its extending signatures. Exception: if there are no extending signatures, then the abstract keyword is ignored.\\
-The state of the Coffee machine consists of its current state as defined above, the amount of money that has been entered by the customer and the type of Coffee, if any, in the dispenser. Since it is marked one, there will always be exactly one instance of it. We declare a signature, Coffee, to hold the state of the Coffee machine at one instant in time.\\
-
-sig Cof \{ \\
-
-balance: one Int,\\
-state: one CofState,\\
-op: OP,\\
-dispenser: lone CofType\\
-
-\}\\
-
+The state of the Coffee machine consists of its current state as defined above, the amount of money that has been entered by the customer and the type of Coffee, if any, in the dispenser. Since it is marked one, there will always be exactly one instance of it. We declare a signature, Coffee, to hold the state of the Coffee machine at one instant in time.
+\begin{verbatim}
+sig Cof {
+  balance: one Int,
+  state: one CofState,
+  op: OP,
+  dispenser: lone CofType
+}
+\end{verbatim}
 The body of this signature declares four relations that Coffee machine needs: balance, state, op, and dispenser. Note that when multiple fields are declared within a single signature body, they are separated by commas. Where a lone indicated ``0 or 1", a one indicates ``exactly 1". The field labelled `op’ in the Coffee is not yet mentioned. So far, the model is considered with respect to Coffee machine and not with respect to the customer and their interaction with the Coffee machine. If considered the interaction of the customer with the Coffee machine, then we can identify various actions the customer can perform: Entering a coin, choosing a Coffee and requesting the change. Hence, an additional signature to record what the customer is doing to initiate the changes in the state of the Coffee machine is declared and is illustrated evolving scenario. The action of the customer is observed at each stage in the trace. This information is just an illustration which aids the understanding of examples produced by the analyser. \\
 	
 abstract sig OP \{ \}\\
