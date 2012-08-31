@@ -17,12 +17,12 @@ by
 }
  \textbf{Reema S Patne (604163)  MSc. In Computing and Software Technology  Swansea University}
 \end{center}
-\clearpage 
+ 
 \begin{abstract}
 \onehalfspacing
 \textrm{In order to ensure the safety and quality of a system, it is necessary to undergo a process of system validation which checks the correctness of specifications, designs and products\cite{Wang2007}. We find post-completion errors which are a particular kind of error in interactive systems\cite{Hoare1986}. When there is an incorrect sequencing of goals and sub-goals, this type of error occurs. Mainly because, the primary goal is achieved before all of the prerequisite sub-goals have been satisfied. This project shows how we can check for this property in a formal model of an interactive system\cite{P.Curson}. Of all the validation techniques, model checking has become the most popular approach in the both hardware and software areas due to the availability of various support tools and its success in the project\cite{Palshikar2004}. This project is to get a working understanding of a model checking tool that uses SAT solvers. Specifically, suggesting the lightweight formal methods, such as the Alloy structural modelling language, is particularly well suited for this task. As a case study we develop an example interactive system using ubiquitous coffee machine where both coffee and change must be delivered.However, this is to be expected as part of learning to use a new system.}
 \end{abstract}
-\clearpage
+
 \begin{center}
 \title \textbf{Declaration}
 \end{center}
@@ -34,7 +34,7 @@ This dissertation is the result of my own independent work/investigation, except
 I hereby give consent for my dissertation, if accepted, to be available for photocopying and for inter-library loan, and for the title and summary to be made available to outside organisations.}
 
 \begin{flushleft}Signed ..................\end{flushleft} 
-\begin{flushright}Date....................\end{flushright}                                                                                                                                               \clearpage
+\begin{flushright}Date....................\end{flushright}                                                                                                                                               
 \begin{center}
 \title \textbf{Acknowledgement}
 \end{center}
@@ -51,10 +51,10 @@ MSc in Computing And Software Technology\\
 Swansea University\\
 September 2012.
 \end{flushright}
-\clearpage 
+ 
 \tableofcontents
 \maketitle
-\clearpage
+
 \section{Introduction}
 \label{Intro}
 \subsection{Problem Statement}
@@ -85,9 +85,9 @@ Finally the Part II examines an Alloy model which solves the coffee machine prob
 
 In Part III the discussion of theoretical survey of background to a project is considered. The approach which is used to make the specification executable will be discussed. It introduces the declarative modelling language namely Alloy followed by development and analysis of a Alloy model which includes alloy interface walkthrough also introducing the Alloy's improved solution visualizer. It also includes the schedule of the project planned throughout the course.
 }
-\clearpage 
+ 
 \textrm { \part{Literature Survey}}
-\clearpage
+
 \textrm{ \section{Model Checking}}
 \label{Model check}
 \onehalfspacing
@@ -230,9 +230,9 @@ There are shortcomings that still need to be answered:
 \end{itemize}
 Despites these shortcomings the model checking is an important and successful area in verifying the models by early detection of the errors \cite{Havelund}.
 }
-\clearpage
+
 \textrm{ \part{Running The Alloy Analyser With Example: Coffee Machine}}
-\clearpage
+
 \textrm{ \section{Alloy Language and the Alloy Analyzer}
 \label{Alloy and its Analyzer}
 \onehalfspacing
@@ -475,9 +475,9 @@ pred enter1pcoin[c, c': Cof] {
 \textrm{This model is listed in appendix E.}
 
 \textrm{Now, there is a reasonably complicated Coffee machine. It began with a Coffee machine that could accept one single coin and dispense one type of Coffee.\cite{Boyatt} Now there is a model of a Coffee machine that can accept multiple coins of different values, provides a selection of different Coffee types and allow for the purchase of multiple Coffees. Throughout these modifications the ability to look for post-completion errors has been retained. The trace of the sequences of operations that results in a post-completion error has lengthened due to the extra complexity of the model.}\cite{Boyatt}
-\clearpage 
+ 
 \textrm{ \part{Theoretical Background To The Project}}
-\clearpage 
+ 
 \textrm{ \section{Making the Specifications Executable}
 \label{Spec exec}
 \onehalfspacing
@@ -661,12 +661,12 @@ Skolem relations are displayed in the output like any other relation in the orig
 This project is all about understanding the engine behind model-checking. SAT-Technology is emerging as a central engine used in model checking tools. The principle behind it is very simple: formulate everything at the (logical) gate-level, and then run a SAT solver. The devil is then in the details. This project is about exploring this fascinating and recent connection. Either gaining some overview, or exploring a concrete application.
 
 The field has advanced considerably due to both clever ideas and careful engineering.\cite{Bryant1986} Model checking and many other application areas have directly benefited from these tools. It is important that the research community keeps pushing ahead with new approaches and new improvements in Boolean reasoning. There remain many important problems that are beyond the reach of today's methods.}
-\clearpage
+
 \bibliographystyle{plain}
 \bibliography{reema1}
 
 
-\clearpage
+
 \section{Appendices}
 \label{Appendices}
 \subsection{A. Simple Coffee Machine}\cite{Boyatt}
@@ -782,7 +782,7 @@ assert  goalsmet  {
 // This generates a counterexample with 5
 check goalsmet for 5
 \end{verbatim}
-\clearpage
+
 \subsection{B.  Coffee machine - different coins}
 \begin{verbatim}
 module  SimpleCofMachine
@@ -914,7 +914,7 @@ assert goalsmet {
 check  goalsmet for 5
 
 \end{verbatim}
-\clearpage
+
 \subsection{C. Coffee machine - different coffee's}
 \begin{verbatim}
 module  SimpleCofMachine
@@ -1073,7 +1073,7 @@ assert  goalsmet  {
 Check  goalsmet for 6
 
 \end{verbatim}
-\clearpage
+
 \subsection{D. Coffee machine - multiple coffees}
 \begin{verbatim}
 module  SimpleCofMachine
@@ -1231,7 +1231,7 @@ assert  goalsmet  {
 check  goalsmet for 6
 
 \end{verbatim}
-\clearpage
+
 \subsection{E. Coffee machine - multiple coins}
 \begin{verbatim}
 module  SimpleCofMachine
