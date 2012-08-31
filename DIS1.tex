@@ -14,7 +14,7 @@ PROJECT DISSERTATION SUBMITTED FOR PARTIAL FULFILMENT FOR THE DEGREE OF MASTER O
 \end{center}
 \newpage
 \begin{abstract}
-\textsf{In order to ensure the safety and quality of a system, it is necessary to undergo a process of system validation which checks the correctness of specifications, designs and products.\cite{Berardetall2001} We find post-completion errors which are a particular kind of error in interactive systems. When there is an incorrect sequencing of goals and sub-goals, this type of error occurs. Mainly because, the primary goal is achieved before all of the prerequisite sub-goals have been satisfied. This project shows how we can check for this property in a formal model of an interactive system. Of all the validation techniques, model checking has become the most popular approach in the both hardware and software areas due to the availability of various support tools and its success in the project. This project is to get a working understanding of a model checking tool that uses SAT solvers. Specifically, suggesting the lightweight formal methods, such as the Alloy structural modelling language, is particularly well suited for this task. As a case study we develop an example interactive system using ubiquitous coffee machine where both coffee and change must be delivered.}
+\textsf{In order to ensure the safety and quality of a system, it is necessary to undergo a process of system validation which checks the correctness of specifications, designs and products. We find post-completion errors which are a particular kind of error in interactive systems. When there is an incorrect sequencing of goals and sub-goals, this type of error occurs. Mainly because, the primary goal is achieved before all of the prerequisite sub-goals have been satisfied. This project shows how we can check for this property in a formal model of an interactive system. Of all the validation techniques, model checking has become the most popular approach in the both hardware and software areas due to the availability of various support tools and its success in the project. This project is to get a working understanding of a model checking tool that uses SAT solvers. Specifically, suggesting the lightweight formal methods, such as the Alloy structural modelling language, is particularly well suited for this task. As a case study we develop an example interactive system using ubiquitous coffee machine where both coffee and change must be delivered.}
 \end{abstract}
 \newpage
 \begin{center}
@@ -793,7 +793,6 @@ Now, there is a reasonably complicated Coffee machine. It began with a Coffee ma
 This project is all about understanding the engine behind model-checking. SAT-Technology is emerging as a central engine used in model checking tools. The principle behind it is very simple: formulate everything at the (logical) gate-level, and then run a SAT solver. The devil is then in the details. This project is about exploring this fascinating and recent connection. Either gaining some overview, or exploring a concrete application.\\
 The field has advanced considerably due to both clever ideas and careful engineering. Model checking and many other application areas have directly benefited from these tools. It is important that the research community keeps pushing ahead with new approaches and new improvements in Boolean reasoning. There remain many important problems that are beyond the reach of today's methods.
 \newpage
-
 \begin{thebibliography} {}
 \bibitem{}      McMillan, K. (n.d.) \emph{``Exploiting SAT solvers in unbounded model checking" }. tutorial presented at CAV'03:.
 \bibitem{}       McMillan,K \emph{``Symbolic Model Checking"}. Kluwer Academic Publishers, 1992.
@@ -802,6 +801,7 @@ The field has advanced considerably due to both clever ideas and careful enginee
 \bibitem{}      Bryant, R. (1986) \emph{ ``Graph Based Algorithms for Boolean Function Manipulation."}  IEEE Trans. on Computers, c(35).
 \bibitem{}       Bryant,R. \emph{ On the complexity of VLSI implementations and graph representations of
 Boolean functions with application to integer multiplication.} IEEE Transactions on Computers,40(2):205–213, February 1991.
+<<<<<<< HEAD
 \bibitem{}      City.academic.gr (n.d.) The University of Sheffield International Faculty, CITY College. [online] Available at: http://www.city.academic.gr/ [Accessed: 12 Mar 2012].
 \bibitem{}      Clarke et al. (1999) Model Checking. Cambridge: MA:MIT press.
 \bibitem{}      Eetimes.com (2004) An introduction to model checking. [online] Available at: http://www.eetimes.com/design/embedded/4024929/An-introduction-to-model-checking [Accessed: 12 Mar 2012].
@@ -814,8 +814,20 @@ Boolean functions with application to integer multiplication.} IEEE Transactions
 \bibitem{}      Strichman, o. (n.d.) 6. \emph{``Tuning SAT-Checkers for Bounded Model-Checking"} and ``Heuristics for Efficient SAT solving" .
 \bibitem{}      Swerl.tudelft.nl (2007) SERG \textgreater Main \textgreater BoWang. [online] Available at: http://swerl.tudelft.nl/bin/view/Main/BoWang [Accessed: 12 Mar 2012].
 
+=======
+\bibitem{}	City.academic.gr (n.d.) The University of Sheffield International Faculty, CITY College. [online] Available at: http://www.city.academic.gr/ [Accessed: 12 Mar 2012].
+\bibitem{}	Clarke et al. (1999) Model Checking. Cambridge: MA:MIT press.
+\bibitem{}	Eetimes.com (2004) An introduction to model checking. [online] Available at: http://www.eetimes.com/design/embedded/4024929/An-introduction-to-model-checking [Accessed: 12 Mar 2012].
+\bibitem{}	Folk.uio.no (1996) What is Model Checking. [online] Available at: http://folk.uio.no/gerardo/model-checking/What-is-Model-Checking.html\#fig1 [Accessed: 12 Mar 2012].
+\bibitem{}	Kenmcmi I. Mironov and L. Zhang.\emph{`` Applications of SAT solvers to cryptanalysis of hash functions"}.In A. Biere and C. P. Gomes, editors, Proceedings of Ninth International Symposium on the Theory and Applications of Satisfiability Testing (SAT 2006), LNCS 4121, pages 102–115,2006.
+\bibitem{}	l.com (n.d.) Ken McMillan's Home Page. [online] Available at: http://www.kenmcmil.com [Accessed: 12 Mar 2012].
+\bibitem{}	M. Davis, G. Logemann, and D. Loveland. \emph{``A machine program for theorem proving."} Communcations of the ACM, 5(7):394–397, 1962.
+\bibitem{}	M.Moskewicz, C.Madigan, Y. Zhao, L. Zhang, and S.Malik. Chaff: \emph{``Engineering an efficient SAT solver."} In 38th Design Automation Conference (DAC ’01), pages 530–535, 2001.
+\bibitem{}	Stanford.edu (2008) Dawson Engler. [online] Available at: http://www.stanford.edu/~engler/ [Accessed: 12 Mar 2012].
+\bibitem{}	Strichman, o. (n.d.) 6. \emph{``Tuning SAT-Checkers for Bounded Model-Checking"} and ``Heuristics for Efficient SAT solving" .
+\bibitem{}	Swerl.tudelft.nl (2007) SERG \textgreater Main \textgreater BoWang. [online] Available at: http://swerl.tudelft.nl/bin/view/Main/BoWang [Accessed: 12 Mar 2012].
+>>>>>>> d1dd973e1810f69d059f9af4f70c1cfa39cb4739
 \end{thebibliography}
-
 \newpage
 \section{Appendices}
 \label{Appendices}
