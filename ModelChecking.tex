@@ -264,32 +264,35 @@ In the Alloy Analyser preference panel, we can set the choice of the SAT solver.
 
 I choose this approach because it allows us to begin with a simple model, apart from imitating the actual modelling process, by using only a small part of Alloy syntax and gradually with more advanced syntax as it is needed. Typically, formulas are temporal logic ones and interpretations are state machines. But, they don't have to be.
 
-\section{Example: A Coffee Machine} \cite{Boyatt}
+\section{Example: A Coffee Machine} 
 \label{Ex: Coffee machine}
 
-It begins with a simple model of a Erroneous Coffee machine. The Coffee machine is capable of accepting two pence coins and returning one pence coins. It dispenses only one type of Coffee costing one pence each. As the coin gets inserted the customer has to push a button to receive the Coffee and then must push another button to receive their change. The simplifying assumptions are made that the machine always has sufficient Coffee and change. The user when pushes a button for a Coffee he actually collects the Coffee from the coffee dispenser and similarly for the change. Even though the errors which occur when these tasks are interrupted problems occur could be considered, but these tasks could not be considered as a post-completion error. On the interaction with the Coffee machine, the primary goal is to retrieve the Coffee and our secondary goal, or sub-goal, is to retrieve the change. Here the post completion error occurs when the customer retrieves the Coffee but forgets to collect their change money. 
+It begins with a simple model of a Erroneous Coffee machine. The Coffee machine is capable of accepting two pence coins and returning one pence coins. It dispenses only one type of Coffee costing one pence each. As the coin gets inserted the customer has to push a button to receive the Coffee and then must push another button to receive their change. The simplifying assumptions are made that the machine always has sufficient Coffee and change. The user when pushes a button for a Coffee he actually collects the Coffee from the coffee dispenser and similarly for the change. Even though the errors which occur when these tasks are interrupted problems occur could be considered, but these tasks could not be considered as a post-completion error. On the interaction with the Coffee machine, the primary goal is to retrieve the Coffee and our secondary goal, or sub-goal, is to retrieve the change. Here the post completion error occurs when the customer retrieves the Coffee but forgets to collect their change money. This example is similar to the one given by Curson and Blanford \cite{P.Curson}.
+
+This is started up by a Finite state automata of a simple coffee machine.
+
+\begin{itemize}
+\item[Input:] Coini, Cofb,Stopb.
+\item[Outputs:]Coino, Cofo.
+\end{itemize}
 \begin{figure}[h!]
 \centering
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=5cm,
                     thick,main node/.style={circle,draw,font=\sffamily\small\bfseries}]
                     
 
-  \node[main node] (Reset) {Reset};
-  \node[main node] (Coin) [right of=Reset] {Coin};
-  \node[main node] (Coffee) [right of=Coin] {Coffee};
-  \node[main node] (Change) [right of=Coffee] {Change};
+  \node[main node] (Initial)[] {Initial};
+  \node[main node] (Wait) [right of=Initial] {Wait};
 
   \path[every node/.style={font=\sffamily\small}]
-    (Reset) edge node [] {Entercoin} (Coin)
-       
-    (Coin) edge node [] {PushCof} (Coffee)
-       
-    (Coffee) edge node [] {PushChange} (Change)
-    
-    (Change) edge [bend left] node [] {} (Reset)
-        
-    (Coffee) edge [bend left] node [above] {GotCof} (Reset);
-      
+    (Initial)edge [loop above] node {Cofb/-} (Initial) 
+              edge node [] {Coini/-} (Wait)
+              edge [loop below] node {stopb/-} (Initial)
+               
+    (Wait) edge [bend left] node [above] {Cofb/Cofo} (Initial)
+           edge [loop above] node {Coini/Coino} (Wait)
+       edge [bend left] node [below] {stopb/Coino} (Initial);
+             
  \end{tikzpicture}
  \caption{Finite State Automata representing a Coffee machine}
 \end{figure}
