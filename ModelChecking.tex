@@ -6,8 +6,6 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 
-
-
 \begin{document}
 \title {Model Checking-An Outlook on the Satisfiability of the SAT-solver using Alloy Tool}
 \author{Reema S Patne (604163)\\
@@ -44,7 +42,13 @@ MSc in Computing And Software Technology\\
 Swansea University\\
 September 2012.
 \end{flushright}
- 
+ \clearpage
+ ``\textit{As it grew lighter, Elephant Island loomed up through the mist on our port hand
+and for various reasons, thenceforth became our goal}."
+\begin{flushright}
+Ernest Shackleton, 1916
+\end{flushright}
+
 \tableofcontents
 
 \chapter{Introduction}
@@ -268,11 +272,11 @@ I choose this approach because it allows us to begin with a simple model, apart 
 \section{How the Analysis works}
 \label{Working of analyses}
 
-The analysis works based on the constraint solver called Alloy Analyser\cite{Vaziri-Farahani2004}. Bounded instance of a code is encoded by unwinding the loops to a smaller number and considering the limited number of heap cells. based on this observation, a counterexample of small size is exhibited if a fragement code fails to satisfy some property. The Alloy Analyzer first translates the problem formula to propositional logic, and then to conjunctive normal form (CNF).First-order logic is converted to a propositional logic with the help of a Kodkod model finder which produces a Java file. This propositional logic is then converted to an input file for a SAT solver which is in CNF format. This format is widely accepted as the standard format for boolean formulas in CNF. This CNF file is the input file to the SAT solver. The CNF file format is an ASCII file format. The file may begin with comment lines. The first character of each comment line must be a lower case letter ``c". Comment lines typically occur in one section at the beginning of the file, but are allowed to appear throughout the file. The comment lines are followed by the ``problem" line. This begins with a lower case ``p" followed by a space, followed by the problem type, which for CNF files is ``cnf", followed by the number of variables followed by the number of clauses. The remainder of the file contains lines defining the clauses, one by one. A clause is defined by listing the index of each positive literal, and the negative index of each negative literal. Indices are 1-based, and for obvious reasons the index 0 is not allowed. The definition of a clause may extend beyond a single line of text. The definition of a clause is terminated by a final value of ``0". The file terminates after the last clause is defined.
+The analysis works based on the constraint solver called Alloy Analyser. Bounded instance of a code is encoded by unwinding the loops to a smaller number and considering the limited number of heap cells. based on this observation, a counterexample of small size is exhibited if a fragement code fails to satisfy some property. The Alloy Analyzer first translates the problem formula to propositional logic, and then to conjunctive normal form (CNF).First-order logic is converted to a propositional logic with the help of a Kodkod model finder which produces a Java file. This propositional logic is then converted to an input file for a SAT solver which is in CNF format. This format is widely accepted as the standard format for boolean formulas in CNF. This CNF file is the input file to the SAT solver. The CNF file format is an ASCII file format. The file may begin with comment lines. The first character of each comment line must be a lower case letter ``c". Comment lines typically occur in one section at the beginning of the file, but are allowed to appear throughout the file. The comment lines are followed by the ``problem" line. This begins with a lower case ``p" followed by a space, followed by the problem type, which for CNF files is ``cnf", followed by the number of variables followed by the number of clauses. The remainder of the file contains lines defining the clauses, one by one. A clause is defined by listing the index of each positive literal, and the negative index of each negative literal. Indices are 1-based, and for obvious reasons the index 0 is not allowed. The definition of a clause may extend beyond a single line of text. The definition of a clause is terminated by a final value of ``0". The file terminates after the last clause is defined.
 
 An off-the-shelf SAT solver is then used to find a satisfying assignment. If one is found then it is appropriately presented back to the user as a counterexample\cite{Vaziri-Farahani2004}.
 
-When the Alloy Analyser finds the instance, the execution trace is obtained in a goal-oriented fashion to satisfy the constraints rather than executing sequentially\cite{Vaziri-Farahani2004}. 
+When the Alloy Analyser finds the instance, the execution trace is obtained in a goal-oriented fashion to satisfy the constraints rather than executing sequentially. 
 
 \subsection{Underlying Assumptions}
 \label{Assumptions}
@@ -739,53 +743,28 @@ The field has advanced considerably due to both clever ideas and careful enginee
 \label{Appendices}
 \section{A. Simple Coffee Machine}
 
-
 \begin{verbatim}
-/*Illustrating a Simple Coffee machine Model
 module SimpleCofMachine
+open util/ordering[Cof] as CO 
 
-/* Library module used to define a trace of operations by declaring various states
-open util/ordering[Cof] as CO */
-
-/* Signature declaration for set of possible states of 
-coffee machine called CofState */
 abstract sig CofState {}
-
-/* signature declaration for the various states of CofState
- must be either Initial or Wait */
  one sig Initial, Wait extends CofState {}
 
-/* signature declaration for set of  customer action called OP */
 abstract sig OP {}
-
-/* signature declaration for various actions to 
-initiate changes in the state of coffee machine */
-
 one sig Coini, Cofb, Stopb, Coino, Cofo extends OP {}
-
-/* signature declaration for Cof to hold the 
-state of coffee machine at one instance in time */
 
 sig Cof {
 	state: one CofState,
 	op: OP
 }
 
-/* an empty predicate which will run to generate instances */
-
 pred show1[c:Cof] {}
-/* Executing the run command shows the solution to the model */
 run show1
 
-/*Predicates used to represent operation on coffee machine and 
-describe relationship between two instances of Cof signature
-*/
+pred entercoin[c,c':Cof] {   
 
-pred entercoin[c,c':Cof] {    /*It constrains the state before selecting the coffee(c) 
-							and after collecting Coffee(c') */
-
-	c.state = Initial &&     /*Ensures that coffee machine is in Initial state initially
-	c'.state = Wait          /* Ensures that coffee machine is in Wait state afterwards
+	c.state = Initial &&     
+	c'.state = Wait          
 
 }
 
@@ -803,45 +782,33 @@ pred initial[c:Cof] {
 c.state = Initial
 }
 
-/* predicated describing the valid traces in the system */
 
 pred traces {
 
-	initial[CO/first[]] &&  /*initial condition holds for the initial time step
+	initial[CO/first[]] &&  
 
-	all c:Cof-CO/last[] | let c'=CO/next[c] | /* for all subsequent times the machine must
-												 change in accordance with one of the predicates */
-	
-	((entercoin[c,c'] && c'.op=Coini) /* action of the customer for entering the input coin */
+	all c:Cof-CO/last[]| let c' = CO/next[c] |  
+												 
+	((entercoin[c,c'] && c'.op = Coini) 
 	or
-	(buycof[c,c'] && c'.op = Cofb && c'.op = Cofo) /* action of thecustomer to press the coffee 
-		                                            button and get the coffee output */
+	(buycof[c,c'] && c'.op = Cofb && c'.op = Cofo) 
+		                                            
 	or
-	(askchange[c,c'] && c'.op = Stopb && c'.op = Coino)) /* action of the customer to stop the
-														   button and get back the coin output */
+	(askchange[c,c'] && c'.op = Stopb && c'.op = Coino))  
 
 }
-
-/*Defining the sequence of events that represent a single interaction 
-of customer with coffee machine
-Transaction is referred to as single interaction*/
 
 pred transaction{
 
-	traces &&  /*consists of traces that begin with the initial state
+	traces &&  
 	(CO/last[]).state = Initial &&
-	Initial !in (Cof-CO/last[]).state  /*finishes with the machine resetting for the one and 
-								        only one time in that transaction */
+	Initial !in (Cof-CO/last[]).state  
+								        
 
 }
 
-/* mechanism for representing the Goal and the Subgoal */
-
 one sig AchieveCoffee{goals: set OP} {goals = Cofo}
 one sig RetrieveChange{subgoals: set OP } { subgoals = Coino}
-
-/* For all valid transaction subgoals(sg) must occur in state 
-before the state in which goal(m) occurs */
 
 assert DynamicBehaviour{
 
@@ -849,10 +816,7 @@ assert DynamicBehaviour{
 	some m => all sg: RetrieveChange.subgoals | op.sg in CO/prevs[m]
 }
 
-/* Asks the alloy to provide counterexample violating the Assertion for a scope of 5 */
-
 check DynamicBehaviour for 5
-
 \end{verbatim}
 
 \section{B.  Coffee machine - different coins}
