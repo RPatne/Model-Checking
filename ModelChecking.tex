@@ -9,13 +9,13 @@
 
 
 \begin{document}
-\title {The Engine Behind Model Checking}
+\title {Model Checking-An Outlook of an Alloy Tool}
 \author{Reema S Patne (604163)\\
   MSc.Computing and Software Technology Swansea University}
   \maketitle
 
 \begin{abstract}
-  In order to ensure the safety and quality of a system, it is necessary to undergo a process of system validation which checks the correctness of specifications, designs and products \cite{Wang2007}. We find post-completion errors which are a particular kind of error in interactive systems. When there is an incorrect sequencing of goals and sub-goals, this type of error occurs \cite{Hoare1986}. Mainly because, the primary goal is achieved before all of the prerequisite sub-goals have been satisfied. This project shows how we can check for this property in a formal model of an interactive system. Of all the validation techniques, model checking has become the most popular approach in the both hardware and software areas due to the availability of various support tools and its success in the project \cite{Palshikar2004}. This project is to get a working understanding of a model checking tool that uses SAT solvers. Specifically, suggesting the lightweight formal methods, such as the Alloy structural modelling language, is particularly well suited for this task. As a case study we develop an example interactive system using ubiquitous coffee machine where both coffee and change must be delivered.However, this is to be expected as part of learning to use a new system.
+  In order to ensure the safety and quality of a system, it is necessary to undergo a process of system validation which checks the correctness of specifications, designs and products \cite{Wang2007}. Of all the validation techniques, model checking has become the most popular approach in the both hardware and software areas due to the availability of various support tools and its success in the project \cite{Palshikar2004}. In recent years, Finite state verification techniques have proven to be most effective technique in detecting the bugs in the code overcoming the flaws of traditional testing methods\cite{Vaziri-Farahani2004}. This dissertation presents a finite state verification technique for checking properties. The analysis technique presented here is based on Alloy modelling language and its analyser which is modular, automatic and no user provided abstractions are required\cite{Vaziri-Farahani2004}. This project is to get a working understanding of a model checking tool that uses SAT solvers. Specifically, suggesting the lightweight formal methods, such as the Alloy structural modelling language, is particularly well suited for this task. As a case study we develop an example interactive system using ubiquitous coffee machine where both coffee and change must be delivered.However, this is to be expected as part of learning to use a new system.
 \end{abstract}
 
 \begin{center}
@@ -49,8 +49,9 @@ September 2012.
 
 \chapter{Introduction}
 \label{Intro}
+Software systems are often bound to deviate from their expected behaviour and based on their domain of application, their effect may be benign or catastrophic. The common way to set it right is by testing which has several drawbacks as the bugs may go unnoticed because the whole classes of cases may be missed. Also the test cases requires will be large. hence a new technique called finite state techniques has proven to be more effective in finding the bugs. This method explores all possible executions of a fragment of code. It also checks for the behavioural properties. If a property is not satisfied, it outputs a counterexample. it relies on the abstraction of the code, which renders it finite state making it manageable. Finite state technique is also effective in checking properties describing event sequences\cite{Vaziri-Farahani2004}. 
 
-Interactive systems are prone to the common types of errors like the one similar to the specific behaviour of cash machine who leaves back their cash card in the ATM machine after the cash is withdrawn. Also, like the ones retrieving the photocopies from the Xerox but forgetting to collect the original document is another common error with the interactive systems. This type of error is referred to as a``Post Completion" error \cite{Boyatt}. Achieving the primary goal even before all the sub-goals are satisfied is the key characteristics of these errors. In other words, the main objective is achieved but, due to the wrong sequencing of events we forget to do the items that were before it on the list. These kinds of errors usually don't occur, but however we should try the every possible way of preventing these kinds of errors from occurring. This kind of errors can be handled by ensuring that sequences of sub-tasks are completed before the main goal is achieved at the end of the sequence. The various interactive errors can be checked by correctly formulating the problem and using the existing formal method tools \cite{P.Curson}. This error can be approached by using the lightweight formal method, namely Alloy which uses the SAT solvers, where the constraints in the Alloy -a declarative modelling language, can be translated into Boolean logic and solved with the SAT-solver \cite{Yeung2005}. But the project focuses on the SAT translation and not on the  SAT solver which is a black box for the project. The presented approach is explained with help of an example coffee machine. This project demonstrates how the Alloy Analyser which is used as a SAT translation to conduct fully automated analysis of a coffee machine specification represented in Alloy. 
+This error can be approached by using the lightweight formal method, namely Alloy which uses the SAT solvers, where the constraints in the Alloy -a declarative modelling language, can be translated into Boolean logic and solved with the SAT-solver \cite{Yeung2005}. But the project focuses on the SAT translation and not on the  SAT solver which is a black box for the project. The presented approach is explained with help of an example coffee machine. This project demonstrates how the Alloy Analyser which is used as a SAT translation to conduct fully automated analysis of a coffee machine specification represented in Alloy. 
 
 The Alloy Analyzer is a compiler which translates the problem to be analyzed into a (usually huge) Boolean formula. This formula is then handed to a SAT solver, and the solution is translated back by the Alloy Analyzer into the language of the model. The Alloy Analyser thus makes the problem finite (and reducible to a Boolean formula) by solving the problems within a user-specified scope that bounds the size of the domains. In otherwords, model-finder essentially translates a model expressed in relational logic into a corresponding Boolean logic formula, and then invoke an off-the-shelf SAT-solver on the Boolean formula. In the event that the solver finds a solution, the result is translated back into a corresponding binding of constants to variables in the relational logic model. Although the analysis can be performed by a traditional formal method, there is a lower barrier to entry afforded by lightweight formal methods.
 
@@ -60,7 +61,7 @@ The lightweight formal methods such as Alloy provide the user with many benefits
 \item {Tools provide a more ``programmer-friendly" interface and can be used by any developers who are not formal methods experts} \cite{Boyatt}.
 \item {In software engineering, one of the great benefits of Alloy is that you can analyze a tiny model, write three lines, and analyze it, add few more lines and analyze again \cite{ErichGamma1995}. This increment makes Alloy especially good for exploring design ideas. }
 \end{itemize}
-These approaches are used much earlier in the development process to validate aspects of an evolving specification and to explore requirements \cite{Hoare1986}. Here the focus is on post-completion errors as an example property but is chosen only to serve as an example and our models are not designed solely for any particular property \cite{ErichGamma1995}. The models are general and able to be used to investigate many other properties.
+These approaches are used much earlier in the development process to validate aspects of an evolving specification and to explore requirements \cite{Hoare1986}. Here the focus is on Coffee machine as an example property but is chosen only to serve as an example and the model is not designed solely for any particular property \cite{ErichGamma1995}. The models are general and able to be used to investigate many other properties.
  
 \section{Outline Of This Dissertation}
 \label{Outline dissert}
@@ -179,7 +180,7 @@ In late 90s, researchers came up with the idea of Bounded model checking which u
 Application of Model Checking ranges from simple coffee machines to nuclear plants which are undoubtedly critical and the failure of which may cause economical and physical damages. Considering an example of a coffee machine, where the system is fed with a sensitive data to check the behaviour of the system as it is supposed to behave. This is known as testing. 
 \begin{figure}[h!]
 \centering
-  \includegraphics[width= 0.5\textwidth]{flower.png}
+ \includegraphics[width= 0.5\textwidth]{flower.png}
 \caption{Finite states of a coffee machine.}
 \end{figure}
  A coffee machine consists of a set the following above states which are depicted in circles and relations as arrows between the states. Arrows are given with labels representing actions. The combination of this set of states and relations is known as ``automaton". If the given action on an arrow connecting both the states is satisfied, then automaton in a given state changes to another state. 
@@ -264,12 +265,23 @@ In the Alloy Analyser preference panel, we can set the choice of the SAT solver.
 
 I choose this approach because it allows us to begin with a simple model, apart from imitating the actual modelling process, by using only a small part of Alloy syntax and gradually with more advanced syntax as it is needed. Typically, formulas are temporal logic ones and interpretations are state machines. But, they don't have to be.
 
+\section{How the Analysis works}
+\label{Working of analyses}
+
+The analysis works based on the constraint solver called Alloy Analyser\cite{Vaziri-Farahani2004}. Bounded instance of a code is encoded by unwinding the loops to a smaller number and considering the limited number of heap cells. based on this observation, a counterexample of small size is exhibited if a fragement code fails to satisfy some property. The Alloy Analyzer first translates the problem formula to propositional logic, and then to conjunctive normal form (CNF).First-order logic is converted to a propositional logic with the help of a Kodkod model finder which produces a Java file. This propositional logic is then converted to an input file for a SAT solver which is in CNF format. This format is widely accepted as the standard format for boolean formulas in CNF. This CNF file is the input file to the SAT solver. The CNF file format is an ASCII file format. The file may begin with comment lines. The first character of each comment line must be a lower case letter ``c". Comment lines typically occur in one section at the beginning of the file, but are allowed to appear throughout the file. The comment lines are followed by the ``problem" line. This begins with a lower case ``p" followed by a space, followed by the problem type, which for CNF files is ``cnf", followed by the number of variables followed by the number of clauses. The remainder of the file contains lines defining the clauses, one by one. A clause is defined by listing the index of each positive literal, and the negative index of each negative literal. Indices are 1-based, and for obvious reasons the index 0 is not allowed. The definition of a clause may extend beyond a single line of text. The definition of a clause is terminated by a final value of ``0". The file terminates after the last clause is defined.
+
+An off-the-shelf SAT solver is then used to find a satisfying assignment. If one is found then it is appropriately presented back to the user as a counterexample\cite{Vaziri-Farahani2004}.
+
+When the Alloy Analyser finds the instance, the execution trace is obtained in a goal-oriented fashion to satisfy the constraints rather than executing sequentially\cite{Vaziri-Farahani2004}. 
+
+\subsection{Underlying Assumptions}
+\label{Assumptions}
+For the analysis technique, heap size and the number of iterations requires bounds from the users\cite{Vaziri-Farahani2004}. Exhaustive search within the small bounds uncovering the most bugs is the underlying assumption and is known as small scope hypothesis. the appropriate bounds to the user is left to the user. 
+
 \section{Example: A Coffee Machine} 
 \label{Ex: Coffee machine}
 
-It begins with a simple model of a Erroneous Coffee machine. The Coffee machine is capable of accepting two pence coins and returning one pence coins. It dispenses only one type of Coffee costing one pence each. As the coin gets inserted the customer has to push a button to receive the Coffee and then must push another button to receive their change. The simplifying assumptions are made that the machine always has sufficient Coffee and change. The user when pushes a button for a Coffee he actually collects the Coffee from the coffee dispenser and similarly for the change. Even though the errors which occur when these tasks are interrupted problems occur could be considered, but these tasks could not be considered as a post-completion error. On the interaction with the Coffee machine, the primary goal is to retrieve the Coffee and our secondary goal, or sub-goal, is to retrieve the change. Here the post completion error occurs when the customer retrieves the Coffee but forgets to collect their change money. This example is similar to the one given by Curson and Blanford \cite{P.Curson}.
-
-This is started up by a Finite state automata of a simple coffee machine.
+It begins with a simple model of a coffee machine which retrieves the change and coffee. This is started up by a Finite state automata of a simple coffee machine.
 
 \begin{itemize}
 \item[Input:] Coini, Cofb,Stopb.
@@ -296,106 +308,97 @@ This is started up by a Finite state automata of a simple coffee machine.
  \end{tikzpicture}
  \caption{Finite State Automata representing a Coffee machine}
 \end{figure}
-
-
-The Alloy based model of Coffee machine is shown in Appendix A. There is a error in the model as then coffee machine fails to retrieve the coffee. This error is discovered by examining the situation and also examining a model of scenario by using the Alloy Analyser. 
-
-\section{Dissecting the Coffee Machine model}
-\label{Dissecting Cooffee machine}
-
-A model is constructed which is considered as a representative of the Coffee machine described. Initially, the possible states of the Coffee machine must be decided. The machine can be either: waiting for the money to be inserted (labelling this as a `Reset’ state); having accepted the money and waiting for the Coffee button to be pushed (`Coin state’); after the Coffee has been dispensed (the ‘Coffee’ state); or having returned change to the customer (the `Change’ state). The signature declaration is as follows \cite{Boyatt}:
+\section{Dissecting the coffee machine model}
+\label{dissecting coffee machine}
+ The coffee machine is initially in the `Initial' state and is capable of accepting the coin(Coini) and transiting to `Wait' state. As the coin(Coini) gets inserted the customer has to push a button(Cofb) to receive the coffee(Coffee) and must push another button(Coino) to receive the change. On receiving the change the coffee machine resets by pressing the stop button(Stopb) and going to the `Initial' state again. This example is similar to the one given by Curson and Blanford \cite{P.Curson}.
+ 
+ The Alloy based model of Coffee machine is shown in Appendix A.
+ 
+The possible inputs of a coffee machine are: Coini, Cofb, Stopb. The possible outputs of a coffee machine are: Coino, Cofo.
 
 \begin{verbatim}
 abstract sig CofState{}
-one sig Reset, Coin, Coffee, Change extends CoffeeState{}
+one sig Initial, Wait extends CofState{}
 \end{verbatim}
 
- It defines a set named CoffeeState. Here we can define relations that have this signature as their domain. Relations defined here behave like fields of an object in the OO paradigm. Another way to enforce that constraint would be to mark CoffeeState as abstract. An abstract signature only contains atoms which are also contained in one of its extending signatures. Exception: if there are no extending signatures, then the abstract keyword is ignored.
+It defines a set named CoffeeState. Here we can define relations that have this signature as their domain. Relations defined here behave like fields of an object in the OO paradigm. Another way to enforce that constraint would be to mark CoffeeState as abstract. An abstract signature only contains atoms which are also contained in one of its extending signatures. Exception: if there are no extending signatures, then the abstract keyword is ignored. It provides the signature declaration for the various states i.e., `Initial' and `Wait' of a coffee machine. 
 
-The state of the Coffee machine consists of its current state as defined above, the amount of money that has been entered by the customer and the type of Coffee, if any, in the dispenser. Since it is marked one, there will always be exactly one instance of it. We declare a signature, Coffee, to hold the state of the Coffee machine at one instant in time \cite{Boyatt}.
+\begin{verbatim}
+abstract sig OP{}
+one sig Coini, Cofb, Stopb, Coino, Cofo extends OP{}
+\end{verbatim}
+
+It defines the signature declaration for a set of customer action called OP. It also defines the signature declaration for various actions `Coini', `Cofb', `Stopb', `Coino', `Cofo' to initiate the changes in the states of a coffee machine.
 
 \begin{verbatim}
 sig Cof{
-	balance: one Int,
 	state: one CofState,
-	op: OP,
-	dispenser: lone CofType
+	op: OP
 }
 \end{verbatim}
 
- The body of this signature declares four relations that Coffee machine needs: balance, state, op, and dispenser. Note that when multiple fields are declared within a single signature body, they are separated by commas. Where a lone indicated ``0 or 1", a one indicates ``exactly 1". The field labelled `op’ in the Coffee is not yet mentioned. So far, the model is considered with respect to Coffee machine and not with respect to the customer and their interaction with the Coffee machine. If considered the interaction of the customer with the Coffee machine, then we can identify various actions the customer can perform: Entering a coin, choosing a Coffee and requesting the change. Hence, an additional signature to record what the customer is doing to initiate the changes in the state of the Coffee machine is declared and is illustrated evolving scenario. The action of the customer is observed at each stage in the trace. This information is just an illustration which aids the understanding of examples produced by the analyser \cite{Boyatt}.
- 
-\begin{verbatim}	
-abstract sig OP{}
-one sig ENTERCOIN, PUSHCOF, PUSHCHANGE, RESET extends OP{}
-\end{verbatim}
+The state of the Coffee machine consists of its current state as defined above. Since it is marked one, there will always be exactly one instance of it. We declare a signature Cof to hold the state of the Coffee machine at one instant in time \cite{Boyatt}.
 
 To represent the evolving state of the Coffee machine we must constrain the possible states of our model. Predicates are used to represent operations on the state of the Coffee machine and describe the relationship between two instances of the Coffee signature. We can think of these as the `before' (c) and `after' (c') states. We present the predicate that presents the customer, who has just inserted a coin, selecting the Coffee to purchase \cite{Boyatt}:
 
 \begin{verbatim}
-pred buycof[c, c': Cof]{
-	c.state = Coin && 
-	INT/gte[c.balance,int(1)] &&
-	c'.balance = INT/sub[c.balance, int(1)] &&
-	no c.dispenser &&
-	c'.dispenser = Cof1
-	c'.state = Coffee
+pred entercoin[c,c':Cof] {
+	c.state=Initial &&
+	c'.state=Wait
 }
+
 \end{verbatim}
 
-This predicate, although it represents an operation, is a constraint. It constrains the state before selecting the coffee (c) and constrains the state after selecting the coffee (c'). For example, ``c.state = Coin" ensures that the coffee machine is in the `Coin’ state initially and then ``c'.state = Coffee" ensures that it is in the `Coffee' state afterwards. This is a familiar and expressive approach in state-based specifications facilitating the use of Alloy. This is a familiar and expressive approach in state-based specifications facilitating the use of Alloy. As the amount of money is being considered that has been entered into the machine, integer operations are used in the util/integer package using them with the prefix `INT’. Sufficient funds must be available to purchase Coffee and subtracting the cost of the Coffee from the available balance. Also representing the Coffee being dropped into the dispenser. Similarly, other operations on the state of the Coffee machine, such as entering coins and returning change, are described using this approach to predicates \cite{Boyatt}.
+This predicate, although it represents an operation, is a constraint. It constrains the state before selecting the coffee (c) and constrains the state after selecting the coffee (c'). For example, ``c.state = Initial" ensures that the coffee machine is in the `Initial’ state initially and then ``c'.state = Wait" ensures that it is in the `Wait' state afterwards. This is a familiar and expressive approach in state-based specifications facilitating the use of Alloy. This is a familiar and expressive approach in state-based specifications facilitating the use of Alloy. Similarly, other operations on the state of the Coffee machine, such as entering coins and returning change, are described using this approach to predicates \cite{Boyatt}.
 
 The aim is to examine the dynamic behaviour of the Coffee machine and must therefore introduce a mechanism to capture the evolving state of the Coffee machine but still allow for the model to be statically checked. Alloy already has this mechanism in the form of traces. The predicate describing the valid traces in the system is \cite{Boyatt}:
 
 \begin{verbatim}
 pred traces{
-	init[CO/first[]] &&
+
+	initial[CO/first[]] &&
 	all c:Cof-CO/last[] | let c' = CO/next[c] |
-	((entercoin[c,c'] && c'.op = ENTERCOIN)
+	((entercoin[c,c'] && c'.op = Coini)
 	or
-	(buycof[c,c'] && c'.op = PUSHCOF)
+	(buycof[c,c'] && c'.op = Cofb && c'.op = Cofo)
 	or
-	(askchange[c,c'] && c'.op = PUSHCHANGE)
-	or
-	(reset[c,c'] && c'.op = RESET))
+	(askchange[c,c'] && c'.op = Stopb && c'.op = Coino)
+
 }
 \end{verbatim}
 
-This says that the initial condition holds for the initial time step, and then for all subsequent times the machine must change in accordance with one of the four predicates: entercoin, buycof, askchange, and reset. Additionally, the actions of the customer are defined here to help annotate any examples returned. The four actions by the customer are: entering a coin (ENTER-COIN), pushing the coffee button (PUSHCOF), pushing the change button (PUSHCHANGE) and removing their change from the machine (RESET) \cite{Boyatt}. The ordering library module used here is generic, usable with any signature type and not specific to this example.
+This says that the initial condition holds for the initial time step, and then for all subsequent times the machine must change in accordance with one of the three predicates: entercoin, buycof and askchange. Additionally, the actions of the customer are defined here to help annotate any examples returned. The three actions by the customer are: Entering the input coin(Coini), action of the customer to press the coffee button(Cofb) and get the Coffee output(Cofo). The ordering library module used here is generic, usable with any signature type and not specific to this example.
 
-\section{Checking for Post-Completion errors}
-\label{Post completion error check}
-
-Sequences of events must be defined representing a single interaction of the customer with the Coffee machine in order to check the post-completion errors. A single interaction of the model shall be referred to as `transaction’, consisting of a trace that begins with the initial state (awaiting coins) and finishes with the Coffee machine resetting for the one and only time in that transaction \cite{Boyatt}.
+A single interaction of the model shall be referred to as `transaction’, consisting of a trace that begins with the initial state (awaiting coins) and finishes with the Coffee machine resetting for the one and only time in that transaction \cite{Boyatt}.
 
 \begin{verbatim}
 pred transaction{
 	traces &&
-	(CO/last[]).op = RESET &&
-	RESET !in (Cof - CO/last[]).op
+	(CO/last[]).state = Initial &&
+	Initial !in (Cof - CO/last[]).state
 }
 
-one sig Goal {goals : set CofState } {goals = Coffee }
-one sig Subgoals {subgoals : set CofState }{subgoals = Change }
+one sig AchieveCoffee{goals : set OP } {goals = Cofo }
+one sig RetrieveChange{subgoals : set OP }{subgoals = Coino }
 
-assert goalsmet{
-	transaction => let m = CO/max[state.(Goal.goals)] |
-	some m => all sg: Subgoals.subgoals | state.sg in CO/prevs[m]
+assert Dynamicbehaviour{
+	transaction => let m = CO/max[state.(AchieveCoffee.goals)] |
+	some m => all sg: retrieveChange.subgoals | state.sg in CO/prevs[m]
 }
-check goalsmet for 5
+check Dynamicbehaviour for 5
 \end{verbatim}
 
-Also shown above is the mechanism for representing the goal and sub-goals, the order in which they are satisfied being of great importance to the post-completion errors which are being considering. We define the main goal to be the dispensing of the Coffee, and the sub-goal to be the dispensing of the change. For a post-completion error to occur in our model, the Coffee would be dispensed before the change is dispensed. In the goalsmet assertion, it is stated that for valid transactions all subgoals (sg) must occur in states before the state in which the goal occurs (m). Assertions are something we believe to be true about our model and the check command asks Alloy to provide us with the counterexamples, demonstrating that it is possible for the primary goal to be achieved prior to all of the sub-goals being satisfied.
+We define the main goal to be the dispensing of the Coffee, and the sub-goal to be the dispensing of the change. For a post-completion error to occur in our model, the Coffee would be dispensed before the change is dispensed. In the DynamicBehaviour assertion, it is stated that for valid transactions all subgoals (sg) must occur in states before the state in which the goal occurs (m). Assertions are something we believe to be true about our model and the check command asks Alloy to provide us with the counterexamples, demonstrating that it is possible for the primary goal to be achieved prior to all of the sub-goals being satisfied.
 
-Now, the model has been constructed and also the appropriate mechanisms to represent are also introduced and check for the post completion error. The properties of the model using the tool itself can be explored. Checking the goalsmet assertion quickly provides a counterexample that should, in this case, already be easily identifiable and simple to confirm by a visual inspection of the model. The current version of the model is constructed in a way that prevents the machine from engaging in behaviour where the change is dispensed before the Coffee. Addressing this post-completion error suggests modifications to the actual Coffee machine. Of course, any Coffee machine that requires a button requesting change after the Coffee dispensed will have a post-completion error. Perhaps a solution is to, after the Coffee has been selected, noisily return the change to the customer just before the Coffee itself is dispensed.
+Now, the model has been constructed and also the appropriate mechanisms to represent are also introduced and checked for the error. The properties of the model using the tool itself can be explored. 
 
 \begin{figure}[h!]
- \centering
-  \includegraphics[width= 1\textwidth]{viz1.png}
+\centering
+ \includegraphics[width= 1\textwidth]{viz1.png}
 \caption{Finite states of a coffee machine.}
- \end{figure}
+\end{figure}
  
- \section{Extending the Coffee machine}
+\section{Extending the Coffee machine}
 \label{Cofee machine ext}
 
 Now, several possible extensions and revisions to our Coffee machine model are considered \cite{Boyatt}. The properties that have already been defined can be checked with each revision, specifically those regarding post-completion errors \cite{Boyatt}. Each of these extended models shows how through the experimentation and interaction with the model develop them beyond their initial design whilst retaining the properties and valuable checks has been developed \cite{Boyatt}.
@@ -734,118 +737,122 @@ The field has advanced considerably due to both clever ideas and careful enginee
 
 \chapter{Appendices}
 \label{Appendices}
-\section{A. Simple Coffee Machine}\cite{Boyatt}
+\section{A. Simple Coffee Machine}
 
 
 \begin{verbatim}
+/*Illustrating a Simple Coffee machine Model
+module SimpleCofMachine
 
+/* Library module used to define a trace of operations by declaring various states
+open util/ordering[Cof] as CO */
 
-module  SimpleCofMachine
-open  util / ordering [ Cof ]  as  CO
-open  util / integer  as  INT
-abstract  sig  CofState  {}
-one  sig  Reset, Coin, Coffee, Change extends CofState  {}
-abstract  sig  OP  {}
-one  sig  ENTERCOIN, PUSHCOF, PUSHCHANGE, RESET extends OP  {}
-abstract  sig  CofType  {}
-one  sig  Cof1 extends CofType  {}
+/* Signature declaration for set of possible states of 
+coffee machine called CofState */
+abstract sig CofState {}
 
-sig  Cof  {
+/* signature declaration for the various states of CofState
+ must be either Initial or Wait */
+ one sig Initial, Wait extends CofState {}
 
-	balance :  one Int ,
-	state :  one CofState ,
-	op :  OP,
-	dispenser :  lone CofType
-	
+/* signature declaration for set of  customer action called OP */
+abstract sig OP {}
+
+/* signature declaration for various actions to 
+initiate changes in the state of coffee machine */
+
+one sig Coini, Cofb, Stopb, Coino, Cofo extends OP {}
+
+/* signature declaration for Cof to hold the 
+state of coffee machine at one instance in time */
+
+sig Cof {
+	state: one CofState,
+	op: OP
 }
 
-// Give us a quick example
+/* an empty predicate which will run to generate instances */
 
-pred  show1 [ c : Cof ]  {}
+pred show1[c:Cof] {}
+/* Executing the run command shows the solution to the model */
 run show1
 
-pred  entercoin [ c , c' : Cof ]  {
+/*Predicates used to represent operation on coffee machine and 
+describe relationship between two instances of Cof signature
+*/
 
-	c . state  =  Reset &&
-	c' . balance  =  INT/add [ c . balance , int ( 2 ) ] &&
-	c' . dispenser  =  c . dispenser &&
-	c' . state  =  Coin
-	
-}
+pred entercoin[c,c':Cof] {    /*It constrains the state before selecting the coffee(c) 
+							and after collecting Coffee(c') */
 
-pred  buycof [ c , c' : Cof ]  {
-
-	c . state  =  Coin &&
-	INT/ gte [ c . balance , int ( 1 ) ] &&
-	c' . balance  =  INT/sub [ c . balance , int ( 1 ) ] &&
-	no c . dispenser &&
-	c' . dispenser  =  Cof1
-	c' . state  =  Coffee
+	c.state = Initial &&     /*Ensures that coffee machine is in Initial state initially
+	c'.state = Wait          /* Ensures that coffee machine is in Wait state afterwards
 
 }
 
-pred  askchange [ c , c' : Cof ]  {
-
-	c . state  =  Coffee
-	INT/ gt [ c . balance , 0 ] &&
-	INT/ zero [ c' . balance ] &&
-	c' . dispenser  =  c . dispenser &&
-	c' . state  =  Change
-
+pred buycof[c,c':Cof] {
+	c.state = Wait &&
+	c'.state = Initial
 }
 
-pred  reset  [ c , c' : Cof ]  {
-
-	c . state  =  Change  &&
-	c' . balance  =  c . balance  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Reset
-
+pred askchange[c,c':Cof] {
+	c.state = Wait &&
+	c'.state = Initial
 }
 
-pred  init [ c : Cof ]  {
-
-	c . balance  =  0  &&
-	c . state = Reset  &&
-	c . dispenser  =  none
-
+pred initial[c:Cof] {
+c.state = Initial
 }
+
+/* predicated describing the valid traces in the system */
 
 pred traces {
 
-	init [CO/ first [ ] ]  &&
-	all c : Cof−CO/ last [ ] | let c'  =  CO/ next [ c ] |
-	( ( entercoin [ c , c' ]  &&  c' . op  =  ENTERCOIN)
+	initial[CO/first[]] &&  /*initial condition holds for the initial time step
+
+	all c:Cof-CO/last[] | let c'=CO/next[c] | /* for all subsequent times the machine must
+												 change in accordance with one of the predicates */
+	
+	((entercoin[c,c'] && c'.op=Coini) /* action of the customer for entering the input coin */
 	or
-	( buycof [ c , c' ]  &&  c' . op  =  PUSCOF)
+	(buycof[c,c'] && c'.op = Cofb && c'.op = Cofo) /* action of thecustomer to press the coffee 
+		                                            button and get the coffee output */
 	or
-	( askchange [ c , c' ]  &&  c' . op  =  PUSHCHANGE)
-	or
-	( reset [ c , c' ]  &&  c' . op  =  RESET) )
+	(askchange[c,c'] && c'.op = Stopb && c'.op = Coino)) /* action of the customer to stop the
+														   button and get back the coin output */
 
 }
 
-pred transaction {
+/*Defining the sequence of events that represent a single interaction 
+of customer with coffee machine
+Transaction is referred to as single interaction*/
 
-	traces  &&
-	(CO/ last [ ] ) . op  =  RESET  &&
-	RESET ! in (Cof − CO/ last [ ] ) . op
+pred transaction{
+
+	traces &&  /*consists of traces that begin with the initial state
+	(CO/last[]).state = Initial &&
+	Initial !in (Cof-CO/last[]).state  /*finishes with the machine resetting for the one and 
+								        only one time in that transaction */
 
 }
 
+/* mechanism for representing the Goal and the Subgoal */
 
-one sig Goal{goals: set CofState}{goals = Coffee}
-one sig Subgoals{subgoals: set CofState}{subgoals = Change}
+one sig AchieveCoffee{goals: set OP} {goals = Cofo}
+one sig RetrieveChange{subgoals: set OP } { subgoals = Coino}
 
-assert  goalsmet  {
+/* For all valid transaction subgoals(sg) must occur in state 
+before the state in which goal(m) occurs */
 
-	transaction=>let m = CO/max[state.(Goal.goals)]| 
-	some m=>all sg: Subgoals.subgoals | state.sg in CO/ prevs[m]
+assert DynamicBehaviour{
+
+	transaction => let m = CO/max[op.(AchieveCoffee.goals)] |
+	some m => all sg: RetrieveChange.subgoals | op.sg in CO/prevs[m]
 }
 
-// This generates a counterexample with 5
+/* Asks the alloy to provide counterexample violating the Assertion for a scope of 5 */
 
-check goalsmet for 5
+check DynamicBehaviour for 5
+
 \end{verbatim}
 
 \section{B.  Coffee machine - different coins}
