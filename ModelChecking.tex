@@ -1,32 +1,51 @@
-\documentclass[a4paper,10pt]{report}
+\documentclass[a4paper,12pt]{report}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{a4}
 \usepackage{algorithm}
 \usepackage{tikz}
 \usetikzlibrary{arrows}
-
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{lipsum}
+\usepackage{setspace}
 \begin{document}
-\title {Model Checking-An Outlook on the Satisfiability of the SAT-solver using Alloy Tool}
-\author{Reema S Patne (604163)\\
-  MSc.Computing and Software Technology Swansea University}
-  \maketitle
 
+\title {Model Checking-An Outlook on the Satisfiability of the SAT-solver using Alloy Tool}
+
+\author{
+Reema S Patne (604163)\\
+%MSc.Computing and Software Technology, Swansea University\\
+Project Dissertation submitted to Swansea University in \\
+Partial Fulfilment for the Degree of Master of Science.\\
+Department of Computer Science, Swansea University 
+ }
+ 
+ \maketitle
+ \begin{onehalfspacing}
 \begin{abstract}
-  In order to ensure the safety and quality of a system, it is necessary to undergo a process of system validation which checks the correctness of specifications, designs and products \cite{Wang2007}. Of all the validation techniques, model checking has become the most popular approach in the both hardware and software areas due to the availability of various support tools and its success in the project \cite{Palshikar2004}. In recent years, Finite state verification techniques have proven to be most effective technique in detecting the bugs in the code overcoming the flaws of traditional testing methods\cite{Vaziri-Farahani2004}. This dissertation presents a finite state verification technique for checking properties. The analysis technique presented here is based on Alloy modelling language and its analyser which is modular, automatic and no user provided abstractions are required \cite{Vaziri-Farahani2004}. This project is to get a working understanding of a model checking tool that uses SAT solvers. Specifically, suggesting the lightweight formal methods, such as the Alloy structural modelling language, is particularly well suited for this task. As a case study we develop an example interactive system using ubiquitous coffee machine where both coffee and change must be delivered.However, this is to be expected as part of learning to use a new system.
+
+  In order to ensure the safety and quality of a system, it is necessary to undergo a process of system validation which checks the correctness of specifications, designs and products \cite{B.Berard2001}. Of all the validation techniques, model checking has become the most popular approach in the both hardware and software areas due to the availability of various support tools and its success in the project \cite{Palshikar2004}. In recent years, Finite state verification techniques have proven to be most effective technique in detecting the bugs in the code overcoming the flaws of traditional testing methods\cite{Vaziri-Farahani2004}. This dissertation presents a finite state verification technique for checking properties. The analysis technique presented here is based on Alloy modelling language and its analyser which is modular, automatic and no user provided abstractions are required \cite{Vaziri-Farahani2004}. This project is to get a working understanding of a model checking tool that uses SAT solvers. Specifically, suggesting the lightweight formal methods, such as the Alloy structural modelling language, is particularly well suited for this task. As a case study we develop an example interactive system using ubiquitous coffee machine where both coffee and change must be delivered.However, this is to be expected as part of learning to use a new system.
 \end{abstract}
 
 \begin{center}
 \title \textbf{Declaration}
 \end{center}
+
 This work has not previously been accepted in substance for any degree and is not being concurrently submitted in candidature for any degree.
 
+\begin{flushleft}Signed ..................\end{flushleft} 
+\begin{flushright}Date....................\end{flushright}                                                                                                                                              
+
 This dissertation is the result of my own independent work/investigation, except where otherwise stated. Other sources are acknowledged by giving explicit references. A bibliography is appended.
+
+\begin{flushleft}Signed ..................\end{flushleft} 
+\begin{flushright}Date....................\end{flushright}                                                                                                                                              
 
 I hereby give consent for my dissertation, if accepted, to be available for photocopying and for inter-library loan, and for the title and summary to be made available to outside organisations.
 
 \begin{flushleft}Signed ..................\end{flushleft} 
-\begin{flushright}Date....................\end{flushright}                                                                                                                                               \clearpage
+\begin{flushright}Date....................\end{flushright}                                                                                                                                              
+ \clearpage
 \begin{center}
 \title {Acknowledgement}
 \end{center}
@@ -43,7 +62,7 @@ Swansea University\\
 September 2012.
 \end{flushright}
  \clearpage
- ``\textit{As it grew lighter, Elephant Island loomed up through the mist on our port hand
+``\textit{As it grew lighter, Elephant Island loomed up through the mist on our port hand
 and for various reasons, thenceforth became our goal}."
 \begin{flushright}
 Ernest Shackleton, 1916
@@ -53,57 +72,84 @@ Ernest Shackleton, 1916
 
 \chapter{Introduction}
 \label{Intro}
-Software systems are often bound to deviate from their expected behaviour and based on their domain of application, their effect may be benign or catastrophic. The common way to set it right is by testing which has several drawbacks as the bugs may go unnoticed because the whole classes of cases may be missed. Also the test cases requires will be large. hence a new technique called finite state techniques has proven to be more effective in finding the bugs. This method explores all possible executions of a fragment of code. It also checks for the behavioural properties. If a property is not satisfied, it outputs a counterexample. it relies on the abstraction of the code, which renders it finite state making it manageable. Finite state technique is also effective in checking properties describing event sequences\cite{Vaziri-Farahani2004}. 
 
-This error can be approached by using the lightweight formal method, namely Alloy which uses the SAT solvers, where the constraints in the Alloy -a declarative modelling language, can be translated into Boolean logic and solved with the SAT-solver \cite{Yeung2005}. But the project focuses on the SAT translation and not on the  SAT solver which is a black box for the project. The presented approach is explained with help of an example coffee machine. This project demonstrates how the Alloy Analyser which is used as a SAT translation to conduct fully automated analysis of a coffee machine specification represented in Alloy. 
+Software systems are often prone to bugs and are bound to deviate from their expected behaviour. Based on their domain of application, their effect may be benign or catastrophic \cite{Jackson2000}. The common way to set it right is by testing which has several drawbacks as the bugs may go unnoticed because the whole classes of cases may be missed. Also the test cases required will be large. Of all the approaches, the most efficient technique used for validating a system is Model checking. The design process and the validation process are the must to ensure the correctness of specifications, designs and products of the system \cite{ErichGamma1995}. Validation is done to see that whether the system meets all its requirements. In model checking, the design to be verified is modeled as finite state machine. Hence a new technique called finite state techniques has proven to be more effective in finding the bugs. This method explores all possible executions of a fragment of code. It also checks for the behavioural properties. If a property is not satisfied, it outputs a counterexample. It relies on the abstraction of the code, which renders it finite state making it manageable. Finite state technique is also effective in checking properties describing event sequences\cite{Vaziri-Farahani2004}. 
+
+Clarke and Emerson in the early eighties coined the term model checking. In order to check the correctness of the specifications, the reachable states were explicitly enumerated by first model checking algorithms. This resulted as a drawback by restricting model checkers capacity to systems with a few million states. But the early implementations were able to handle only smaller designs and could not compete with industrial complexity because the number of states can grow exponentially in the number of variables. Alloy can be considered as a natural choice for representation of interactive systems \cite{A.Blandford2000}. The project will be structured as follows:
+Firstly, introducing the key concepts of Alloy. Then, describe the approach of analysing the model with the Alloy Analyser and applying it to an example. It is difficult to validate the system with the specifications and requirements \cite{RussellBoyatt}. The validation task would be easier if we make the specifications executable, giving the immediate feedback of the behaviour of the future software to the user \cite{RussellBoyatt}.
+
+The Boolean level of representation of the model-checking task with the computation engine that supported the required set of operations gave rise to Symbolic model checking \cite{R.Bryant1986}. Ordered Binary Decision Diagram (OBDD) was the first approach combining the efficiency and expressive power. Recently, based on Davis-Putnam-Logemann-Loveland (DPLL) algorithm, Boolean satisfiability (SAT) checkers have greatly extended the reach of bounded model checkers \cite{R.Bryant1986}.
+
+OBDDs and DPLL –based checkers compliments each other. OBBDs readily deal with quantified Boolean formulas (QBF) where as DPLL cannot \cite{R.Bryant1986}. SAT problem which are completely intractable for DPLL are trivial with OBDDs. SAT checkers are insensitive to the number of variables \cite{O.Strichman}.
+
+The first symbolic model checkers used Ordered Binary Decision Diagrams (OBDDs) \cite{R.Bryant1986} to represent system transition relations and sets of system states \cite{McMillan1992} . All the steps required for a model checking is expressed as a series of operations on these representations, without enumerating individual states or transitions. Recently, Bounded and Inbounded model checking has been devised which use Boolean satisfiability (SAT) solvers as a computational engines \cite{McMillan1992}. Combining the methods which have a SAT solver work on a detailed system model and OBDDs operate on a abstracted model, is more powerfull than operating on its own \cite{Clarke1999}.
+
+Then there was a breakthrough towards usage of this technique by introducing symbolic model checking where the sets of states are represented using boolean functions. In symbolic model checking the state space can be traversed more  efficiently by considering large number of states at a single step.
+   
+Alloy is one such symbolic model checker. This method can be approached by using the lightweight formal method, namely Alloy which uses the SAT solvers, where the constraints in the Alloy - a declarative modelling language, can be translated into Boolean logic and solved with the SAT-solver \cite{Yeung2005}. By defining a set of atoms and relations, the problem space in the Alloy can be specified. Atom is similar to objects, structs and classes of imperative language. Relations are used to specify the interaction between these atoms once the complex structures are built. By keeping the problem solvable, relations makes Alloy to understand easily. Its modeling language is first-order logic with relations as the only types of terms. To verify the Satisfiability of axioms defined in the model and to output the counterexample for properties which follows the axioms the SAT-solver is used. We will be able to choose SAT solver by setting the Alloy's preference panel. The choice of the SAT solver is upto us. It is used as a black box with simple input/output language(DIMACS). But the project focuses on the SAT translation and not on the  SAT solver which is a black box for the project. The presented approach is explained with help of an example coffee machine. This project demonstrates how the Alloy Analyser which is used as a SAT translation to conduct fully automated analysis of a coffee machine specification represented in Alloy. 
 
 The Alloy Analyzer is a compiler which translates the problem to be analyzed into a (usually huge) Boolean formula. This formula is then handed to a SAT solver, and the solution is translated back by the Alloy Analyzer into the language of the model. The Alloy Analyser thus makes the problem finite (and reducible to a Boolean formula) by solving the problems within a user-specified scope that bounds the size of the domains. In otherwords, model-finder essentially translates a model expressed in relational logic into a corresponding Boolean logic formula, and then invoke an off-the-shelf SAT-solver on the Boolean formula. In the event that the solver finds a solution, the result is translated back into a corresponding binding of constants to variables in the relational logic model. Although the analysis can be performed by a traditional formal method, there is a lower barrier to entry afforded by lightweight formal methods.
 
 The lightweight formal methods such as Alloy provide the user with many benefits:
 \begin{itemize}
 \item {In order to develop an ongoing development, the formal basis provides an automatic feedback in a more focused way.}
-\item {Tools provide a more ``programmer-friendly" interface and can be used by any developers who are not formal methods experts} \cite{Boyatt}.
+\item {Tools provide a more ``programmer-friendly" interface and can be used by any developers who are not formal methods experts} \cite{A.Blandford2000}.
 \item {In software engineering, one of the great benefits of Alloy is that you can analyze a tiny model, write three lines, and analyze it, add few more lines and analyze again \cite{ErichGamma1995}. This increment makes Alloy especially good for exploring design ideas. }
+\item {Here the specification replaces the method calls by making the analyser modular. Usually the users do not prefer to write intermediate specifications, it allows to check larger specification with very few annotations by offering a suite of optimizations.}
+\item {It only considers the bounded instances of programs and  doesn't require any abstraction from the user.}
+\item {It outputs the execution trace of the code in the form of a counterexample when the property is not satisfied.}
+
 \end{itemize}
-These approaches are used much earlier in the development process to validate aspects of an evolving specification and to explore requirements \cite{Hoare1986}. Here the focus is on Coffee machine as an example property but is chosen only to serve as an example and the model is not designed solely for any particular property \cite{ErichGamma1995}. The models are general and able to be used to investigate many other properties.
+
+These approaches are used much earlier in the development process to validate aspects of an evolving specification and to explore requirements \cite{Hoare1986}.Model checkers are now able to handle the complex verification problems coming from real world hardware and software designs with the help of Boolean methods \cite{ErichGamma1995}. By giving the importance of Symbolic model checking, I take this opportunity to examine the capabilities of SAT solver \cite{R.Bryant1986}. Here the focus is on Coffee machine as an example property but is chosen only to serve as an example and the model is not designed solely for any particular property \cite{ErichGamma1995}. The models are general and able to be used to investigate many other properties.
+
+When the given task is to prove that the given formula is unsatisfiable, we find an error in the design by using the SAT solver which is typically used by verification problem \cite{McMillan2003}. To prove that the formula is unsatisfiable, it is currently highly favourable to use DPPL method \cite{M.Davis1962} for solving SAT problems by backtracking search among complete SAT algorithms. By doing so, it has gained a remarkable progress in speed and capacity \cite{M.Moskewicz2001}.
+
+I would like to be working on the use of Alloy as the formalism used for the formal analysis of models. Alloy is a lightweight modelling language for software design. By using the Alloy Analyzer, it is amenable to a fully automatic analysis \cite{J.M.Wing1996}. It also provides a visualizer for making sense of solutions and counterexamples it finds \cite{A.Blandford2000}.
+
+The main goal of this project is to describe some aspects of the system but not the entire system and to check the properties about it. 
  
 \section{Outline Of This Dissertation}
 \label{Outline dissert}
 
-This report mainly consists of Four parts. Chapter I is the Introduction including the outline of the project.
+This report mainly consists of Eight chapters. Chapter I is the Introduction including the outline of the project.
 
-In Chapter II the concept of systems and their specifications and the basic theory of model checking technique will be presented as a part of Literature Survey. A simple example to illustrate the technique is mentioned. The various model checkers along with their uses are listed. The new challenges faced throughout the project are also mentioned along with the conclusion of the literature survey.
+In Chapter II the concept of systems and their specifications and the basic theory of model checking technique will be presented as a part of Literature Survey. A simple example to illustrate the technique is mentioned. The various model checkers along with their uses are listed and concludes of the literature survey.
 
-Chapter II examines an Alloy model which solves the coffee machine problem, using the module for modelling the ordered state. It will conclude with the method, result and refinement along with the references. As a part of case study an Alloy Analyser example is also presented.
+Chapter III examines an Alloy model which solves the coffee machine problem, using the module for modelling the ordered state. It will conclude with the method, result and refinement along with the references. As a part of case study an Alloy Analyser example is also presented.
 
-Finally in Chapter III the discussion of theoretical survey of background to a project is considered. The approach which is used to make the specification executable will be discussed. It introduces the declarative modelling language namely Alloy followed by development and analysis of a Alloy model which includes alloy interface walkthrough also introducing the Alloy's improved solution visualizer. It also includes the schedule of the project planned throughout the course.
+Chapter IV the discussion is about Technical aspects of Alloy Analyzer. The approach which is used to make the specification executable will be discussed. It introduces the declarative modelling language namely Alloy followed by development and analysis of a Alloy model which includes alloy interface walk-through also introducing the Alloy's improved solution visualizer. 
 
-\chapter{Model Checking}
-\label{Model check}
+In Chapter V the discussion is about getting the working understanding of the Model checking tool by making the specifications executable.
 
-The technique used for validating a system is Model checking. The design process and the validation process are the must to ensure the correctness of specifications, designs and products of the system \cite{ErichGamma1995}. Validation is done to see that whether the system meets all its requirements. 
+Chapter VI is all about the SAT translation by interpreting the result from Alloy to Propositional Logic to CNF. 
 
-Model checking systematically checks the validity of a given finite-state model of a system and properties stated in the form of logical formalism such as temporal logic \cite{Palshikar2004}. It uses algorithms which are executed by the computer tools \cite{McMillan2003}. The inputs to such model checkers are the description of the model and the description of the properties. Once these files are fed as an input, the model checker performs the verification. If error occurs, then the model checker provides the counter-example to explain under which circumstances the error can be generated. This counter-example helps in finding the error and repairing the specifications of the model \cite{Wang2007}. This can be shown with help of the following diagram. It shows us how the verification process takes place in the model checking \cite{DanielJackson}.  
+Finally Chapter VII concludes the project by including the summary, future thoughts, Challenges faced throughout the project and the project schedule maintained throughout the dissertation.
 
-Describing what a system is required to do is known as system \cite{Wang2007}. By doing so, we will be able to understand the system. Various validation techniques are used to check the correctness of specification. It guarantees the quality of the system and also its safety \cite{Clarke1999}. Model checking is one of the most popular validation techniques. For a system defined in finite state model and a property defined in terms of logical formalism, model checking techniques could systematically check the validity of this property \cite{Engler}. A finite-state model is used to design computer programs and digital logic circuits \cite{ErichGamma1995}. It is as an abstract machine that can be in one of a finite number of states \cite{M.Davis1962}. It will be only in one state at a time; the state it is in at any given time is called the current state. When initiated by a triggering event or condition, the state changes, this is called a transition \cite{D.Jackson}.
+\chapter{ Theoretical background of Model Checking}
+\label{Background of Model check}
+
+Model checking systematically checks the validity of a given finite-state model of a system and properties stated in the form of logical formalism such as temporal logic \cite{Palshikar2004}. It uses algorithms which are executed by the computer tools \cite{McMillan2003}. The inputs to such model checkers are the description of the model and the description of the properties. Once these files are fed as an input, the model checker performs the verification. If error occurs, then the model checker provides the counter-example to explain under which circumstances the error can be generated. This counter-example helps in finding the error and repairing the specifications of the model \cite{Wang2007}. This can be shown with help of the following diagram. It shows us how the verification process takes place in the model checking \cite{DanielJackson2004}.  
+
+Describing what a system is required to do is known as system \cite{Wang2007}. By doing so, we will be able to understand the system. Various validation techniques are used to check the correctness of specification. It guarantees the quality of the system and also its safety \cite{Clarke1999}. Model checking is one of the most popular validation techniques. For a system defined in finite state model and a property defined in terms of logical formalism, model checking techniques could systematically check the validity of this property \cite{DawsonEngler}. A finite-state model is used to design computer programs and digital logic circuits \cite{ErichGamma1995}. It is as an abstract machine that can be in one of a finite number of states \cite{M.Davis1962}. It will be only in one state at a time; the state it is in at any given time is called the current state. When initiated by a triggering event or condition, the state changes, this is called a transition \cite{J.M.Wing1996}.
 
 Roughly, M is an abstract model of a system whose structure is defined as finite-automata and $\phi$  is a logical formula specifying a desirable property such that M satisfies $\phi$  abbreviated as $M \models \phi$. 
 
-Model checking helps from preventing the bugs even before penning down the code of the project i.e., during the requirement and the design phase itself \cite{ErichGamma1995}. It prevents the further breed of the bugs and hence it makes sense by being cost effective \cite{Havelund}. The errors which are not been able to find by simulation is done by model checking by considering all possible behaviours of the system \cite{Havelund}. 
+Model checking helps from preventing the bugs even before penning down the code of the project i.e., during the requirement and the design phase itself \cite{ErichGamma1995}. It prevents the further breed of the bugs and hence it makes sense by being cost effective \cite{Havelund2001}. The errors which are not been able to find by simulation is done by model checking by considering all possible behaviours of the system\cite{Havelund2001}. 
 
-Model checking is the one of the foremost applications of logics which ranges from computer science to computer engineering. Since then, there has been a multiple breakthrough. The gap which was built between the theoretical computer science, hardware and software engineering was bridged by Model Checking. Now, model checking has been extensively used for verifying many Software and also used in hardware industry. It has virtually became a universal tool for the analysis of the systems. Henceforth, this project will focus on the state of the art of model of model checking.
+Model checking is the one of the foremost applications of logics which ranges from computer science to computer engineering. Since then, there has been a multiple breakthrough. The gap which was built between the theoretical computer science, hardware and software engineering was bridged by Model Checking. Now, model checking has been extensively used for verifying many Software and also used in hardware industry\cite{Jackson2000}. It has virtually became a universal tool for the analysis of the systems. Henceforth, this project will focus on the state of the art of model of model checking.
 
 \section{Systems and their Specifications}
 \label{Sys and Spec}
 
-Describing a system is called specification. Specification helps in finding errors and understanding a system \cite{Wang2007}. So, it is a good practise to have a clear idea about the design and improve it before the implementation \cite{ErichGamma1995}. The specification of the system can be functional or non-functional i.e. what a system is supposed to do or performance properties \cite{Wang2007}. These specifications are written in formal language with proper syntax and semantics which can be verified and validated with respect to requirements \cite{D.Jackson}.
+Describing a system is called specification. Specification helps in finding errors and understanding a system \cite{Wang2007}. So, it is a good practise to have a clear idea about the design and improve it before the implementation \cite{ErichGamma1995}. The specification of the system can be functional or non-functional i.e. what a system is supposed to do or performance properties \cite{Wang2007}. These specifications are written in formal language with proper syntax and semantics which can be verified and validated with respect to requirements \cite{J.M.Wing1996}.
 
 It helps in developing the explicit model of a system which is clear, precise and unambiguous. Mathematics is used as a basic tool to achieve this. Here, reading the accompanying words in order to understand the relation between the equations is a bit tedious. In order to overcome this shortcoming using mathematics as a basic tool, logicians have temporal logic which is precise and completely formal mathematics. This temporal logic is used in such a way so as to describe the system behaviour. 
 
 \section{Temporal Logic} 
 \label{Temp Logic}
 
-There are various interpretations of temporal logic depends on the individual as how to consider the system with time \cite{Berard}. It is the logic for expressing mathematics. It supports formulating the properties of the system behaviour with respect to time \cite{Berard}. There are various types of temporal logics:
+There are various interpretations of temporal logic depends on the individual as how to consider the system with time \cite{B.Berard2001}. It is the logic for expressing mathematics. It supports formulating the properties of the system behaviour with respect to time \cite{B.Berard2001}. There are various types of temporal logics:
 \begin{itemize}
 \item Temporal Logics used to specify the reactive systems are:
 
@@ -111,27 +157,27 @@ There are various interpretations of temporal logic depends on the individual as
 
  \textbf{Branching temporal logic:}It allows the user to write formulas which include some sensitivity to the choices available to a system during its execution.
 \end{itemize}
- These two kinds of temporal logic are characterized by a continuous interaction with the environment \cite{Engler}.
+ These two kinds of temporal logic are characterized by a continuous interaction with the environment \cite{DawsonEngler}.
 \begin{itemize}
 \item Temporal Logics used to specify the time-critical systems:
 
  \textbf{Real-Time temporal logic:}  It allows statement of properties of multiple concurrent processes and supports relative time references.
 \end{itemize}
 
-It is characterized by quantitative timing properties relating occurrences of events \cite{Engler}.
+It is characterized by quantitative timing properties relating occurrences of events. \cite{DawsonEngler}.
 In order to avoid the errors we write specifications. Validation techniques are used to checking the correctness of the system \cite{Wang2007}.  
 
 \section{Model-Checking Algorithm}
 \label{Model chec Algo}
 
-Model checking uses exhaustive state space search of the system model as algorithm: The desired properties satisfied for each state of the model \cite{Berard}. Reachability property is used to check whether the system can reach a state without any deadlocks. Reachability is considered as one of the important property which uses Reachability analysis technique \cite{M.Davis1962}. It starts from initial system state and see to it that it reaches all the possible system states which can be reached. For instance, in a traffic signal model, yellow, red and green are the three states. Model checking proves if it can reach some state, all the states are eventually got by the model, or if the model could never get some state \cite{M.Davis1962}.
+Model checking uses exhaustive state space search of the system model as algorithm: The desired properties satisfied for each state of the model \cite{B.Berard2001}. Reachability property is used to check whether the system can reach a state without any deadlocks. Reachability is considered as one of the important property which uses Reachability analysis technique \cite{M.Davis1962}. It starts from initial system state and see to it that it reaches all the possible system states which can be reached. For instance, in a traffic signal model, yellow, red and green are the three states. Model checking proves if it can reach some state, all the states are eventually got by the model, or if the model could never get some state \cite{M.Davis1962}.
 
 \section{Approaches Of Model Checking}
 \label{Appr to model check}
 
 \begin{itemize}
-\item Logic based approach: Here the system is modelled as finite-state automaton representing the states as values of variables and control location, and changes of a system from one state to other state is represented by transition \cite{DanielJackson}. If a system satisfying the desired behaviour given in some logic with the initial set of states, then the system is said to be correct \cite{DanielJackson}.
-\item Behaviour based approach: Given the desired and the possible behaviour with the same notation, the equivalence relations are used as criteria for the correctness \cite{DanielJackson}. Hence, if the desired and the possible state behaviour are equivalent then the system is said to be correct \cite{DanielJackson}.  
+\item Logic based approach: Here the system is modelled as finite-state automaton representing the states as values of variables and control location, and changes of a system from one state to other state is represented by transition \cite{DanielJackson2004}. If a system satisfying the desired behaviour given in some logic with the initial set of states, then the system is said to be correct \cite{DanielJackson2004}.
+\item Behaviour based approach: Given the desired and the possible behaviour with the same notation, the equivalence relations are used as criteria for the correctness \cite{DanielJackson2004}. Hence, if the desired and the possible state behaviour are equivalent then the system is said to be correct \cite{DanielJackson2004}.  
 \end{itemize}
 
 \section{Model Checkers}
@@ -171,20 +217,20 @@ Exhaustible list of  Model Checkers are given below:
 \section{Technology}
 \label{tech}
 
-Model checking then, used explicit state traversal where the reachable state space was traversed to find the errors violating the safety properties. It consumed lot of space in the computer memory because each state of the system was stored in large hash table \cite{Mironov2006}. In order to improve this space consumption in explicit state model checker various techniques came into existence \cite{McMillan1992}. SPIN model checker was the most successful explicit model checker. The goal of this was to overcome the state explosion problem where the states of the model were represented symbolically \cite{McMillan1992}.
+Model checking then, used explicit state traversal where the reachable state space was traversed to find the errors violating the safety properties. It consumed lot of space in the computer memory because each state of the system was stored in large hash table \cite{KenmcmiI.Mironov2006}. In order to improve this space consumption in explicit state model checker various techniques came into existence \cite{McMillan1992}. SPIN model checker was the most successful explicit model checker. The goal of this was to overcome the state explosion problem where the states of the model were represented symbolically \cite{McMillan1992}.
 
-Later in mid-80's Binary Decision Diagrams as a new data structure came into existence for symbolical representation and manipulating Boolean functions efficiently known as Symbolic model checking with BDDs \cite{Berard}. BDDs could handle much larger designs with hundreds of state variables representing Boolean functions \cite{ErichGamma1995}. There existed some shortcoming in BDDs as well. They became too large to handle as they used canonical representation. BDDs required uniform variable ordering along the paths and it sometimes happened that no space efficient variable ordering existed. This was time consuming and needed manual intervention \cite{McMillan1992}.
+Later in mid-80's Binary Decision Diagrams as a new data structure came into existence for symbolical representation and manipulating Boolean functions efficiently known as Symbolic model checking with BDDs \cite{B.Berard2001}. BDDs could handle much larger designs with hundreds of state variables representing Boolean functions \cite{ErichGamma1995}. There existed some shortcoming in BDDs as well. They became too large to handle as they used canonical representation. BDDs required uniform variable ordering along the paths and it sometimes happened that no space efficient variable ordering existed. This was time consuming and needed manual intervention \cite{McMillan1992}.
 
 There came into existence the SAT procedures as an alternative approach to model checking. Unlike BDDs, it didn’t use the canonical representation. It became one of the most efficient implementation. It overcame the state explosion problem faced by BDDs \cite{McMillan1992}. 
 In late 90s, researchers came up with the idea of Bounded model checking which uses SAT solvers to the model checking problem. Bounded model checking technique do a fast exploration of state space overcoming the shortcomings of the previous approaches using the SAT procedures instead of BDDs where the SAT has a depth first search nature \cite{McMillan1992}. This method is applicable for properties which include safety and liveness where it checks whether a given set of states is reachable, and detects loops in a system’s state transition graph.
 
-\section{Example to illustrate the new technique}\cite{D.Jackson}
+\section{Example to illustrate the new technique}
 \label{Example}
-
+This example is referred from \cite{J.M.Wing1996}.
 Application of Model Checking ranges from simple coffee machines to nuclear plants which are undoubtedly critical and the failure of which may cause economical and physical damages. Considering an example of a coffee machine, where the system is fed with a sensitive data to check the behaviour of the system as it is supposed to behave. This is known as testing. 
-\begin{figure}[h!]
+\begin{figure}[ht!]
 \centering
- \includegraphics[width= 0.5\textwidth]{flower.png}
+ \includegraphics[width= 0.5\textwidth]{flower}
 \caption{Finite states of a coffee machine.}
 \end{figure}
  A coffee machine consists of a set the following above states which are depicted in circles and relations as arrows between the states. Arrows are given with labels representing actions. The combination of this set of states and relations is known as ``automaton". If the given action on an arrow connecting both the states is satisfied, then automaton in a given state changes to another state. 
@@ -204,15 +250,7 @@ It is then possible to check that the above formula is satisfied by the automato
 Let us consider now the following property: ``Always, after pressing a button the machine will serve coffee and then tea immediately afterwards". We can write this sentence as follows:
 
 ALWAYS (IF Button THEN (Coffee AND NEXT Tea))
-Here NEXT is a connective formalising the ``immediately after" English expression. As for the previous example it is possible to check whether the automaton satisfies the property. In this case we can see that it is not the case, since from the state ``Button" one can reach the state ``Coffee" and ``Tea", but from the ``Coffee" state it is not possible to go immediately after to the ``Tea" state. This property guarantees that the machine will never allow to get coffee and then tea by paying only once \cite{D.Jackson}.
-
-\section{Challenges Faced}
-\label{Challenges faced}
-
-\begin{itemize}
-\item Learnt the usage of Github: It is a website used for storing and presenting our files. Git is a decentralized version control system that is used by a number of open source projects, most notably perhaps the Linux kernel. GitHub is a new hosted Git repository service that's being called a ``social network" for programmers and with good reason. In my project it helps in communication between me and my supervisor by providing information to assist in evaluating the tools and making an informed decision.
-\item Learnt the usage of LATEX: It is a document preparation system similar to that of a Microsoft word where the similarities end here. Preparing a document with LATEX consists of using a text editor to edit a Latex source file with the .tex extension. And then running a latex program to convert the source file to a document interchange format like PDF etc. Doing in LATEX provides a good typography which provides a good impression on the content of the document and is platform independent unlike MS word which runs only on windows. It's much better than copy+paste since it can be changed by changing just the definition. Even more, Latex allows people to write programs in their documents. 
-\end{itemize}
+Here NEXT is a connective formalising the ``immediately after" English expression. As for the previous example it is possible to check whether the automaton satisfies the property. In this case we can see that it is not the case, since from the state ``Button" one can reach the state ``Coffee" and ``Tea", but from the ``Coffee" state it is not possible to go immediately after to the ``Tea" state. This property guarantees that the machine will never allow to get coffee and then tea by paying only once \cite{J.M.Wing1996}.
 
 \section{Conclusion of literature survey}
 \label{conclude literature survey}
@@ -225,333 +263,41 @@ There are shortcomings that still need to be answered:
 \item Some of the properties which are to be verified are difficult to express in the notation.
 \item Model checking involves much number of states consuming extra efforts in checking parts of the model separately. 
 \end{itemize}
-Despites these shortcomings the model checking is an important and successful area in verifying the models by early detection of the errors \cite{Havelund}.
+Despites these shortcomings the model checking is an important and successful area in verifying the models by early detection of the errors \cite{Havelund2001}.
 
-\chapter{Running The Alloy Analyser With Example: Coffee Machine}
 
-To facilitate the lightweight modelling object, Daniel Jackson, with the assistance of others at the Software Design Group, a declarative modelling language was designed. It allows for writing Z-style specifications in ASCII \cite{J.M.Spivey1989}, and, being close to first-order, is analyzable via translation into SAT . A platform is developed to perform this analysis which is known as Alloy Analyser \cite{Yeung2005}.
+ \chapter{Technical aspects of Alloy Model Checking Tool}
+ \label{Intro to Alloy}
+The dissertation is built on Alloy model checking tool which is a relational modelling language. To facilitate the lightweight modelling object, Daniel Jackson, with the assistance of others at the Software Design Group, a declarative modelling language was designed. It allows for writing Z-style specifications in ASCII \cite{J.M.Spivey1989}, and, being close to first-order, is analyzable via translation into SAT. Daniel Jackson has worked on making the formalisms executable that is, providing  with a useful feedback to a developer quickly. hence the core approach of Jackson was Alloy.
 
-Specification of Alloy consists of signatures, facts, functions, predicates and assertions. Signatures declare the types used in the specification, and the definitions of the types fields. Types in Alloy are hierarchical in the form of a tree; a type may have multiple subtypes but at most one supertype \cite{JonathanEdwards}. In addition, all types descend from a common ancestor, which is called univ. The types and fields defined in signatures form the set of relations that are used in the specification \cite{Yeung2005}.
+ A platform is developed to perform this analysis which is known as Alloy Analyser \cite{Yeung2005}. 
+Specification of Alloy consists of signatures, facts, functions, predicates and assertions. Signatures declare the types used in the specification, and the definitions of the types fields. Types in Alloy are hierarchical in the form of a tree; a type may have multiple subtypes but at most one supertype \cite{DanielJackson2004}. In addition, all types descend from a common ancestor, which is called univ. The types and fields defined in signatures form the set of relations that are used in the specification \cite{Yeung2005}.
 
 Facts are logical formulae or constraints over relations. They may be nested via standard logical operators, such as disjunction , conjunction , and negation . The value of a formula is thus always Boolean \cite{Yeung2005}.
 
 Predicates are logical formulae that are evaluated on zero or more arguments. They can be called within the model or used to run an analysis of the model. Given a predicate to analyze, the Analyzer finds a solution that satisfies both the facts and the predicate, or returns that no such solution exists (within the given scope bounds, which are discussed in the next section) \cite{Yeung2005}.
 
-Assertions are logical formulae whose validity we want to check. That is, given the signatures and facts, we want the Analyzer to help us determine whether an assertion always evaluates to true, and if not, provide a counterexample that demonstrates otherwise. The natural way to do this is to conjoin the facts of a specification with the negation of the assertion, and translate this compounded formula into SAT \cite{Strichman}. If no solution can be found, then this means that the assertion is always true when the constraints are true (within the given scopes), or that the constraints are inconsistent and always false. The latter case implies a faulty specification. On the other hand, if a solution is found, then it illustrates a counterexample case in which the constraints are true, but the assertion is false. 
+Assertions are logical formulae whose validity we want to check. That is, given the signatures and facts, we want the Analyzer to help us determine whether an assertion always evaluates to true, and if not, provide a counterexample that demonstrates otherwise. The natural way to do this is to conjoin the facts of a specification with the negation of the assertion, and translate this compounded formula into SAT \cite{O.Strichman}. If no solution can be found, then this means that the assertion is always true when the constraints are true (within the given scopes), or that the constraints are inconsistent and always false. The latter case implies a faulty specification. On the other hand, if a solution is found, then it illustrates a counterexample case in which the constraints are true, but the assertion is false. 
 
-Describing some aspects of a system (but not the entire system), constraint it to exclude ill-formed examples and checking the properties about it is the main goal of writing a model. The property of allow always holds for problems up to size X or if the property does not hold good, it provides a counterexample \cite{Yeung2005}.
+Describing some aspects of a system (but not the entire system), constraint it to exclude ill-formed examples and checking the properties about it is the main goal of writing a model. The property of alloy always holds for problems up to size X or if the property does not hold good, it provides a counterexample \cite{Yeung2005}.
 
 Apart from the similarities of Alloy with other existing languages and modelling techniques, there are several other differences as well:
 \begin{itemize}
-\item Finite scope check: After analysing the model, the scope (size) must be specified to the model. The analysis is sound and it never returns false positives, but incomplete because it checks the things only upto a certain limit \cite{DanielJackson}. However it is complete upto the scope. Counterexample being smaller than the specified scope is never missed. Smaller scope checks are extremely valuable for finding errors. 
-\item Infinite model: Unlike traditional model checking models written in alloy do not reflect that analysis is finite\cite{D.Jackson}. That is, components of the system and how they interact will be described, but do not specify as to how many components there can be. 
-\item Declarative: As opposed to ``operational" or ``imperative" modeller which asks ``How can I accomplish X" , a declarative modeller answers the question ``How would I recognise that X has happened" \cite{DanielJackson}.
-\item Automatic analysis : Alloy can be automatically analyzed unlike some other declarative modelling languages like Z, the object language of UML\cite{J.M.Spivey1989}. 
+\item Finite scope check: After analysing the model, the scope (size) must be specified to the model. The analysis is sound and it never returns false positives, but incomplete because it checks the things only upto a certain limit \cite{DanielJackson2004}. However it is complete upto the scope. Counterexample being smaller than the specified scope is never missed. Smaller scope checks are extremely valuable for finding errors. 
+\item Infinite model: Unlike traditional model checking models written in alloy do not reflect that analysis is finite\cite{J.M.Wing1996}. That is, components of the system and how they interact will be described, but do not specify as to how many components there can be. 
+\item Declarative: As opposed to ``operational" or ``imperative" modeller which asks ``How can I accomplish X" , a declarative modeller answers the question ``How would I recognise that X has happened" \cite{DanielJackson2004}. They are used for incremental modelling. It starts with by saying very little unlike operational language which requires you to list the possibilities. In oredr to make a model more steady, we can add a property by making the model fit the system more closely. It is free of all side-effects.
+\item Automatic analysis : Alloy can be automatically analyzed unlike some other declarative modelling languages like Z, the object language of UML \cite{J.M.Spivey1989}. 
 Examples of the system and the counterexamples to claims made about the system can be generated automatically.
-\item Structured data: Alloy is a rich way to describe states by supporting the complex data structures, such as trees.
+\item Structured data: Alloy is a rich way to describe states by supporting the complex data structures, such as trees. It can be best viewed in terms of events and transitions between simple states. It makes more feasible to store and manipulate structures by the computational growth. 
 \end{itemize}
 
-\section{Boolean translation of the Alloy constraint}
-\label{Bool Transl}
+\section{Necessity of Analysis}
+\label{Necessity of analysis}
 
-By placing a bound on the universe of atoms, we will be able to solve the constraints in first-order logic. By doing so, the search space becomes finite and then translating the constraints into the Boolean form finally finding the solution with a SAT solver \cite{Strichman}. The SAT solver finds a solution to the satisfiability(SAT) problem: 
+It gives us a total different experience when a model is built incrementally with an analyzer along with simulating and checking. it is a way different from using pencil and paper alone. Firstly, its astonishing as to how many simple slips even a competent modeller can make turning ideas into text which tends to be exposed quickly. Secondly, the feedback got from the simulation helps us in bringing important properties to mind. Thirdly we will also be able to check whether the model has some properties we intended but didn't state explicitly which is considered to be one of the most powerful role of analysis. By doing so, even the mundane consequences helps in exposing the subtle problems in the design. Lastly, use of tool is a fun to work with. It gives a sense of confidence and progress in the model by successfully generating possible simulations and checking the properties. 
 
-Given a Boolean function f(x1,..,xn), return an assignment of Boolean values to xi such that f evaluates to true, or prove that no such assignment exists. The solution is mapped back to the original constraint problem in a manner comprehensible to the author of the constraints \cite{Yeung2005}.
-
-For our project, it is only necessary to have a basic understanding of how the translation into Boolean logic works in Alloy. 
- 
-``The universe of atoms is bounded by a user-defined or inferred scope for each type used in the object model. Consider a binary relation .
-\begin{equation}
-r : X \rightarrow Y
-\end{equation} with the scopes of X and Y set to m and n, respectively. Then, r can be represented as an m-by-n Boolean matrix where a value of true in the i-th row and j-th column means that the i-th element of X is related to the j-th element of Y. To translate a constraint over r, one simply replaces the constants in the Boolean matrix with variables. The translations for most operations follow nicely; for example, union and intersection of relations can be translated as pairwise disjunction and conjunction of the variables, respectively" \cite{Yeung2005}.
-
-In the Alloy Analyser preference panel, we can set the choice of the SAT solver. For almost many of the analyses, the choice of the SAT solver doesn't matter. The emphasis of the Alloy is on the systems involving complex structured state. It is also used to analyse and model almost all kinds of system including name servers, network configuration protocols, access control, telephony, scheduling, document structuring, key management, cryptography, instant messaging, railway switching, filesystem synchronisation, semantic web. 
-
-I choose this approach because it allows us to begin with a simple model, apart from imitating the actual modelling process, by using only a small part of Alloy syntax and gradually with more advanced syntax as it is needed. Typically, formulas are temporal logic ones and interpretations are state machines. But, they don't have to be.
-
-\section{How the Analysis works}
-\label{Working of analyses}
-
-The analysis works based on the constraint solver called Alloy Analyser. Bounded instance of a code is encoded by unwinding the loops to a smaller number and considering the limited number of heap cells. based on this observation, a counterexample of small size is exhibited if a fragement code fails to satisfy some property. The Alloy Analyzer first translates the problem formula to propositional logic, and then to conjunctive normal form (CNF).First-order logic is converted to a propositional logic with the help of a Kodkod model finder which produces a Java file. This propositional logic is then converted to an input file for a SAT solver which is in CNF format. This format is widely accepted as the standard format for boolean formulas in CNF. This CNF file is the input file to the SAT solver. The CNF file format is an ASCII file format. The file may begin with comment lines. The first character of each comment line must be a lower case letter ``c". Comment lines typically occur in one section at the beginning of the file, but are allowed to appear throughout the file. The comment lines are followed by the ``problem" line. This begins with a lower case ``p" followed by a space, followed by the problem type, which for CNF files is ``cnf", followed by the number of variables followed by the number of clauses. The remainder of the file contains lines defining the clauses, one by one. A clause is defined by listing the index of each positive literal, and the negative index of each negative literal. Indices are 1-based, and for obvious reasons the index 0 is not allowed. The definition of a clause may extend beyond a single line of text. The definition of a clause is terminated by a final value of ``0". The file terminates after the last clause is defined.
-
-An off-the-shelf SAT solver is then used to find a satisfying assignment. If one is found then it is appropriately presented back to the user as a counterexample\cite{Vaziri-Farahani2004}.
-
-When the Alloy Analyser finds the instance, the execution trace is obtained in a goal-oriented fashion to satisfy the constraints rather than executing sequentially. 
-
-\subsection{Underlying Assumptions}
-\label{Assumptions}
-For the analysis technique, heap size and the number of iterations requires bounds from the users\cite{Vaziri-Farahani2004}. Exhaustive search within the small bounds uncovering the most bugs is the underlying assumption and is known as small scope hypothesis. the appropriate bounds to the user is left to the user. 
-
-\section{Example: A Coffee Machine} 
-\label{Ex: Coffee machine}
-
-It begins with a simple model of a coffee machine which retrieves the change and coffee. This is started up by a Finite state automata of a simple coffee machine.
-
-\begin{itemize}
-\item[Input:] Coini, Cofb,Stopb.
-\item[Outputs:]Coino, Cofo.
-\end{itemize}
-\begin{figure}[h!]
-\centering
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=5cm,
-                    thick,main node/.style={circle,draw,font=\sffamily\small\bfseries}]
-                    
-
-  \node[main node] (Initial)[] {Initial};
-  \node[main node] (Wait) [right of=Initial] {Wait};
-
-  \path[every node/.style={font=\sffamily\small}]
-    (Initial)edge [loop above] node {Cofb/-} (Initial) 
-              edge node [] {Coini/-} (Wait)
-              edge [loop below] node {stopb/-} (Initial)
-               
-    (Wait) edge [bend left] node [above] {Cofb/Cofo} (Initial)
-           edge [loop above] node {Coini/Coino} (Wait)
-       edge [bend left] node [below] {stopb/Coino} (Initial);
-             
- \end{tikzpicture}
- \caption{Finite State Automata representing a Coffee machine}
-\end{figure}
-\section{Dissecting the coffee machine model}
-\label{dissecting coffee machine}
- The coffee machine is initially in the `Initial' state and is capable of accepting the coin(Coini) and transiting to `Wait' state. As the coin(Coini) gets inserted the customer has to push a button(Cofb) to receive the coffee(Coffee) and must push another button(Coino) to receive the change. On receiving the change the coffee machine resets by pressing the stop button(Stopb) and going to the `Initial' state again. This example is similar to the one given by Curson and Blanford \cite{P.Curson}.
- 
- The Alloy based model of Coffee machine is shown in Appendix A.
- 
-The possible inputs of a coffee machine are: Coini, Cofb, Stopb. The possible outputs of a coffee machine are: Coino, Cofo.
-
-\begin{verbatim}
-abstract sig CofState{}
-one sig Initial, Wait extends CofState{}
-\end{verbatim}
-
-It defines a set named CoffeeState. Here we can define relations that have this signature as their domain. Relations defined here behave like fields of an object in the OO paradigm. Another way to enforce that constraint would be to mark CoffeeState as abstract. An abstract signature only contains atoms which are also contained in one of its extending signatures. Exception: if there are no extending signatures, then the abstract keyword is ignored. It provides the signature declaration for the various states i.e., `Initial' and `Wait' of a coffee machine. 
-
-\begin{verbatim}
-abstract sig OP{}
-one sig Coini, Cofb, Stopb, Coino, Cofo extends OP{}
-\end{verbatim}
-
-It defines the signature declaration for a set of customer action called OP. It also defines the signature declaration for various actions `Coini', `Cofb', `Stopb', `Coino', `Cofo' to initiate the changes in the states of a coffee machine.
-
-\begin{verbatim}
-sig Cof{
-	state: one CofState,
-	op: OP
-}
-\end{verbatim}
-
-The state of the Coffee machine consists of its current state as defined above. Since it is marked one, there will always be exactly one instance of it. We declare a signature Cof to hold the state of the Coffee machine at one instant in time \cite{Boyatt}.
-
-To represent the evolving state of the Coffee machine we must constrain the possible states of our model. Predicates are used to represent operations on the state of the Coffee machine and describe the relationship between two instances of the Coffee signature. We can think of these as the `before' (c) and `after' (c') states. We present the predicate that presents the customer, who has just inserted a coin, selecting the Coffee to purchase \cite{Boyatt}:
-
-\begin{verbatim}
-pred entercoin[c,c':Cof] {
-	c.state=Initial &&
-	c'.state=Wait
-}
-
-\end{verbatim}
-
-This predicate, although it represents an operation, is a constraint. It constrains the state before selecting the coffee (c) and constrains the state after selecting the coffee (c'). For example, ``c.state = Initial" ensures that the coffee machine is in the `Initial’ state initially and then ``c'.state = Wait" ensures that it is in the `Wait' state afterwards. This is a familiar and expressive approach in state-based specifications facilitating the use of Alloy. This is a familiar and expressive approach in state-based specifications facilitating the use of Alloy. Similarly, other operations on the state of the Coffee machine, such as entering coins and returning change, are described using this approach to predicates \cite{Boyatt}.
-
-The aim is to examine the dynamic behaviour of the Coffee machine and must therefore introduce a mechanism to capture the evolving state of the Coffee machine but still allow for the model to be statically checked. Alloy already has this mechanism in the form of traces. The predicate describing the valid traces in the system is \cite{Boyatt}:
-
-\begin{verbatim}
-pred traces{
-
-	initial[CO/first[]] &&
-	all c:Cof-CO/last[] | let c' = CO/next[c] |
-	((entercoin[c,c'] && c'.op = Coini)
-	or
-	(buycof[c,c'] && c'.op = Cofb && c'.op = Cofo)
-	or
-	(askchange[c,c'] && c'.op = Stopb && c'.op = Coino)
-
-}
-\end{verbatim}
-
-This says that the initial condition holds for the initial time step, and then for all subsequent times the machine must change in accordance with one of the three predicates: entercoin, buycof and askchange. Additionally, the actions of the customer are defined here to help annotate any examples returned. The three actions by the customer are: Entering the input coin(Coini), action of the customer to press the coffee button(Cofb) and get the Coffee output(Cofo). The ordering library module used here is generic, usable with any signature type and not specific to this example.
-
-A single interaction of the model shall be referred to as `transaction’, consisting of a trace that begins with the initial state (awaiting coins) and finishes with the Coffee machine resetting for the one and only time in that transaction \cite{Boyatt}.
-
-\begin{verbatim}
-pred transaction{
-	traces &&
-	(CO/last[]).state = Initial &&
-	Initial !in (Cof - CO/last[]).state
-}
-
-one sig AchieveCoffee{goals : set OP } {goals = Cofo }
-one sig RetrieveChange{subgoals : set OP }{subgoals = Coino }
-
-assert Dynamicbehaviour{
-	transaction => let m = CO/max[state.(AchieveCoffee.goals)] |
-	some m => all sg: retrieveChange.subgoals | state.sg in CO/prevs[m]
-}
-check Dynamicbehaviour for 5
-\end{verbatim}
-
-We define the main goal to be the dispensing of the Coffee, and the sub-goal to be the dispensing of the change. For a post-completion error to occur in our model, the Coffee would be dispensed before the change is dispensed. In the DynamicBehaviour assertion, it is stated that for valid transactions all subgoals (sg) must occur in states before the state in which the goal occurs (m). Assertions are something we believe to be true about our model and the check command asks Alloy to provide us with the counterexamples, demonstrating that it is possible for the primary goal to be achieved prior to all of the sub-goals being satisfied.
-
-Now, the model has been constructed and also the appropriate mechanisms to represent are also introduced and checked for the error. The properties of the model using the tool itself can be explored. 
-
-\begin{figure}[h!]
-\centering
- \includegraphics[width= 1\textwidth]{viz1.png}
-\caption{Finite states of a coffee machine.}
-\end{figure}
- 
-\section{Extending the Coffee machine}
-\label{Cofee machine ext}
-
-Now, several possible extensions and revisions to our Coffee machine model are considered \cite{Boyatt}. The properties that have already been defined can be checked with each revision, specifically those regarding post-completion errors \cite{Boyatt}. Each of these extended models shows how through the experimentation and interaction with the model develop them beyond their initial design whilst retaining the properties and valuable checks has been developed \cite{Boyatt}.
-
-\subsection{Allowing different types of coins}
-\label{Allowing different types coins}
-
-Suppose we expand this model to allow the coffee machine to accept both one and two pence coins. We now have two initial steps, one that represents the insertion of a 1p coin and the second for the insertion of a 2p coin \cite{Boyatt}:
-
-\begin{verbatim}
-pred enter2pcoin[c, c': Cof] {
-	c.state = Reset &&
-	c'.balance = INT/add[c.balance, int(2)] &&
-	c'.dispenser = c.dispenser &&
-	c'.state = Coin
-}
-
-pred enter1pcoin[c, c': Cof]{
-	c.state = Reset &&
-	c'.balance = INT/add[c.balance, int(1)] &&
-	c'.dispenser = c.dispenser &&
-	c'.state = Coin
-}
-\end{verbatim}
-They must also account for two different reset conditions. Customers are allowed to insert 2p coins into the machine for Coffee that only cost 1p and must therefore return change of 1p. However, should a 1p coin be inserted into the Coffee machine, it is not necessary to give change so which can reset immediately under these conditions. There are two reset possibilities \cite{Boyatt}:
-
-\begin{verbatim}
-pred reset[c,c' : Cof]{
-	c.state = Change &&
-	c'.balance = c.balance &&
-	c'.dispenser = c.dispenser &&
-	c'.state = Reset
-}
-
-pred reset2[c,c' : Cof] {
-	c.state = Coffee &&
-	c.balance = 0 &&
-	c'.balance = c.balance &&
-	c'.dispenser = c.dispenser &&
-	c'.state = Reset
-}
-\end{verbatim}
-
-The first allows the machine to return to the reset state after the change has been dispensed and the second allows the machine to be reset immediately after the coffee is dispensed if and only if there is no chance to dispense \cite{Boyatt}. This model is listed in appendix B.
-
-\subsection{Allowing different types of Coffee}
-\label{Different Coffees}
-
-Our Coffee currently only allows for the selection of one type of Coffee. Clearly, real life Coffee machines allow for the selection of a wide variety of products. In accordance to it, the purchase of both a small Coffee, costing one pence, and a large Coffee, costing two pence is allowed. Whereas before there was a single operation, buycof, to represent the purchase of a Coffee and now introducing an operation for each of the different types of Coffee \cite{Boyatt}.
-
-\begin{verbatim}
-pred buysmallcof[c, c': Cof] {
-	c.state = Coin &&
-	INT/gte[c.balance,int(1)] &&
-	c'.balance = INT/sub[c.balance, int(1)] &&
-	no c.dispenser &&
-	c'.dispenser = SmallCof
-	c'.state = Coffee
-}
-
-pred buylargecof[c, c': Cof] {
-	c.state = Coin &&
-	INT/gte[c.balance,int(2)] &&
-	c'.balance = INT/sub[c.balance, int(2)] &&
-	no c.dispenser &&
-	c'.dispenser = LargeCof
-	c'.state = Coffee
-}
-\end{verbatim}
-
- Additionally, the actual retrieval of the Coffee from the dispenser can now be considered. Until now, there was no consideration of the customer retrieving the Coffee after the machine has dispensed it \cite{Boyatt}. A new state, GotCoffee, to represent the state of the machine after the Coffee has been retrieved is introduced. (The machine may, for instance, detect this with a sensor on the dispenser door.) For all of these modifications there is an introduction of the actions of the customer in the form of the OP signature declarations and the traces model is adapted accordingly \cite{Boyatt}.
- 
-\begin{verbatim}
-pred getcof[c,c':Cof] {
-	c.state = Coffee &&
-	c'.state = GotCoffee &&
-	some c.dispenser &&
-	no c'.dispenser &&
-	c'.balance = c.balance
-}
-\end{verbatim}
-
- This model is listed in appendix C.
- 
-\subsection{Purchasing more than one Coffee}
-\label{Purchasing more than one coffee}
-
-Suppose the customer inserts a two pence coin but then only purchases Coffee costing one pence. Selecting multiple Coffees from the machine would be allowed. A simple extension to the existing getcof predicate allows there to be a valid transition from the Coffee state back to the Coin state if a non-zero balance remains \cite{Boyatt}. If the customer had acted as described, entering a two pence and selecting a one pence Coffee, it would allow the machine to return to the state as if the customer had simply entered a one pence coin. This demonstrates that the state of the model can depend quite specifically on the state of the machine before the operation \cite{Boyatt}.
-
-\begin{verbatim}
-pred getcof[c,c':Cof] {
-	c.state = Coffee &&
-	some c.dispenser &&
-	no c'.dispenser &&
-	c'.balance = c.balance &&
-	((INT/gte[c.balance,int(0)] => c'.state = Coin )
-	or c'.state = GotCoffee)
-}
-\end{verbatim}
-
-This model is listed in appendix D.
-
-\subsection{Inserting more than one coin}
-\label{Inserting more than one coin}
-
-In the final example, the customer is allowed to insert more than one coin into the Coffee machine \cite{Boyatt}. This modification simply requires us to allow the machine to return to the state where it accepts coins but without resetting the stored balance \cite{Boyatt}.
-
-\begin{verbatim}
-pred enter2pcoin[c, c': Cof] {
-	c.state = Reset &&
-	c'.balance = INT/add[c.balance, int(2)] &&
-	c'.dispenser = c.dispenser &&
-	(c'.state = Coin or c'.state = Reset)
-}
-pred enter1pcoin[c, c': Cof] {
-	c.state = Reset &&
-	c'.balance = INT/add[c.balance, int(1)] &&
-	c'.dispenser = c.dispenser &&
-	(c'.state = Coin or c'.state = Reset)
-}
-\end{verbatim}
-
-This model is listed in appendix E.
-
-Now, there is a reasonably complicated Coffee machine. It began with a Coffee machine that could accept one single coin and dispense one type of Coffee \cite{Boyatt}. Now there is a model of a Coffee machine that can accept multiple coins of different values, provides a selection of different Coffee types and allow for the purchase of multiple Coffees. Throughout these modifications the ability to look for post-completion errors has been retained. The trace of the sequences of operations that results in a post-completion error has lengthened due to the extra complexity of the model \cite{Boyatt}.
- 
-\chapter{Theoretical Background To The Project}
-Alloy can be considered as a natural choice for representation of interactive systems \cite{P.Curson}.  The project will be structured as follows:
- Firstly, introducing the key concepts of Alloy. Then, describe the approach of analysing the model with the Alloy Analyser and applying it to an example.
-It is difficult to validate the system with the specifications and requirements \cite{Boyatt}. The     validation task would be easier if we make the specifications executable, giving the immediate feedback of the behaviour of the future software to the user \cite{Boyatt}.
-
-The Boolean level of representation of the model-checking task with the computation engine that supported the required set of operations gave rise to Symbolic model checking \cite{Bryant1986}. Ordered Binary Decision Diagram (OBDD) was the first approach combining the efficiency and expressive power. Recently, based on Davis-Putnam-Logemann-Loveland (DPLL) algorithm, Boolean satisfiability (SAT) checkers have greatly extended the reach of bounded model checkers \cite{Bryant1986}.
-
-OBDDs and DPLL –based checkers compliments each other. OBBDs readily deal with quantified Boolean formulas (QBF) where as DPLL cannot \cite{Bryant1986}. SAT problem which are completely intractable for DPLL are trivial with OBDDs. SAT checkers are insensitive to the number of variables \cite{Strichman}.
-
-\section{A view from the Engine Room}
-\label{View from engine}
-
-The first symbolic model checkers used Ordered Binary Decision Diagrams (OBDDs) \cite{Bryant1986} to represent system transition relations and sets of system states \cite{McMillan1992} . All the steps required for a model checking is expressed as a series of operations on these representations, without enumerating individual states or transitions. Recently, Bounded and Inbounded model checking has been devised which use Boolean satisfiability (SAT) solvers as a computational engines \cite{McMillan1992}. Combining the methods which have a SAT solver work on a detailed system model and OBDDs operate on a abstracted model, is more powerfull than operating on its own \cite{Clarke1999}.
-
-Model checkers are now able to handle the complex verification problems coming from real world hardware and software designs with the help of Boolean methods \cite{ErichGamma1995}. By giving the importance of Symbolic model checking, I take this opportunity to examine the capabilities of SAT solver \cite{Bryant1986}.
-
-\subsection{Making the Specifications Executable}
-\label{Spec Exec}
-
-When the given task is to prove that the given formula is unsatisfiable, we find an error in the design by using the SAT solver which is typically used by verification problem \cite{McMillan2003}. To prove that the formula is unsatisfiable, it is currently highly favourable to use DPPL method \cite{M.Davis1962} for solving SAT problems by backtracking search among complete SAT algorithms. By doing so, it has gained a remarkable progress in speed and capacity \cite{M.Moskewicz2001}.
-
-I would like to be working on the use of Alloy as the formalism used for the formal analysis of models. Alloy is a lightweight modelling language for software design. By using the Alloy Analyzer, it is amenable to a fully automatic analysis \cite{D.Jackson}. It also provides a visualizer for making sense of solutions and counterexamples it finds \cite{P.Curson}.
-
+It helps in making the model more succinct and correct. It helps in finding the bugs more thoroughly and quickly. It finds basic flaws even in a simple model. There is a sense of confidence when the model behaves as expected under analysis which is cleaner to boot and small as well. All and all they are total error-ridden.
+   
 \section{Running the Alloy Analyser}
 \label{Run Alloy Analyzer}
 
@@ -568,9 +314,9 @@ in the console.
 
 Once you get Alloy up and running, you will be presented with a screen with two sections, looking something like this:
 
- \begin{figure}[h!]
+ \begin{figure}[ht!]
 \centering
- \includegraphics[width= 1\textwidth]{alloyblank.png}
+ \includegraphics[width= 1.0\textwidth]{alloyblank}
 \caption{Alloy Layout.}
  \end{figure}
  
@@ -590,7 +336,7 @@ The main toolbar of the Alloy Analyser provides quick access to the most commonl
 \subsection{Editor Panel and Message Panel}
 \label{Editor and Message Panel}
 
-The user interface consists of the editor panel and the message panel. The relative sizes of panels may be adjusted by clicking and dragging the split bars that separate the panels \cite{DanielJackson}.
+The user interface consists of the editor panel and the message panel. The relative sizes of panels may be adjusted by clicking and dragging the split bars that separate the panels \cite{DanielJackson2004}.
 \begin{itemize}
 \item 	Editor panel: Contains a tabbed text editor for modifying Alloy models. It supports tabbing so you can edit multiple text files simultaneously. It also supports error highlighting during model compilation.
 \item 	Message panel: Displays the results of analysis. Each counterexample and each satisfying instance will have a clickable hyperlink. Clicking on it will launch the Alloy Visualizer to display the counterexample or instance.
@@ -604,9 +350,9 @@ For example, if a model cannot be compiled, an error message is displayed, and t
 
 The preferences can be set by clicking the options menu.
 \begin{itemize}
-\item SAT solver : Alloy4 comes prepackaged with a selection of SAT solvers. By default, the pure Java solver ``SAT4J” is chosen since it runs on every platform and operating system \cite{DanielJackson}.
+\item SAT solver : Alloy4 comes prepackaged with a selection of SAT solvers. By default, the pure Java solver ``SAT4J” is chosen since it runs on every platform and operating system \cite{DanielJackson2004}.
 
-If you require faster performance, you can try one of the native solver such as MiniSat or ZChaff. But if MiniSat or ZChaff crashes due to platform or operating system incompatibility, then change the solver back to SAT4J \cite{DanielJackson}.
+If you require faster performance, you can try one of the native solver such as MiniSat or ZChaff. But if MiniSat or ZChaff crashes due to platform or operating system incompatibility, then change the solver back to SAT4J \cite{DanielJackson2004}.
 
 \item Warnings are Fatal : By default, a model that contains one or more compilation warnings cannot be executed.
 \item Maximum Memory to Use : The amount of memory to allocate for Alloy4; larger and more complicated models require more memory.
@@ -614,22 +360,22 @@ If you require faster performance, you can try one of the native solver such as 
 \item Font Size : This controls the font size in the editor panel and the message panel.
 \item Font : This controls the font in the editor panel and the message panel.
 \item Tab Size : This controls the tab size in the editor panel.
-\item Skolem Depth : This controls the maximum depth of alternating universal-vs-existential quantifier that we will permit when generating a skolem function. If a formula exceeds this depth, a skolem function for it will not be generated \cite{DanielJackson}.
-\item Unsat Core Minimization Strategy : This controls the unsat core. The fast strategy performs no minimization at all. The medium strategy uses a hybrid algorithm that attempts to reduce the core size. The slow strategy guarantees that, at the logic level, the core is a locally minimum core \cite{DanielJackson}.
-\item Visualize Automatically : If this option is enabled, after executing any command, the Alloy Analyser will automatically load the visualizer to visualize the counterexample or instance (if any)\cite{DanielJackson}.
-\item Record the Kodkod Input/output : If this option is enabled, after executing any command, then Alloy Analyser will record the Kodkod input model generated for that command, as well as the Kodkod solution corresponding to that command \cite{DanielJackson}.
+\item Skolem Depth: This controls the maximum depth of alternating universal-vs-existential quantifier that we will permit when generating a skolem function. If a formula exceeds this depth, a skolem function for it will not be generated\cite{DanielJackson2004}.
+\item Unsat Core Minimization Strategy : This controls the unsat core. The fast strategy performs no minimization at all. The medium strategy uses a hybrid algorithm that attempts to reduce the core size. The slow strategy guarantees that, at the logic level, the core is a locally minimum core \cite{DanielJackson2004}.
+\item Visualize Automatically : If this option is enabled, after executing any command, the Alloy Analyser will automatically load the visualizer to visualize the counterexample or instance (if any)\cite{DanielJackson2004}.
+\item Record the Kodkod Input/output : If this option is enabled, after executing any command, then Alloy Analyser will record the Kodkod input model generated for that command, as well as the Kodkod solution corresponding to that command \cite{DanielJackson2004}.
 \end{itemize}
 
 \section{Performing an Analysis on Alloy Models}
 \label{Alloy Performance}
 
-A run command is used to search for solutions that satisfy the specification and a predicate, while a check command is used to search for the solutions that satisfy the specification but violate an assertion \cite{DanielJackson}.
+A run command is used to search for solutions that satisfy the specification and a predicate, while a check command is used to search for the solutions that satisfy the specification but violate an assertion \cite{DanielJackson2004}.
 
-To run either type of analysis, select the command to be run from the run menu, or click the ``run" toolbar button \cite{DanielJackson}.
+To run either type of analysis, select the command to be run from the run menu, or click the ``run" toolbar button \cite{DanielJackson2004}.
 
 The run menu will display the list of check and run commands present in the model. The commands can be executed one at a time, or click ``run all" to execute them all.
 
-The run toolbar button will executes the most recently executed command. If no command has been executed, it will execute the first command in the model.The analysis will either terminate with a solution or indicate that one cannot be found within the search space specified by the type scopes of the command.If a solution is found, it can be displayed by clicking on the blue clickable hyperlink in the message panel.Or, if you enable ``visualize automatically" in the options menu, then the option will be displayed automatically \cite{DanielJackson}.
+The run toolbar button will executes the most recently executed command. If no command has been executed, it will execute the first command in the model.The analysis will either terminate with a solution or indicate that one cannot be found within the search space specified by the type scopes of the command.If a solution is found, it can be displayed by clicking on the blue clickable hyperlink in the message panel.Or, if you enable ``visualize automatically" in the options menu, then the option will be displayed automatically \cite{DanielJackson2004}.
 
 \subsection{Loading the Model}
 \label{Model loading}
@@ -641,7 +387,7 @@ Therefore, if made some changes to the model, there is no need of saving them be
 \subsection{Troubleshooting}
 \label{Troubleshoot}
 
-Here are some of the common errors that may be encountered \cite{DanielJackson}:
+Here are some of the common errors that may be encountered \cite{DanielJackson2004}:
 \begin{itemize}
 \item Higher-order quantification: The declaration for a variable in a quantified formula is higher-order and cannot be reduced via skolemization. Solving such formulas will always take a significant amount of time and memory unless the scope is very, very small, since every combination must be enumerated. Thus, the Alloy Analyser will not attempt to solve such a formula.
 \item The module X cannot be found: The Alloy Analyser cannot find the desired model to import in an ``open” statement.
@@ -654,8 +400,8 @@ Here are some of the common errors that may be encountered \cite{DanielJackson}:
 
 Various things may affect the speed of analysis which include:
 \begin{itemize}
-\item The size of the type scoped specified in the command. The difficulty of the analysis increases with scope in a quicker than linear fashion \cite{DanielJackson}.
-\item The SAT solver used. By default, the SAT4J solver is used. However, other solvers may fare better in specific models. The SAT solver may be changed by clicking the options menu \cite{DanielJackson}.
+\item The size of the type scoped specified in the command. The difficulty of the analysis increases with scope in a quicker than linear fashion \cite{DanielJackson2004}.
+\item The SAT solver used. By default, the SAT4J solver is used. However, other solvers may fare better in specific models. The SAT solver may be changed by clicking the options menu \cite{DanielJackson2004}.
 \end{itemize}
 
 \subsection{About Module Paths}
@@ -665,8 +411,8 @@ Alloy models may contain ``open" statements, like this one:
 
 Open util/integer
 
-The Alloy ``open" statement is roughly similar to Java ``import" or the C/C++ ``include" in that it tells the tool to look at some source in another file.Alloy will look for util/integer.als in two places:First of all, if the module is one of the sample model that comes with Alloy4, it will load it. This includes all the ``util" modules such as util/ordering and util/Boolean \cite{DanielJackson}.
-Alloy 4 contains a number of utility modules that provide common operations on graphs, integers, etc. Here is a list of the modules and a short description for each module \cite{DanielJackson}:
+The Alloy ``open" statement is roughly similar to Java ``import". It tells the tool to look at some source in another file.Alloy will look for util/integer.als in two places: First of all, if the module is one of the sample model that comes with Alloy4, it will load it. This includes all the ``util" modules such as util/ordering and util/Boolean \cite{DanielJackson2004}.
+Alloy 4 contains a number of utility modules that provide common operations on graphs, integers, etc. Here is a list of the modules and a short description for each module \cite{DanielJackson2004}:
 \begin{itemize}
 \item module util/boolean: Creates a Bool type with two singleton subtypes: True and False. 
 \item module util/graph[node]: Utilities for common operations and contraints on graphs. 
@@ -696,7 +442,7 @@ The labels, colours, and various other settings can be configured by clicking th
 \label{Skolemization relations}
 
 Often times, quantified formulas can be reduced to equivalent formulas without the use of quantifiers.
-This reduction is called skolemization and is based on the introduction of one or more skolem constants or function that capture the constraint of the quantified formula in their values \cite{DanielJackson}.
+This reduction is called skolemization and is based on the introduction of one or more skolem constants or function that capture the constraint of the quantified formula in their values \cite{DanielJackson2004}.
 
 Consider the following example: 
 
@@ -712,14 +458,14 @@ fact {
 
     x' in A \&\& no x'.r 
     
-x' is the skolem reation in this case. The existential quantifier ``some" is not needed because the analysis will search for the existence of the skolem realtion x'\cite{D.Jackson}.
+x' is the skolem reation in this case. The existential quantifier ``some" is not needed because the analysis will search for the existence of the skolem realtion x'\cite{J.M.Wing1996}.
   
 \subsection{Determining the names of Skolem relations }
 \label{determine skolem relations}
 
  The Alloy Analyzer automatically generates and assigns names to skolem relations.
  
-The names can be determined by looking at the solved instance using any of the three (Text, Tree, Viz) views \cite{DanielJackson}.
+The names can be determined by looking at the solved instance using any of the three (Text, Tree, Viz) views \cite{DanielJackson2004}.
 For instance, in the above example, the name \$x may have been assigned to the skolem relation x'. 
 
 \subsection{Using skolem relations }
@@ -727,14 +473,841 @@ For instance, in the above example, the name \$x may have been assigned to the s
 
 Skolem relations are displayed in the output like any other relation in the original model. Hence, its visualization may be conspicuous.
 
-\section{Summary}
-\label{summary}
+In the Alloy Analyser preference panel, we can set the choice of the SAT solver. For almost many of the analyses, the choice of the SAT solver doesn't matter. The emphasis of the Alloy is on the systems involving complex structured state. It is also used to analyse and model almost all kinds of system including name servers, network configuration protocols, access control, telephony, scheduling, document structuring, key management, cryptography, instant messaging, railway switching, filesystem synchronisation, semantic web. 
 
-This project is all about understanding the engine behind model-checking. SAT-Technology is emerging as a central engine used in model checking tools. The principle behind it is very simple: Formulate everything at the (logical) gate-level, and then run a SAT solver. The devil is then in the details. This project is about exploring this fascinating and recent connection. Either gaining some overview, or exploring a concrete application.
+I choose this approach because it allows us to begin with a simple model, apart from imitating the actual modelling process, by using only a small part of Alloy syntax and gradually with more advanced syntax as it is needed. Typically, formulas are temporal logic ones and interpretations are state machines. But, they don't have to be.
 
-The field has advanced considerably due to both clever ideas and careful engineering \cite{Bryant1986}. Model checking and many other application areas have directly benefited from these tools. It is important that the research community keeps pushing ahead with new approaches and new improvements in Boolean reasoning. There remain many important problems that are beyond the reach of today's methods.
+\chapter{Case study : Coffee Machine}
+\label{Ex: Coffee machine}
+
+It begins with a simple model of a coffee machine which retrieves the change and coffee. This is started up by a Finite state automata of a simple coffee machine.
+
+\begin{itemize}
+\item[Input:]Coini, Cofb, Stopb.
+\item[Outputs:]Coino, Cofo.
+\end{itemize}
+\begin{figure}[ht!]
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=5cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\small\bfseries}]
+                    
+
+  \node[main node] (Initial)[] {Initial};
+  \node[main node] (Wait) [right of=Initial] {Wait};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (Initial)edge [loop above] node {Cofb/-} (Initial) 
+              edge node [] {Coini/-} (Wait)
+              edge [loop below] node {stopb/-} (Initial)
+               
+    (Wait) edge [bend left] node [above] {Cofb/Cofo} (Initial)
+           edge [loop above] node {Coini/Coino} (Wait)
+       edge [bend left] node [below] {stopb/Coino} (Initial);
+             
+ \end{tikzpicture}
+ \caption{Finite State Automata representing a Coffee machine}
+\end{figure}
+\section{Dissecting the coffee machine model}
+\label{dissecting coffee machine}
+ The coffee machine is initially in the `Initial' state and is capable of accepting the input coin(Coini) and transiting to `Wait' state. As the coin(Coini) gets inserted the customer has to push a button(Cofb) to receive the coffee(Cofo) and must push another button(Stopb) to receive the change(Coino). On receiving the change the coffee machine resets by pressing the stop button(Stopb) and going to the `Initial' state again. This example is similar to the one given by Curson and Blanford \cite{A.Blandford2000}.
+ 
+ The Alloy based model of Coffee machine is shown in Appendix A.
+ 
+The possible inputs of a coffee machine are: Coini, Cofb, Stopb. The possible outputs of a coffee machine are: Coino, Cofo.
+
+\begin{verbatim}
+abstract sig CofState{}
+one sig Initial, Wait extends CofState{}
+\end{verbatim}
+
+It defines a set named CofState. Here we can define relations that have this signature as their domain. Relations defined here behave like fields of an object in the OO paradigm. Another way to enforce that constraint would be to mark CofState as abstract. An abstract signature only contains atoms which are also contained in one of its extending signatures. Exception: If there are no extending signatures, then the abstract keyword is ignored. It provides the signature declaration for the various states i.e., `Initial' and `Wait' of a coffee machine. 
+
+\begin{verbatim}
+abstract sig OP{}
+one sig Coini, Cofb, Stopb, Coino, Cofo extends OP{}
+\end{verbatim}
+
+It defines the signature declaration for a set of customer action called OP. It also defines the signature declaration for various actions `Coini', `Cofb', `Stopb', `Coino', `Cofo' to initiate the changes in the states of a coffee machine.
+
+\begin{verbatim}
+sig Cof{
+	state: one CofState,
+	op: OP
+}
+\end{verbatim}
+
+The state of the Coffee machine consists of its current state as defined above. Since it is marked one, there will always be exactly one instance of it. We declare a signature Cof to hold the state of the Coffee machine at one instant in time \cite{RussellBoyatt}.
+
+To represent the evolving state of the Coffee machine we must constrain the possible states of our model. Predicates are used to represent operations on the state of the Coffee machine and describe the relationship between two instances of the Coffee signature. We can think of these as the `before' (c) and `after' (c') states. We present the predicate that presents the customer, who has just inserted a coin, selecting the Coffee to purchase \cite{RussellBoyatt}:
+
+\begin{verbatim}
+pred entercoin[c,c':Cof] {
+	c.state=Initial &&
+	c'.state=Wait
+}
+
+\end{verbatim}
+
+This predicate, although it represents an operation, is a constraint. It constrains the state before selecting the coffee (c) and constrains the state after selecting the coffee (c'). For example, ``c.state = Initial" ensures that the coffee machine is in the `Initial’ state initially and then ``c'.state = Wait" ensures that it is in the `Wait' state afterwards. This is a familiar and expressive approach in state-based specifications facilitating the use of Alloy. This is a familiar and expressive approach in state-based specifications facilitating the use of Alloy. Similarly, other operations on the state of the Coffee machine, such as entering coins and returning change, are described using this approach to predicates \cite{RussellBoyatt}.
+
+The aim is to examine the dynamic behaviour of the Coffee machine and must therefore introduce a mechanism to capture the evolving state of the Coffee machine but still allow for the model to be statically checked. It is called as dynamic because there is a change of state. Alloy already has this mechanism in the form of traces. The predicate describing the valid traces in the system is \cite{RussellBoyatt}:
+
+\begin{verbatim}
+pred traces{
+
+	initial[CO/first[]] &&
+	all c:Cof-CO/last[] | let c' = CO/next[c] |
+	((entercoin[c,c'] && c'.op = Coini)
+	or
+	(buycof[c,c'] && c'.op = Cofb && c'.op = Cofo)
+	or
+	(askchange[c,c'] && c'.op = Stopb && c'.op = Coino)
+
+}
+\end{verbatim}
+
+This says that the initial condition holds for the initial time step, and then for all subsequent times the machine must change in accordance with one of the three predicates: entercoin, buycof and askchange. Additionally, the actions of the customer are defined here to help annotate any examples returned. The three actions by the customer are: Entering the input coin(Coini), action of the customer to press the coffee button(Cofb) and get the Coffee output(Cofo). The ordering library module used here is generic, usable with any signature type and not specific to this example.
+
+A single interaction of the model shall be referred to as `transaction’, consisting of a trace that begins with the initial state (awaiting coins) and finishes with the Coffee machine resetting for the one and only time in that transaction \cite{RussellBoyatt}.
+
+\begin{verbatim}
+pred transaction{
+	traces &&
+	(CO/last[]).state = Initial &&
+	Initial !in (Cof - CO/last[]).state
+}
+
+one sig AchieveCoffee{goals : set OP } {goals = Cofo }
+one sig RetrieveChange{subgoals : set OP }{subgoals = Coino }
+
+assert Dynamicbehaviour{
+	transaction => let m = CO/max[state.(AchieveCoffee.goals)] |
+	some m=>all sg: retrieveChange.subgoals|state.sg in CO/prevs[m]
+}
+check Dynamicbehaviour for 5
+
+\end{verbatim}
+
+We define the main goal to be the dispensing of the Coffee, and the sub-goal to be the dispensing of the change. For a post-completion error to occur in our model, the Coffee would be dispensed before the change is dispensed. In the DynamicBehaviour assertion, it is stated that for valid transactions all subgoals (sg) must occur in states before the state in which the goal occurs (m). Assertions are something we believe to be true about our model and the check command asks Alloy to provide us with the counterexamples, demonstrating that it is possible for the primary goal to be achieved prior to all of the sub-goals being satisfied.
+
+Now, the model has been constructed and also the appropriate mechanisms to represent are also introduced and checked for the error. The properties of the model using the tool itself can be explored. 
+
+\section{Extending the Coffee machine}
+\label{Cofee machine ext}
+
+Now, several possible extensions and revisions to our Coffee machine model are considered \cite{RussellBoyatt}. The properties that have already been defined can be checked with each revision, specifically those regarding post-completion errors \cite{RussellBoyatt}. Each of these extended models shows how through the experimentation and interaction with the model develop them beyond their initial design whilst retaining the properties and valuable checks has been developed \cite{RussellBoyatt}.
+
+\subsection{Allowing different types of coins}
+\label{Allowing different types coins}
+
+Suppose we expand this model to allow the coffee machine to accept both one and two pence coins. We now have two initial steps, one that represents the insertion of a 1p coin and the second for the insertion of a 2p coin \cite{RussellBoyatt}:
+
+\begin{verbatim}
+pred enter2pcoin[c, c': Cof] {
+	c.state = Reset &&
+	c'.balance = INT/add[c.balance, int(2)] &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Coin
+}
+
+pred enter1pcoin[c, c': Cof]{
+	c.state = Reset &&
+	c'.balance = INT/add[c.balance, int(1)] &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Coin
+}
+\end{verbatim}
+They must also account for two different reset conditions. Customers are allowed to insert 2p coins into the machine for Coffee that only cost 1p and must therefore return change of 1p. However, should a 1p coin be inserted into the Coffee machine, it is not necessary to give change so which can reset immediately under these conditions. There are two reset possibilities \cite{RussellBoyatt}:
+
+\begin{verbatim}
+pred reset[c,c' : Cof]{
+	c.state = Change &&
+	c'.balance = c.balance &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Reset
+}
+
+pred reset2[c,c' : Cof] {
+	c.state = Coffee &&
+	c.balance = 0 &&
+	c'.balance = c.balance &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Reset
+}
+\end{verbatim}
+
+The first allows the machine to return to the reset state after the change has been dispensed and the second allows the machine to be reset immediately after the coffee is dispensed if and only if there is no chance to dispense \cite{RussellBoyatt}. This model is listed in appendix B.
+
+\subsection{Allowing different types of Coffee}
+\label{Different Coffees}
+
+Our Coffee currently only allows for the selection of one type of Coffee. Clearly, real life Coffee machines allow for the selection of a wide variety of products. In accordance to it, the purchase of both a small Coffee, costing one pence, and a large Coffee, costing two pence is allowed. Whereas before there was a single operation, buycof, to represent the purchase of a Coffee and now introducing an operation for each of the different types of Coffee \cite{RussellBoyatt}.
+
+\begin{verbatim}
+pred buysmallcof[c, c': Cof] {
+	c.state = Coin &&
+	INT/gte[c.balance,int(1)] &&
+	c'.balance = INT/sub[c.balance, int(1)] &&
+	no c.dispenser &&
+	c'.dispenser = SmallCof
+	c'.state = Coffee
+}
+
+pred buylargecof[c, c': Cof] {
+	c.state = Coin &&
+	INT/gte[c.balance,int(2)] &&
+	c'.balance = INT/sub[c.balance, int(2)] &&
+	no c.dispenser &&
+	c'.dispenser = LargeCof
+	c'.state = Coffee
+}
+\end{verbatim}
+
+ Additionally, the actual retrieval of the Coffee from the dispenser can now be considered. Until now, there was no consideration of the customer retrieving the Coffee after the machine has dispensed it \cite{RussellBoyatt}. A new state, GotCoffee, to represent the state of the machine after the Coffee has been retrieved is introduced. (The machine may, for instance, detect this with a sensor on the dispenser door). For all of these modifications there is an introduction of the actions of the customer in the form of the OP signature declarations and the traces model is adapted accordingly\cite{RussellBoyatt}.
+ 
+\begin{verbatim}
+pred getcof[c,c':Cof] {
+	c.state = Coffee &&
+	c'.state = GotCoffee &&
+	some c.dispenser &&
+	no c'.dispenser &&
+	c'.balance = c.balance
+}
+\end{verbatim}
+
+ This model is listed in appendix C.
+ 
+\subsection{Purchasing more than one Coffee}
+\label{Purchasing more than one coffee}
+
+Suppose the customer inserts a two pence coin but then only purchases Coffee costing one pence. Selecting multiple Coffees from the machine would be allowed. A simple extension to the existing getcof predicate allows there to be a valid transition from the Coffee state back to the Coin state if a non-zero balance remains \cite{RussellBoyatt}. If the customer had acted as described, entering a two pence and selecting a one pence Coffee, it would allow the machine to return to the state as if the customer had simply entered a one pence coin. This demonstrates that the state of the model can depend quite specifically on the state of the machine before the operation \cite{RussellBoyatt}.
+
+\begin{verbatim}
+pred getcof[c,c':Cof] {
+	c.state = Coffee &&
+	some c.dispenser &&
+	no c'.dispenser &&
+	c'.balance = c.balance &&
+	((INT/gte[c.balance,int(0)] => c'.state = Coin )
+	or c'.state = GotCoffee)
+}
+\end{verbatim}
+
+This model is listed in appendix D.
+
+\subsection{Inserting more than one coin}
+\label{Inserting more than one coin}
+
+In the final example, the customer is allowed to insert more than one coin into the Coffee machine \cite{RussellBoyatt}. This modification simply requires us to allow the machine to return to the state where it accepts coins but without resetting the stored balance \cite{RussellBoyatt}.
+
+\begin{verbatim}
+pred enter2pcoin[c, c': Cof] {
+	c.state = Reset &&
+	c'.balance = INT/add[c.balance, int(2)] &&
+	c'.dispenser = c.dispenser &&
+	(c'.state = Coin or c'.state = Reset)
+}
+pred enter1pcoin[c, c': Cof] {
+	c.state = Reset &&
+	c'.balance = INT/add[c.balance, int(1)] &&
+	c'.dispenser = c.dispenser &&
+	(c'.state = Coin or c'.state = Reset)
+}
+\end{verbatim}
+
+This model is listed in appendix E.
+
+Now, there is a reasonably complicated Coffee machine. It began with a Coffee machine that could accept one single coin and dispense one type of Coffee \cite{RussellBoyatt}. Now there is a model of a Coffee machine that can accept multiple coins of different values, provides a selection of different Coffee types and allow for the purchase of multiple Coffees. Throughout these modifications the ability to look for post-completion errors has been retained. The trace of the sequences of operations that results in a post-completion error has lengthened due to the extra complexity of the model \cite{RussellBoyatt}.
+ 
+
+\chapter{Model Checking - How the Analysis works}
+\label{Working of analysis}
+
+The analysis works based on constraint solver called Alloy analyser. Bounded instance of a code is encoded by unwinding the loops to a smaller number and considering the limited number of heap cells. Based on this observation, a counterexample of small size is exhibited if a fragment code fails to satisfy some property. 
+
+In the give coffee machine example assertion is checked by searching for our counterexample and hopefully finding none. A finite scope has to be chosen to search within, hence it is chosen as 5. That is, Alloy will examine all examples whose top level signatures( those who don't extend other signature have upto 5 instances.
+
+Check DynamicBehaviour for 5
+
+When a check statement is executed there may be two possible results:
+\begin{itemize}
+\item There are no counterexample to the assertion for the specified scope or smaller. Alloy does not guarantee about the property holding for larger scopes, but there is the evidence that by examining only the small scope most errors can be caught by the models. 
+\item Alloy found a counterexample. The example can then be visualized as to understand why it occurred. Since the Alloy does not guarantee of returning the smallest counterexample that exists, its better to try running the same check command on smaller scopes to bring down the size for the solution before visualizing it. 
+\end{itemize}
+In our example there is no counterexample, infact it holds for any scope. But Alloy only guarantees that it holds for upto a scope of 5.
+
+Assertions could have been written as facts, by potentially masking the counterexample if they do not hold. Hence its preferable to check the properties rather than redundantly forcing them to be true. 
+
+\section{Underlying Assumptions}
+\label{Assumptions}
+For the analysis technique, heap size and the number of iterations requires bounds from the users\cite{Vaziri-Farahani2004}. Exhaustive search within the small bounds uncovering the most bugs is the underlying assumption and is known as small scope hypothesis. The appropriate bounds to the user is left to the user. 
+
+\section{Making the specifications executable}
+\label{Make spec exec}
+
+In this section, the basics of how to execute a command to check the Alloy model will be seen. All this will be done in the context of the first Coffee machine model, focusing on checking the assertions we made. 
+
+Here, after creating a Coffee machine model and saving it with .als extension, a command is selected and executed by clicking on the `Execute' icon or by choosing Execute from the Tools menu. You will be told ``no counterexample found. Assertion may be valid.", meaning that there are no counter examples to the assertion within a scope of 5. Had there been solutions, you can click on message and display one such solution in a new visualizer window.
+
+\mdfdefinestyle{MyFrame}{%
+    linecolor=black,
+    outerlinewidth=0.5pt,
+    roundcorner=0.5pt,
+    innertopmargin=\baselineskip,
+    innerbottommargin=\baselineskip,
+    innerrightmargin=0.5pt,
+    innerleftmargin=0.5pt,
+    backgroundcolor=gray!50!white}
+\begin{mdframed}[style=MyFrame]
+\lipsum[0]
+
+\textbf{Executing ``Run show1"}
+
+  Solver=sat4j Bitwidth=0 MaxSeq=0 SkolemDepth=1 Symmetry=20
+  
+   68 vars. 24 primary vars. 87 clauses. 173ms.
+   
+   Instance found. Predicate is consistent. 60ms.
+
+\lipsum[0]
+\end{mdframed}
+
+Generally when any changes are made to the model and want to see its effect on a run or a check, there is no need to click save first. It is saved automatically when that command is executed again. Thsi is because the Alloy Analyzer will always use the text editor's version rather than the version on the disk.
+
+\section{Visualizing the Instance}
+The instance of it is visualized by clicking on it. A new window will open up with a diagram similar to dis:
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=1.0\textwidth]{viz1}
+\caption{Finite states of a coffee machine}
+\end{figure}
+ 
+The tree structure of a model can also be seen by clicking on the ``tree" button from the toolbar. However by clicking on the ``viz" button from the toolbar we can get back the diagram view.
+
+\chapter{Interpreting the Result from Alloy to CNF} 
+In order to find such a satisfying assignment, the Alloy Analyzer first translates the problem formula to propositional logic, and then to conjunctive normal form(CNF).This CNF file is the input file to the SAT solver. An off-the-shelf SAT solver is then used to find a satisfying assignment.
+
+\section{A mechanism behind the SAT Translation}
+\label{A view from behind}
+
+By placing a bound on the universe of atoms, we will be able to solve the constraints in first-order logic. By doing so, the search space becomes finite and then translating the constraints into the Boolean form finally finding the solution with a SAT solver \cite{O.Strichman}. The SAT solver finds a solution to the satisfiability(SAT) problem: 
+
+Given a Boolean function f(int,..,xn), return an assignment of Boolean values to xi such that f evaluates to true, or prove that no such assignment exists. The solution is mapped back to the original constraint problem in a manner comprehensible to the author of the constraints \cite{Yeung2005}.
+
+For our project, it is only necessary to have a basic understanding of how the translation into Boolean logic works in Alloy. 
+ 
+``The universe of atoms is bounded by a user-defined or inferred scope for each type used in the object model. Consider a binary relation .
+\begin{equation}
+r : X \rightarrow Y
+\end{equation} 
+with the scopes of X and Y set to m and n, respectively. Then, r can be represented as an m-by-n Boolean matrix where a value of true in the i-th row and j-th column means that the i-th element of X is related to the j-th element of Y. To translate a constraint over r, one simply replaces the constants in the Boolean matrix with variables. The translations for most operations follow nicely; for example, union and intersection of relations can be translated as pairwise disjunction and conjunction of the variables, respectively" \cite{Yeung2005}.
+
+\subsection{From Alloy to Propositional logic using Kodkod Model Checker}
+\label{Kodkod model checker}
+First-order logic is converted to a propositional logic with the help of a Kodkod model finder which produces a Java file. 
+
+Kodkod is a model finder which acts as a intermediate file to convert relational logic into Boolean formula and then the SAT solver is invoked on the Boolean formula. Alloy has an inbuilt KodKod model checker which automatically generates the java file. It is stored in a temporary file on the disk and can be viewed by clicking the \textit{Options} button on the toolbar. When the \textit{Options} toolbar is clicked, a set of menu displays. On clicking the \textit{SAT solver} in Option menu various SAT solvers inbuilt in the Alloy tool appears. In order to get the location of the Kodkod file, the \textit{Output Kodkod to file} is to be clicked which shows a message on the right hand side of the Alloy layout displaying the path of the Kodkod file located.
+
+With respect to our first Coffee machine model, it appears something like this.
+\begin{verbatim}
+import java.util.Arrays;
+import java.util.List;
+import kodkod.ast.*;
+import kodkod.ast.operator.*;
+import kodkod.instance.*;
+import kodkod.engine.*;
+import kodkod.engine.satlab.SATFactory;
+import kodkod.engine.config.Options;
+
+/* 
+  ==================================================
+    kodkod formula: 
+  ==================================================
+    no(this/Initial & this/Wait) && 
+    no(this/Coini & this/Cofb) && 
+    no((this/Coini + this/Cofb) & this/Stopb) && 
+    no ((this/Coini+this/Cofb+this/Stopb) & this/Coino) && 
+    no ((this/Coini+this/Cofb+this/Stopb+this/Coino ) & this/Cofo) && 
+    (all show1_this: this/Cof | 
+      one (show1_this . this/Cof.state) && 
+      (show1_this . this/Cof.state) in (this/Initial + this/Wait)) && 
+    (this/Cof.state . univ) in this/Cof && 
+    (all show1_this: this/Cof | 
+      one (show1_this . this/Cof.op) && 
+      (show1_this . this/Cof.op) in (this/Coini + this/Cofb + this/Stopb + 
+      this/Coino + this/Cofo)) && 
+    (this/Cof.op . univ) in this/Cof && 
+    (this/AchieveCoffee . (this/AchieveCoffee -> this/AchieveCoffee.goals)) in (
+    this/Coini + this/Cofb + this/Stopb + this/Coino + this/Cofo) && 
+    this/AchieveCoffee.goals = this/Cofo && 
+    (this/RetrieveChange . (this/RetrieveChange -> this/RetrieveChange.subgoals)
+    ) in (this/Coini + this/Cofb + this/Stopb + this/Coino + this/Cofo) && 
+    this/RetrieveChange.subgoals = this/Coino && 
+    (CO/Ord . (CO/Ord -> CO/Ord.First)) in this/Cof && 
+    (CO/Ord . (CO/Ord -> CO/Ord.Next)) in (this/Cof -> this/Cof) && 
+    ord[CO/Ord.Next, this/Cof, CO/Ord.First, ] && 
+    (some show1_c: this/Cof | 
+      true) && 
+    Int/next = Int/next && 
+    seq/Int = seq/Int && 
+    String = String && 
+    this/Initial = this/Initial && 
+    this/Wait = this/Wait && 
+    this/Coini = this/Coini && 
+    this/Cofb = this/Cofb && 
+    this/Stopb = this/Stopb && 
+    this/Coino = this/Coino && 
+    this/Cofo = this/Cofo && 
+    this/Cof = this/Cof && 
+    this/AchieveCoffee = this/AchieveCoffee && 
+    this/RetrieveChange = this/RetrieveChange && 
+    CO/Ord = CO/Ord && 
+    this/Cof.state = this/Cof.state && 
+    this/Cof.op = this/Cof.op && 
+    this/AchieveCoffee.goals = this/AchieveCoffee.goals && 
+    this/RetrieveChange.subgoals = this/RetrieveChange.subgoals && 
+    CO/Ord.First = CO/Ord.First && 
+    CO/Ord.Next = CO/Ord.Next && 
+     = 
+  ==================================================
+*/
+public final class Test {
+
+public static void main(String[] args) throws Exception {
+
+Relation next = Relation.nary("Int/next", 2);
+Relation int = Relation.unary("seq/Int");
+Relation string = Relation.unary("String");
+Relation Initial = Relation.unary("this/Initial");
+Relation Wait = Relation.unary("this/Wait");
+Relation Coini = Relation.unary("this/Coini");
+Relation Cofb = Relation.unary("this/Cofb");
+Relation Stopb = Relation.unary("this/Stopb");
+Relation Coino = Relation.unary("this/Coino");
+Relation CofO = Relation.unary("this/Cofo");
+Relation Cof = Relation.unary("this/Cof");
+Relation AchieveCoffee = Relation.unary("this/AchieveCoffee");
+Relation RetrieveChange = Relation.unary("this/RetrieveChange");
+Relation CO/Ord = Relation.unary("CO/Ord");
+Relation Cof.state = Relation.nary("this/Cof.state", 2);
+Relation Cof.op = Relation.nary("this/Cof.op", 2);
+Relation AchieveCoffee.goals = Relation.unary("this/AchieveCoffee.goals");
+Relation RetrieveChange.subgoals = Relation.unary("this/RetrieveChange.subgoals");
+Relation CO/ord.First = Relation.unary("CO/Ord.First");
+Relation CO/Ord.Next = Relation.nary("CO/Ord.Next", 2);
+Relation " " = Relation.unary("");
+
+List<String> atomlist = Arrays.asList(
+ "AchieveCoffee$0", "CO/Ord$0", "Cof$0", "Cof$1", "Cof$2",
+ "Cofb$0", "Cofo$0", "Coini$0", "Coino$0", "Initial$0", "RetrieveChange$0",
+ "Stopb$0", "Wait$0"
+);
+
+Universe universe = new Universe(atomlist);
+TupleFactory factory = universe.factory();
+Bounds bounds = new Bounds(universe);
+
+TupleSet next_upper = factory.noneOf(2);
+bounds.boundExactly(next, next_upper);
+
+TupleSet int_upper = factory.noneOf(1);
+bounds.boundExactly(int, int_upper);
+
+TupleSet string_upper = factory.noneOf(1);
+bounds.boundExactly(string, string_upper);
+
+TupleSet Initial_upper = factory.noneOf(1);
+Initial_upper.add(factory.tuple("Initial$0"));
+bounds.boundExactly(Initial, Initial_upper);
+
+TupleSet Wait_upper = factory.noneOf(1);
+Wait_upper.add(factory.tuple("Wait$0"));
+bounds.boundExactly(Wait, Wait_upper);
+
+TupleSet Coini_upper = factory.noneOf(1);
+Coini_upper.add(factory.tuple("Coini$0"));
+bounds.boundExactly(Coini, Coini_upper);
+
+TupleSet Cofb_upper = factory.noneOf(1);
+Cofb_upper.add(factory.tuple("Cofb$0"));
+bounds.boundExactly(Cofb, Cofb_upper);
+
+TupleSet Stopb_upper = factory.noneOf(1);
+Stopb_upper.add(factory.tuple("Stopb$0"));
+bounds.boundExactly(Stopb, Stopb_upper);
+
+TupleSet Coino_upper = factory.noneOf(1);
+Coino_upper.add(factory.tuple("Coino$0"));
+bounds.boundExactly(Coino, Coino_upper);
+
+TupleSet CofO_upper = factory.noneOf(1);
+CofO_upper.add(factory.tuple("Cofo$0"));
+bounds.boundExactly(CofO, CofO_upper);
+
+TupleSet Cof_upper = factory.noneOf(1);
+Cof_upper.add(factory.tuple("Cof$0"));
+Cof_upper.add(factory.tuple("Cof$1"));
+Cof_upper.add(factory.tuple("Cof$2"));
+bounds.boundExactly(Cof, Cof_upper);
+
+TupleSet AchieveCoffee_upper = factory.noneOf(1);
+AchieveCoffee_upper.add(factory.tuple("AchieveCoffee$0"));
+bounds.boundExactly(AchieveCoffee, AchieveCoffee_upper);
+
+TupleSet RetrieveChange_upper = factory.noneOf(1);
+RetrieveChange_upper.add(factory.tuple("RetrieveChange$0"));
+bounds.boundExactly(RetrieveChange, RetrieveChange_upper);
+
+TupleSet CO/Ord_upper = factory.noneOf(1);
+CO/Ord_upper.add(factory.tuple("CO/Ord$0"));
+bounds.boundExactly(CO/Ord, CO/Ord_upper);
+
+TupleSet Cof.state_upper = factory.noneOf(2);
+Cof.state_upper.add(factory.tuple("Cof$0").product(factory.tuple("Initial$0")));
+Cof.state_upper.add(factory.tuple("Cof$0").product(factory.tuple("Wait$0")));
+Cof.state_upper.add(factory.tuple("Cof$1").product(factory.tuple("Initial$0")));
+Cof.state_upper.add(factory.tuple("Cof$1").product(factory.tuple("Wait$0")));
+Cof.state_upper.add(factory.tuple("Cof$2").product(factory.tuple("Initial$0")));
+Cof.state_upper.add(factory.tuple("Cof$2").product(factory.tuple("Wait$0")));
+bounds.bound(Cof.state, Cof.state_upper);
+
+TupleSet Cof.op_upper = factory.noneOf(2);
+Cof.op_upper.add(factory.tuple("Cof$0").product(factory.tuple("Coini$0")));
+Cof.op_upper.add(factory.tuple("Cof$0").product(factory.tuple("Cofb$0")));
+Cof.op_upper.add(factory.tuple("Cof$0").product(factory.tuple("Stopb$0")));
+Cof.op_upper.add(factory.tuple("Cof$0").product(factory.tuple("Coino$0")));
+Cof.op_upper.add(factory.tuple("Cof$0").product(factory.tuple("Cofo$0")));
+Cof.op_upper.add(factory.tuple("Cof$1").product(factory.tuple("Coini$0")));
+Cof.op_upper.add(factory.tuple("Cof$1").product(factory.tuple("Cofb$0")));
+Cof.op_upper.add(factory.tuple("Cof$1").product(factory.tuple("Stopb$0")));
+Cof.op_upper.add(factory.tuple("Cof$1").product(factory.tuple("Coino$0")));
+Cof.op_upper.add(factory.tuple("Cof$1").product(factory.tuple("Cofo$0")));
+Cof.op_upper.add(factory.tuple("Cof$2").product(factory.tuple("Coini$0")));
+Cof.op_upper.add(factory.tuple("Cof$2").product(factory.tuple("Cofb$0")));
+Cof.op_upper.add(factory.tuple("Cof$2").product(factory.tuple("Stopb$0")));
+Cof.op_upper.add(factory.tuple("Cof$2").product(factory.tuple("Coino$0")));
+Cof.op_upper.add(factory.tuple("Cof$2").product(factory.tuple("Cofo$0")));
+bounds.bound(Cof.op, Cof.op_upper);
+
+TupleSet AchieveCofee.goals_upper = factory.noneOf(1);
+AchieveCofee.goals_upper.add(factory.tuple("Cofo$0"));
+bounds.boundExactly(AchieveCofee.goals, AchieveCofee.goals_upper);
+
+TupleSet RetrieveChange.subgoals_upper = factory.noneOf(1);
+RetrieveChange.subgoals_upper.add(factory.tuple("Coino$0"));
+bounds.boundExactly(RetrieveChange.subgoals, RetrieveChange.subgoals_upper);
+
+TupleSet First_upper = factory.noneOf(1);
+First_upper.add(factory.tuple("Cof$0"));
+First_upper.add(factory.tuple("Cof$1"));
+First_upper.add(factory.tuple("Cof$2"));
+bounds.bound(First, First_upper);
+
+TupleSet Next_upper = factory.noneOf(2);
+Next_upper.add(factory.tuple("Cof$0").product(factory.tuple("Cof$0")));
+Next_upper.add(factory.tuple("Cof$0").product(factory.tuple("Cof$1")));
+Next_upper.add(factory.tuple("Cof$0").product(factory.tuple("Cof$2")));
+Next_upper.add(factory.tuple("Cof$1").product(factory.tuple("Cof$0")));
+Next_upper.add(factory.tuple("Cof$1").product(factory.tuple("Cof$1")));
+Next_upper.add(factory.tuple("Cof$1").product(factory.tuple("Cof$2")));
+Next_upper.add(factory.tuple("Cof$2").product(factory.tuple("Cof$0")));
+Next_upper.add(factory.tuple("Cof$2").product(factory.tuple("Cof$1")));
+Next_upper.add(factory.tuple("Cof$2").product(factory.tuple("Cof$2")));
+bounds.bound(Next, Next_upper);
+
+TupleSet string0_upper = factory.noneOf(1);
+string0_upper.add(factory.tuple("Cof$0"));
+string0_upper.add(factory.tuple("Cof$1"));
+string0_upper.add(factory.tuple("Cof$2"));
+bounds.bound(string0, string0_upper);
 
 
+Expression string3=Initial.intersection(Wait);
+Formula string2=string3.no();
+Expression string5=Coini.intersection(Cofb);
+Formula string4=string5.no();
+Expression string8=Coini.union(Cofb);
+Expression string7=string8.intersection(Stopb);
+Formula string6=string7.no();
+Expression Initial1=string8.union(Stopb);
+Expression Initial0=Initial1.intersection(Coino);
+Formula string9=Initial0.no();
+Expression Initial4=Initial1.union(Coino);
+Expression Initial3=Initial4.intersection(CofO);
+Formula Initial2=Initial3.no();
+Variable Initial7=Variable.unary("show1_this");
+Decls Initial6=Initial7.oneOf(Cof);
+Expression Wait0=Initial7.join(Cof.state);
+Formula Initial9=Wait0.one();
+Expression Wait2=Initial.union(Wait);
+Formula Wait1=Wait0.in(Wait2);
+Formula Initial8=Initial9.and(Wait1);
+Formula Initial5=Initial8.forAll(Initial6);
+Expression Wait4=Cof.state.join(Expression.UNIV);
+Formula Wait3=Wait4.in(Cof);
+Variable Wait8=Variable.unary("show1_this");
+Decls Wait7=Wait8.oneOf(Cof);
+Expression Coini1=Wait8.join(Cof.op);
+Formula Coini0=Coini1.one();
+Expression Coini3=Initial4.union(CofO);
+Formula Coini2=Coini1.in(Coini3);
+Formula Wait9=Coini0.and(Coini2);
+Formula Wait6=Wait9.forAll(Wait7);
+Expression Coini5=Cof.op.join(Expression.UNIV);
+Formula Coini4=Coini5.in(Cof);
+Expression Coini8=AchieveCoffee.product(AchieveCofee.goals);
+Expression Coini7=AchieveCoffee.join(Coini8);
+Formula Coini6=Coini7.in(Coini3);
+Formula Coini9=AchieveCofee.goals.eq(CofO);
+Expression Cofb2=RetrieveChange.product(RetrieveChange.subgoals);
+Expression Cofb1=RetrieveChange.join(Cofb2);
+Formula Cofb0=Cofb1.in(Coini3);
+Formula Cofb3=RetrieveChange.subgoals.eq(Coino);
+Expression Cofb6=CO/Ord.product(First);
+Expression Cofb5=CO/Ord.join(Cofb6);
+Formula Cofb4=Cofb5.in(Cof);
+Expression Cofb9=CO/Ord.product(Next);
+Expression Cofb8=CO/Ord.join(Cofb9);
+Expression Stopb0=Cof.product(Cof);
+Formula Cofb7=Cofb8.in(Stopb0);
+Formula Stopb1=Next.totalOrder(Cof,First,string0);
+Variable Stopb4=Variable.unary("show1_c");
+Decls Stopb3=Stopb4.oneOf(Cof);
+Formula Stopb2=Formula.TRUE.forSome(Stopb3);
+Formula Stopb6=next.eq(next);
+Formula Stopb7=int.eq(int);
+Formula Stopb8=string.eq(string);
+Formula Stopb9=Initial.eq(Initial);
+Formula Coino0=Wait.eq(Wait);
+Formula Coino1=Coini.eq(Coini);
+Formula Coino2=Cofb.eq(Cofb);
+Formula Coino3=Stopb.eq(Stopb);
+Formula Coino4=Coino.eq(Coino);
+Formula Coino5=CofO.eq(CofO);
+Formula Coino6=Cof.eq(Cof);
+Formula Coino7=AchieveCoffee.eq(AchieveCoffee);
+Formula Coino8=RetrieveChange.eq(RetrieveChange);
+Formula Coino9=CO/Ord.eq(CO/Ord);
+Formula CofO0=Cof.state.eq(Cof.state);
+Formula CofO1=Cof.op.eq(Cof.op);
+Formula CofO2=AchieveCofee.goals.eq(AchieveCofee.goals);
+Formula CofO3=RetrieveChange.subgoals.eq(RetrieveChange.subgoals);
+Formula CofO4=First.eq(First);
+Formula CofO5=Next.eq(Next);
+Formula CofO6=string0.eq(string0);
+Formula string1=Formula.compose(FormulaOperator.AND, string2, string4, string6, string9,
+ Initial2, Initial5, Wait3, Wait6, Coini4, Coini6, Coini9, Cofb0, Cofb3, Cofb4, Cofb7, 
+ Stopb1, Stopb2, Stopb6, Stopb7, Stopb8, Stopb9, Coino0, Coino1,Coino2, Coino3, 
+ Coino4, Coino5, Coino6, Coino7, Coino8, Coino9, CofO0, CofO1, CofO2, CofO3, CofO4, CofO5, CofO6);
+
+Solver solver = new Solver();
+solver.options().setSolver(SATFactory.DefaultSAT4J);
+solver.options().setBitwidth(1);
+solver.options().setFlatten(false);
+solver.options().setIntEncoding(Options.IntEncoding.TWOSCOMPLEMENT);
+solver.options().setSymmetryBreaking(20);
+solver.options().setSkolemDepth(0);
+System.out.println("Solving...");
+System.out.flush();
+Solution sol = solver.solve(string1,bounds);
+System.out.println(sol.toString());
+}}
+
+\end{verbatim}
+The explanation goes as follows:
+
+When a Kodkod file was generated automatically it had its own default variable names assigned to variables. So, in order to make it more understandable and convenient to get the flow of the program I have replaced the default variable names with the original name of the variables.
+
+All the states and actions are represented as relation data-types in Java program. Atom List contains all the list of goals, states and actions. 
+
+A universe is created out of Atom List. We get a factory from universe which will help you fetch all the elements from the universe. And then its trying to  bound each tuple set to corresponding relational variables. Tuple set is an ordered list of elements. 
+
+In the Tuple set of Cof.state it is trying to associate possible states. Cof0 is an instance of Coffee machine. Similarly Cof1, Cof2 are also the instance. In Cof.op it is trying to associate possible actions.
+
+In the Tuple set of ``First", state will be either in Cof0, Cof1, Cof2. 
+ 
+In the Tuple set of ``Next" it states different possible steps or transitions that can take place between two states.  
+
+And finally in the Tuple Set String 0 "Last" is associating to be in one of the three instances i.e., Cof1, Cof2 and Cof3.
+
+Until now I have tried to associate the contents of Atom List to relational variables. In this process I am defining what does each relation variable semantically mean. Here its defining all the predicates that were defined in modelling language using the relation variables. 
+
+In the following code:
+
+\begin{verbatim}
+Expression string8=Coini.union(Cofb);
+Expression string7=string8.intersection(Stopb);
+Formula string6=string7.no();
+\end{verbatim}
+It represents the trace of events where Coini.union(Cofb) says that a Coin input action(Coini) and Coffee button(Cofb) is followed by Stop button(Stopb) which is the end of action. Union indicates the action is not yet completed and intersection is the end of the action. Here there is no change to be returned.
+
+Similarly in the following code: 
+\begin{verbatim}
+Expression Initial1=string8.union(Stopb);
+Expression Initial0=Initial1.intersection(Coino);
+Formula string9=Initial0.no();
+\end{verbatim}
+It represents traces of events which returns the change.
+
+And finally for the code:
+\begin{verbatim}
+Expression Stopb0=Cof.product(Cof);
+Formula Cofb7=Cofb8.in(Stopb0);
+Formula Stopb1=Next.totalOrder(Cof,First,string0);
+\end{verbatim}
+It also represents the trace of events where change and coffee is the output. 
+
+In the following code:
+\begin{verbatim}
+Expression Wait0=Initial7.join(Cof.state);
+Formula Initial9=Wait0.one();
+\end{verbatim}
+It is outputting the current coffee state.
+
+It also defines different sequence of traces possible by using expressions and formulas and goals. Tuple Set indicates what does each relation mean. Expressions and Formulas are used to define traces and goals.
+
+Finally all the formulas are combined into a single formula and executing. It is getting the formula to show the state. A solver is used to solve the formula. It does all the required default settings for the solver that is required to solve the formula.
+ 
+\subsection{From Propositional Logic to CNF}
+\label{Prop to CNF} 
+This propositional logic is then converted to an input file for a SAT solver which is in CNF format. Alloy automatically generates the CNF file. It is stored in a temporary file on the disk and can be viewed by clicking the \textit{``Options"} button on the toolbar. When the \textit{``Options"} toolbar is clicked, a set of menu displays. On clicking the \textit{``SAT solver"} in Option menu various SAT solvers inbuilt in the Alloy tool appears. In order to get the location of the Kodkod file, the \textit{``Output CNF to file"} is to be clicked which shows a message on the right hand side of the Alloy layout displaying the path of the input file located.
+
+With respect to our first Coffee machine model, it appears something like this.
+\begin{verbatim}
+p cnf 68 87                 
+-2 -1 -25 0
+25 -27 0
+1 2 -26 0
+26 -27 0
+27 -34 0
+-4 -3 -28 0
+28 -30 0
+3 4 -29 0
+29 -30 0
+30 -34 0
+-6 -5 -31 0
+31 -33 0
+5 6 -32 0
+32 -33 0
+33 -34 0
+-8 -7 -35 0
+35 -43 0
+-7 36 0
+-8 36 0
+7 8 -36 0
+-36 -9 -37 0
+37 -43 0
+-9 38 0
+-36 38 0
+9 36 -38 0
+-38 -10 -39 0
+39 -43 0
+-10 40 0
+-38 40 0
+10 38 -40 0
+-40 -11 -41 0
+41 -43 0
+11 40 -42 0
+42 -43 0
+43 -62 0
+-13 -12 -44 0
+44 -52 0
+-12 45 0
+-13 45 0
+12 13 -45 0
+-45 -14 -46 0
+46 -52 0
+-14 47 0
+-45 47 0
+14 45 -47 0
+-47 -15 -48 0
+48 -52 0
+-15 49 0
+-47 49 0
+15 47 -49 0
+-49 -16 -50 0
+50 -52 0
+16 49 -51 0
+51 -52 0
+52 -62 0
+-18 -17 -53 0
+53 -61 0
+-17 54 0
+-18 54 0
+17 18 -54 0
+-54 -19 -55 0
+55 -61 0
+-19 56 0
+-54 56 0
+19 54 -56 0
+-56 -20 -57 0
+57 -61 0
+-20 58 0
+-56 58 0
+20 56 -58 0
+-58 -21 -59 0
+59 -61 0
+21 58 -60 0
+60 -61 0
+61 -62 0
+-23 -22 -63 0
+63 -67 0
+-22 64 0
+-23 64 0
+22 23 -64 0
+-64 -24 -65 0
+65 -67 0
+24 64 -66 0
+66 -67 0
+34 0
+62 0
+67 0
+
+\end{verbatim}
+ This format is widely accepted as the standard format for boolean formulas in CNF.  The CNF file format is an ASCII file format. The file may begin with comment lines. The first character of each comment line must be a lower case letter ``c". Comment lines typically occur in one section at the beginning of the file, but are allowed to appear throughout the file. The comment lines are followed by the ``problem" line. This begins with a lower case ``p" followed by a space, followed by the problem type, which for CNF files is ``cnf", followed by the number of variables which in our case is ``68" and followed by the number of clauses which are ``87" in number. The remainder of the file contains lines defining the clauses, one by one. A clause is defined by listing the index of each positive literal, and the negative index of each negative literal. Indices are 1-based, and for obvious reasons the index 0 is not allowed. The definition of a clause may extend beyond a single line of text. The definition of a clause is terminated by a final value of ``0". The file terminates after the last clause is defined. It is in DIMACS CNF format and is widely accepted as standard format for boolean formulas in CNF. 
+
+\section{Outputting the Final result}
+\label{Final result}
+
+Satisfiability, in computer science abbreviated as SAT is the problem of defining the Boolean formula. The variables of a given Boolean formula is assigned in a way to make a formula evaluate to TRUE. It is also important to determine that no such assignments exists, which implies that the function expressed by a formula is identically FALSE for all possible variable assignments. Therefore, a formula of a propositional logic is said to be satisfiable if logical values assigned to its variables in a way to make a formula true. In the recent years SAT solvers have become extremely powerful over the last decade because of its capacity to solve millions of variables and constraints in only a few seconds thus making the Alloy to solve larger scopes and more complicated models.
+
+A SAT solver is integrated within the Alloy. Alloy thus uses logical reduction of the complicated model as an input to its SAT solver back-end. It is fed using a textual input file using the DIMACS format. An off-the-shelf SAT solver is then used to find a satisfying assignment\cite{Vaziri-Farahani2004}. If one is found then it is appropriately presented back to the user as a counterexample.
+
+When the Alloy Analyser finds the instance, the execution trace is obtained in a goal-oriented fashion to satisfy the constraints rather than executing sequentially.
+
+In our Coffee machine model SAT solver finally finds an instance which has no counterexample.
+
+\chapter{Conclusion}
+
+This project was all about understanding the engine behind model-checking. SAT-Technology is emerging as a central engine used in model checking tools. The principle behind it is very simple: Formulate everything at the (logical) gate-level, and then run a SAT solver. The devil is then in the details. This project is about exploring this fascinating and recent connection. Either gaining some overview, or exploring a concrete application.
+
+The field has advanced considerably due to both clever ideas and careful engineering \cite{R.Bryant1986}. Model checking and many other application areas have directly benefited from these tools. It is important that the research community keeps pushing ahead with new approaches and new improvements in Boolean reasoning. There remain many important problems that are beyond the reach of today's methods.
+
+\section{Challenges Faced in the course of the Dissertation}
+\label{Challenges faced}
+
+\begin{itemize}
+\item Learnt the usage of Github: It is a website used for storing and presenting our files. Git is a decentralized version control system that is used by a number of open source projects, most notably perhaps the Linux kernel. GitHub is a new hosted Git repository service that's being called a ``social network" for programmers and with good reason. In my project it helps in communication between me and my supervisor by providing information to assist in evaluating the tools and making an informed decision.
+\item Learnt the usage of LATEX: It is a document preparation system similar to that of a Microsoft word where the similarities end here. Preparing a document with LATEX consists of using a text editor to edit a Latex source file with the .tex extension. And then running a latex program to convert the source file to a document interchange format like PDF etc. Doing in LATEX provides a good typography which provides a good impression on the content of the document and is platform independent unlike MS word which runs only on windows. It's much better than copy+paste since it can be changed by changing just the definition. Even more, Latex allows people to write programs in their documents. 
+\end{itemize}
+
+\section{Project Schedule}
+\label{Project Schd}
+This section will give an overview of how the project was constructed and how the project was managed.
+\begin{itemize}
+\item Since the model checking being a very exhaustive field and also theoretical, it took approximately around one month i.e., June to concentrate on the basics of  model checking. I went through it thoroughly into the books called ``Systems ans Software Verification" by B.Berard for understanding the Model-Checking Techniques and Tools, ``Software Abstractions" by Daniel Jackson for understanding the Logic, Language ans Analysis, ``Tuning SAT-Checkers for Bounded Model-Checking" and ``Heuristics for Efficient SAT solving" by O.Strichman.
+\item  By gaining the thorough knowledge about the model checking and understanding its basics, the next two months i.e., in the month of July and August I learnt how the Model checking software works. Also was going through the various websites to understand the software.
+\item And in the month of September I was in a position to give my own example and check how it works.
+\end{itemize}
+\section{Future Works}
+\label{Future works}
+This dissertation provided a wide opportunity to study on the various properties of model checking tool, but due to the time constraint I was able to focus only on the few properties of it. Also, it had an opportunity to incorporate the optimizations in Alloy Analyser which went without the realization. This approach could be more efficient than the one presented here. 
+
+\section{Final Thoughts} 
+\label{Final Thoughts} 
+A Finite-state verification system was built for checking system specifications. The technique presented here was fully automatic, modular and did not require any user-provided abstractions. But the only abstraction it considers is the bounded instances of code. The case demonstrated the effectiveness and  usefulness of the technique. The processors get faster but the size of the procedure does not grow over time. Hope is that the technique becomes more efficient with the time and also the use of specifications as a successful invaluable tool for handling the software systems. 
+\end{onehalfspacing}
 \bibliographystyle{plain}
 \bibliography{reema1}
 
@@ -744,197 +1317,231 @@ The field has advanced considerably due to both clever ideas and careful enginee
 \section{A. Simple Coffee Machine}
 
 \begin{verbatim}
+/* Illustrating a Simple Coffee machine Model */
+
 module SimpleCofMachine
-open util/ordering[Cof] as CO 
 
-abstract sig CofState {}
- one sig Initial, Wait extends CofState {}
+/* Library module used to define a trace of operations by 
+declaring various states */
+open util/ordering[Cof] as CO
 
-abstract sig OP {}
+/* Signature declaration for set of possible states of coffee machine 
+called CofState */
+abstract sig CofState{}
+
+/* signature declaration for the various states of CofState must be either 
+Initial or Wait */
+one sig Initial, Wait extends CofState{}
+
+/* signature declaration for set of  customer action called OP */
+abstract sig OP{}
+
+/* signature declaration for various actions to initiate changes 
+in the state of coffee machine */
 one sig Coini, Cofb, Stopb, Coino, Cofo extends OP {}
 
+/* signature declaration for Cof to hold the state of coffee machine at 
+one instance in time */
 sig Cof {
 	state: one CofState,
 	op: OP
 }
 
+/* an empty predicate which will run to generate instances */
 pred show1[c:Cof] {}
+
+/* Executing the run command shows the solution to the model */
 run show1
 
-pred entercoin[c,c':Cof] {   
+/* Predicates used to represent operation on coffee machine and 
+describe relationship between two instances of Cof signature
+*/
 
-	c.state = Initial &&     
-	c'.state = Wait          
+pred entercoin[c,c':Cof] { /*It constrains the state before 
+							selecting the coffee(c) 
+							and after collecting Coffee(c') */
+
+	c.state=Initial && //Ensures that coffee machine is in Initial state initially
+	c'.state=Wait // Ensures that coffee machine is in Wait state afterwards
 
 }
 
 pred buycof[c,c':Cof] {
-	c.state = Wait &&
-	c'.state = Initial
+	c.state=Wait &&
+	c'.state=Initial
 }
 
 pred askchange[c,c':Cof] {
-	c.state = Wait &&
-	c'.state = Initial
+	c.state=Wait &&
+	c'.state=Initial
 }
 
 pred initial[c:Cof] {
-c.state = Initial
+c.state=Initial
 }
 
-
+/* predicated describing the valid traces in the system */
 pred traces {
 
-	initial[CO/first[]] &&  
+	initial[CO/first[]] && /* initial condition holds for the 
+						      initial time step */
 
-	all c:Cof-CO/last[]| let c' = CO/next[c] |  
-												 
-	((entercoin[c,c'] && c'.op = Coini) 
+	all c:Cof-CO/last[] | let c'=CO/next[c] | /* for all subsequent times the 
+												machine must change in accordance 
+												with one of the predicates */
+	
+	((entercoin[c,c'] && c'.op=Coini) /* action of the customer 
+									for entering the input coin */
 	or
-	(buycof[c,c'] && c'.op = Cofb && c'.op = Cofo) 
-		                                            
+	(buycof[c,c'] && c'.op=Cofb && c'.op = Cofo) /* action of the customer 
+													to press the coffee button and get the coffee output */
 	or
-	(askchange[c,c'] && c'.op = Stopb && c'.op = Coino))  
+	(askchange[c,c'] && c'.op=Stopb && c'.op=Coino))/* action of the customer 
+													to stop the button and get back the coin output */
 
 }
 
+/* Defining the sequence of events that represent a 
+single interaction of customer with coffee machine
+Transaction is referred to as single interaction */
 pred transaction{
 
-	traces &&  
-	(CO/last[]).state = Initial &&
-	Initial !in (Cof-CO/last[]).state  
-								        
+	traces && /* consists of traces that begin with the initial state */
+	(CO/last[]).state=Initial &&
+	Initial !in (Cof-CO/last[]).state /* finishes with the machine resetting for 
+										the one and only one time in that transaction */
 
 }
 
-one sig AchieveCoffee{goals: set OP} {goals = Cofo}
-one sig RetrieveChange{subgoals: set OP } { subgoals = Coino}
+/* mechanism for representing the Goal and the Subgoal */
+one sig AchieveCoffee{goals: set OP} {goals=Cofo}
+one sig RetrieveChange{subgoals: set OP } { subgoals=Coino}
 
+/* For all valid transaction subgoals(sg) must occur in state 
+before the state in which goal(m) occurs */
 assert DynamicBehaviour{
-
-	transaction => let m = CO/max[op.(AchieveCoffee.goals)] |
+	transaction => let m=CO/max[op.(AchieveCoffee.goals)] |
 	some m => all sg: RetrieveChange.subgoals | op.sg in CO/prevs[m]
 }
 
+/* Asks the alloy to provide counterexample violating 
+the Assertion for a scope of 5 */
 check DynamicBehaviour for 5
+
+
 \end{verbatim}
 
 \section{B.  Coffee machine - different coins}
 \begin{verbatim}
-module  SimpleCofMachine
-open  util / ordering [ Cof ]  as  CO
-open  util / integer  as  INT
-abstract  sig  CofState  {}
-one  sig  Reset, Coin, Coffee, Change extends CofState  {}
-abstract  sig  OP {}
-one  sig  ENTER1PCOIN , ENTER2PCOIN , PUSHSMALLCOF , PUSHLARGECOF ,
-GETCOF , PUSHCHANGE , RESET extends OP  {}
-abstract  sig  CofType {}
-one  sig  Cof1 extends CofType  {}
+module SimpleCofMachine
+open util/ordering[Cof] as CO
+open util/integer as INT
+abstract sig CofState {}
+one sig Reset, Coin, Coffee, Change extends CofState {}
+abstract sig OP {}
+one sig ENTER1PCOIN, ENTER2PCOIN, PUSHSMALLCOF, PUSHLARGECOF,
+GETCOF, PUSHCHANGE, RESET extends OP {}
+abstract sig CofType {}
+one sig Cof1 extends CofType {}
 
-sig  Cof {
+sig Cof {
 
-	balance :  one  Int ,
-	state :  one  CofState ,
-	op : OP ,
-	dispenser :  lone CofType
+	balance: one Int,
+	state: one CofState,
+	op: OP,
+	dispenser: lone CofType
 }
 
-// Give us a quick example
-
-pred  show1 [ c : Cof ]  {}
+pred show1[c: Cof] {}
 run show1
 
-pred  enter2pcoin [ c , c' : Cof ]  {
+pred enter2pcoin[c,c': Cof] {
 
-	c . state  =  Reset  &&
-	c' . balance  =  INT/add [ c . balance , int ( 2 ) ]  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Coin
-
-}
-
-pred  enter1pcoin [ c , c' : Cof ]  {
-
-	c . state  =  Reset  &&
-	c' . balance  =  INT/add [ c . balance , int ( 1 ) ]  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Coin
+	c.state=Reset &&
+	c'.balance=INT/add[c.balance,int(2)] &&
+	c'.dispenser=c.dispenser &&
+	c'.state= Coin
 
 }
 
-pred  buycof [ c , c' : Cof ]  {
+pred enter1pcoin[c,c': Cof] {
 
-	c . state  =  Coin  &&
-	INT/ gte [ c . balance , int ( 1 ) ]  &&
-	c' . balance  =  INT/sub [ c . balance , int ( 1 ) ]  &&
-	no  c . dispenser  &&
-	c' . dispenser  =  Cof1
-	c' . state  =  Coffee
+	c.state = Reset  &&
+	c'.balance = INT/add[c.balance,int(1)]  &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Coin
 
 }
 
-pred  askchange [ c , c' : Cof ]  {
+pred  buycof[c,c':Cof] {
 
-	c . state  =  Coffee
-	INT/ gt [ c . balance , 0 ]  &&
-	INT/ zero [ c' . balance ]  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Change
-
-}
-
-pred  reset [ c , c' : Cof ]  {
-
-	c . state  =  Change  &&
-	c' . balance  =  c . balance  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Reset
+	c.state = Coin &&
+	INT/gte[c.balance,int(1)] &&
+	c'.balance = INT/sub[c.balance,int(1)] &&
+	no c.dispenser &&
+	c'.dispenser = Cof1
+	c'.state = Coffee
 
 }
 
-pred  reset2 [ c , c’ : Cof ]  {
+pred askchange[c,c':Cof] {
 
-	c . state  =  Coffee  &&
-	c . balance  =  0  &&
-	c' . balance  =  c . balance  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Reset
-
-}
-
-pred  init [ c : Cof ]  {
-
-	c . balance  =  0  &&
-	c . state  =  Reset  &&
-	c . dispenser  =  none
+	c.state = Coffee
+	INT/gt[c.balance,0] &&
+	INT/zero[c'.balance] &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Change
 
 }
 
-pred  traces  {
+pred reset[c,c':Cof] {
 
-	init [CO/ first [ ] ]  &&
-	all c : Cof−CO/ last [ ] | let c'  =  CO/ next [ c ] |
-	( ( enter1pcoin [ c , c' ]  &&  c' . op  =  ENTER1PCOIN)
+	c.state = Change &&
+	c'.balance = c.balance &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Reset
+
+}
+
+pred reset2[c,c’:Cof] {
+
+	c.state = Coffee &&
+	c.balance = 0 &&
+	c'.balance = c.balance &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Reset
+}
+
+pred init[c:Cof] {
+
+	c.balance = 0 &&
+	c.state = Reset &&
+	c.dispenser = none
+}
+
+pred traces {
+
+	init[CO/first[]] &&
+	all c: Cof−CO/last[] | let c'= CO/next[c] |
+	((enter1pcoin[c,c'] && c'.op = ENTER1PCOIN)
 	or
-	( enter2pcoin [ c , c' ]  &&  c' . op  =  ENTER2PCOIN)
+	(enter2pcoin[c,c'] && c'.op = ENTER2PCOIN)
 	or
-	( buycof [ c , c' ] && c' . op  =  PUSHCOF)
+	(buycof[c,c'] && c'.op = PUSHCOF)
 	or
-	( askchange [ c , c' ] && c' . op  =  PUSHCHANGE)
+	(askchange[c,c'] && c'.op = PUSHCHANGE)
 	or
-	( reset2 [ c , c' ]  &&  c' . op   = RESET)
+	(reset2[c,c'] && c'.op = RESET)
 	or
-	( reset [ c , c' ]  &&  c' . op  =  RESET) )
+	(reset[c,c'] && c'.op = RESET))
 
 }
 
 pred  transaction {
 
 	traces  &&
-	(CO/ last [ ] ) . op  =  RESET  &&
-	RESET ! in (Cof − CO/ last [ ] ) . op
-
+	(CO/last[]).op = RESET &&
+	RESET !in (Cof−CO/last[]).op
 }
 
 one sig Goal{goals: set CofState}{goals=Coffee}
@@ -949,463 +1556,437 @@ assert goalsmet {
 // This generates a counterexample with 5
 
 check goalsmet for 5
+
 \end{verbatim}
 
 \section{C. Coffee machine - different coffee's}
 \begin{verbatim}
-module  SimpleCofMachine
-open  util / ordering [ Cof ]  as  CO
-open  util / integer  as  INT
-abstract  sig  CofState  {}
-one sig Reset, Coin, Coffee, GotCoffee, Change extends CofState {}
-abstract  sig  OP  {}
-one  sig  ENTER1PCOIN , ENTER2PCOIN , PUSHSMALLCOF , PUSHLARGECOF ,
-GETCOF , PUSHCHANGE , RESET extends OP  {}
-abstract  sig  CofType  {}
-one  sig  SmallCof , LargeCof  extends  CofType  {}
+module SimpleCofMachine
+open util/ordering[Cof] as CO
+open util/integer as INT
+abstract sig CofState {}
+one sig Reset,Coin,Coffee,GotCoffee,Change extends CofState {}
+abstract sig OP {}
+one sig ENTER1PCOIN,ENTER2PCOIN,PUSHSMALLCOF,PUSHLARGECOF,
+GETCOF,PUSHCHANGE,RESET extends OP  {}
+abstract sig CofType {}
+one sig SmallCof,LargeCof extends CofType {}
 
 sig  Cof  {
 
-	balance :  one  Int ,
-	state :  one  CofState ,
-	op :  OP,
-	dispenser :  lone  CofType
-
+	balance: one Int,
+	state: one CofState,
+	op: OP,
+	dispenser: lone  CofType
 }
 
-// Give us a quick example
-
-pred  show1 [ c : Cof ]  {}
+pred show1[c:Cof] {}
 run show1
 
-pred  enter2pcoin [ c , c' : Cof ]  {
+pred enter2pcoin[c,c':Cof] {
 
-	c . state  =  Reset  &&
-	c' . balance  =  INT/add [ c . balance , int ( 2 ) ]  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Coin
-	
+	c.state = Reset &&
+	c'.balance = INT/add[c.balance,int(2)] &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Coin	
 }
 
-pred  enter1pcoin [ c , c' : Cof ]  {
+pred enter1pcoin[c,c':Cof] {
 
-	c . state  =  Reset  &&
-	c' . balance  =  INT/add [ c . balance , int ( 1 ) ]  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Coin
-	
+	c.state = Reset &&
+	c'.balance = INT/add[c.balance,int(1)] &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Coin	
 }
 
-pred  buysmallcof [ c , c' : Cof ]  {
+pred buysmallcof[c,c':Cof] {
 
-	c . state  =  Coin  &&
-	INT/ gte [ c . balance , int ( 1 ) ]  &&
-	c' . balance  =  INT/sub [ c . balance , int ( 1 ) ]  &&
-	no  c . dispenser  &&
-	c' . dispenser  =  SmallCof
-	c' . state  =  Coffee
-
-}
-
-pred  buylargecof [ c , c' : Cof ]  {
-
-	c . state  =  Coin  &&
-	INT/ gte [ c . balance , int ( 2 ) ]  &&
-	c' . balance  =  INT / sub [ c . balance ,  int ( 2 ) ]  &&
-	no  c . dispenser  &&
-	c' . dispenser  =  LargeCof
-	c' . state  =  Coffee
+	c.state = Coin &&
+	INT/gte[c.balance,int(1)] &&
+	c'.balance = INT/sub[c.balance,int(1)]  &&
+	no c.dispenser &&
+	c'.dispenser = SmallCof
+	c'.state = Coffee
 
 }
 
-pred  getcof [ c , c' : Cof ]  {
+pred buylargecof[c,c':Cof]{
 
-	c . state  =  Coffee  &&
-	c' . state  =  GotCoffee  &&
-	some  c . dispenser  &&
-	no  c' . dispenser  &&
-	c' . balance  =  c . balance
-
+	c.state = Coin &&
+	INT/gte[c.balance,int(2)] &&
+	c'.balance = INT/sub[c.balance,int(2)] &&
+	no c.dispenser &&
+	c'.dispenser = LargeCof
+	c'.state = Coffee
 }
 
-pred  askchange [ c , c' : Cof ]  {
+pred getcof[c,c':Cof]{
 
-	c . state  =  GotCoffee
-	INT/ gt [ c . balance , 0 ]  &&
-	INT/ zero [ c' . balance ]  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Change
-
+	c.state = Coffee &&
+	c'.state = GotCoffee &&
+	some c.dispenser &&
+	no c'.dispenser  &&
+	c'.balance = c.balance
 }
 
-pred  reset [ c , c' : Cof ]  {
+pred askchange[c,c':Cof] {
 
-	c . state  =  Change  &&
-	c' . balance  =  c . balance  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Reset
-
+	c.state = GotCoffee
+	INT/gt[c.balance,0] &&
+	INT/zero[c'.balance] &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Change
 }
 
-pred  reset2 [ c , c' : Cof ]  {
+pred reset[c,c':Cof] {
 
-	c . state  =  Coffee  &&
-	c . balance  =  0  &&
-	c' . balance  =  c . balance  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Reset
-
+	c.state = Change &&
+	c'.balance = c.balance &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Reset
 }
 
-pred  init [ c : Cof ]  {
+pred reset2[c,c':Cof] {
 
-	c . balance  =  0  &&
-	c . state  =  Reset  &&
-	c . dispenser  =  none
-
+	c.state = Coffee &&
+	c.balance = 0 &&
+	c'.balance = c.balance &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Reset
 }
 
-pred  traces {
+pred init[c:Cof] {
 
-	init [CO / first [ ] ]  &&
-	all  c : Cof−CO/ last [ ] | let c'  =  CO/next [ c ] |
-	( ( enter1pcoin [ c , c' ]  &&  c' . op  =  ENTER1PCOIN)
+	c.balance = 0 &&
+	c.state = Reset &&
+	c.dispenser = none
+}
+
+pred traces {
+
+	init[CO/first[]] &&
+	all c:Cof−CO/last[]| let c' = CO/next[c] |
+	((enter1pcoin[c,c'] && c'.op = ENTER1PCOIN)
 	or
-	( enter2pcoin [ c , c' ]  && c' . op =  ENTER2PCOIN)
+	(enter2pcoin[c,c'] && c'.op = ENTER2PCOIN)
 	or
-	( buysmallcof [ c , c' ]  &&  c' . op = PUSHSMALLCOF)
+	(buysmallcof[c,c'] && c'.op = PUSHSMALLCOF)
 	or
-	( buylargecof [ c , c' ]  &&  c' . op  =  PUSHLARGECOF)
+	(buylargecof[c,c'] && c'.op = PUSHLARGECOF)
 	or
-	( getcof [ c , c' ]  &&  c' . op  =  GETCOF)
+	(getcof[c,c'] && c'.op = GETCOF)
 	or
-	( askchange [ c , c' ]  &&  c' . op  =  PUSHCHANGE)
+	(askchange[c,c'] && c'.op = PUSHCHANGE)
 	or
-	( reset2 [ c , c' ]  &&  c' . op  =  RESET)
+	(reset2[c,c'] && c'.op = RESET)
 	or
-	( reset [ c , c' ]  &&  c' . op  =  RESET) )
+	(reset[c,c'] && c'.op = RESET))
 
 }
 
-pred  transaction {
+pred transaction {
 
-	traces  &&
-	(CO/ last [ ] ) . op  =  RESET  &&
-	RESET ! in (Cof − CO/ last[ ] ) . op
-
+	traces &&
+	(CO/last[]).op = RESET &&
+	RESET !in (Cof−CO/last[]).op
 }
 
-one  sig  Goal { goals :  set CofState }  { goals  =  Coffee }
-one  sig Subgoals { subgoals : set CofState } { subgoals  =  Change}
+one  sig  Goal{goals: set CofState}{goals=Coffee}
+one  sig Subgoals{subgoals: set CofState}{subgoals=Change}
 
 assert  goalsmet  {
 
-	transaction => let m  =  CO/max [ state . ( Goal . goals ) ] |
+	transaction => let m = CO/max[state.(Goal.goals )] |
 	some m=>all sg: Subgoals.subgoals | state.sg in CO/prevs[m]
 	
 }
 // This generates a counterexample with 6
 
-Check  goalsmet for 6
+Check goalsmet for 6
 
 \end{verbatim}
 
 \section{D. Coffee machine - multiple coffees}
 \begin{verbatim}
-module  SimpleCofMachine
-open  util / ordering [ Cof ]  as  CO
-open  util / integer  as  INT
-abstract  sig  CofState  {}
-one sig Reset, Coin, Coffee, GotCoffee, Change extends CofState {}
-abstract  sig  OP  {}
-one  sig  ENTER1PCOIN , ENTER2PCOIN , PUSHSMALLCOF , PUSHLARGECOF ,
-GETCOF , PUSHCHANGE, RESET extends OP  {}
-abstract  sig  CofType  {}
-one  sig  SmallCof , LargeCof extends CofType {}
+module SimpleCofMachine
+open util/ordering[Cof] as CO
+open util/integer as INT
+abstract sig  CofState  {}
+one sig Reset,Coin,Coffee,GotCoffee,Change extends CofState{}
+abstract sig OP {}
+one sig  ENTER1PCOIN, ENTER2PCOIN, PUSHSMALLCOF, PUSHLARGECOF,
+GETCOF, PUSHCHANGE, RESET extends OP  {}
+abstract sig CofType {}
+one sig  SmallCof , LargeCof extends CofType {}
 
-sig  Cof  {
+sig  Cof {
 
-	balance :  one  Int ,
-	state :  one  CofState ,
-	op :  OP,
-	dispenser :  lone  CofType
+	balance: one Int,
+	state: one CofState,
+	op: OP,
+	dispenser: lone CofType
 
 }
 
-// Give us a quick example
-pred  show1 [ c : Cof ]  {}
+pred show1[c:Cof] {}
 run show1
 
-pred enter2pcoin [ c , c' : Cof ]  {
+pred enter2pcoin[c,c': Cof] {
 
-	c . state  =  Reset  &&
-	c' . balance  =  INT/add [ c . balance , int ( 2 ) ]  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Coin
-
-}
-
-pred  enter1pcoin [ c , c' : Cof ]  {
-
-	c . state  =  Reset  &&
-	c' . balance  =  INT/add [ c . balance , int ( 1 ) ]  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Coin
+	c.state = Reset &&
+	c'.balance = INT/add[c.balance,int(2)] &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Coin
 
 }
 
-pred  buysmallcof [ c , c' : Cof ]  {
+pred  enter1pcoin[c,c': Cof] {
 
-	c . state  =  Coin  &&
-	INT/ gte [ c . balance , int ( 1 ) ]  &&
-	c' . balance  =  INT / sub [ c . balance , int ( 1 ) ]  &&
-	no  c . dispenser  &&
-	c' . dispenser  =  SmallCof
-	c' . state  =  Coffee
+	c.state = Reset &&
+	c'.balance = INT/add[c.balance,int(1)] &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Coin
 
 }
 
-pred  buylargecof [ c , c' : Cof ]  {
+pred buysmallcof[c,c': Cof] {
 
-	c . state  =  Coin  &&
-	INT / gte [ c . balance , int ( 2 ) ]  &&
-	c' . balance  =  INT / sub [ c . balance , int ( 2 ) ]  &&
-	no  c . dispenser  &&
-	c' . dispenser  =  LargeCof
-	c' . state  =  Coffee
+	c.state = Coin &&
+	INT/gte[c.balance,int(1)] &&
+	c'.balance = INT/sub[c.balance,int(1)] &&
+	no c.dispenser &&
+	c'.dispenser = SmallCof
+	c'.state = Coffee
+}
+
+pred buylargecof[c,c': Cof] {
+
+	c.state = Coin &&
+	INT/gte[c.balance,int(2)] &&
+	c'.balance = INT/sub[c.balance,int(2)] &&
+	no c.dispenser &&
+	c'.dispenser = LargeCof
+	c'.state = Coffee
+}
+
+pred getcof[c,c':Cof] {
+
+	c.state = Coffee &&
+	some c.dispenser &&
+	no c'.dispenser &&
+	c'.balance = c.balance 
+}
+
+pred askchange[c,c': Cof] {
+
+	c.state = GotCoffee
+	INT/gt[c.balance,0] &&
+	INT/zero[c'.balance] &&
+	c'.dispenser = c.dispenser  &&
+	c'.state = Change
+}
+
+pred reset[c,c':Cof] {
+
+	c.state = Change &&
+	c'.balance = c.balance &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Reset
 
 }
 
-pred  getcof [ c , c' : Cof ]  {
+pred reset2[c,c':Cof] {
 
-	c . state  =  Coffee  &&
-	some  c . dispenser  &&
-	no  c' . dispenser  &&
-	c' . balance  =  c . balance  &&
-	((INT/gte[c.balance, int(0)]=>c'.state=Coin) or c'.state=GotCoffee )
-}
-
-pred  askchange [ c , c' : Cof ]  {
-
-	c . state  =  GotCoffee
-	INT / gt [ c . balance , 0 ]  &&
-	INT / zero [ c' . balance ]  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Change
+	c.state = Coffee &&
+	c.balance = 0  &&
+	c'.balance = c.balance &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Reset
 
 }
 
-pred  reset [ c , c' : Cof ]  {
+pred init[c:Cof] {
 
-	c . state  =  Change  &&
-	c' . balance  =  c . balance  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Reset
-
-}
-
-pred  reset2 [ c , c' : Cof ]  {
-
-	c . state  =  Coffee  &&
-	c . balance = 0  &&
-	c' . balance  =  c . balance  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Reset
+	c.balance = 0 &&
+	c.state = Reset &&
+	c.dispenser = none
 
 }
 
-pred  init [ c : Cof ] {
+pred  traces {
 
-	c . balance = 0  &&
-	c . state  =  Reset  &&
-	c . dispenser  =  none
-
-}
-
-pred  traces  {
-
-	init [CO/ first [ ] ]  &&
-	all  c : Cof−CO/ last [ ] | let c'  =  CO/ next [ c ] |
-	( ( enter1pcoin [ c , c' ]  &&  c' . op  =  ENTER1PCOIN)
+	init[CO/first[]] &&
+	all c: Cof−CO/last[] | let c' = CO/next[c] |
+	((enter1pcoin[c,c'] && c'.op = ENTER1PCOIN)
 	or
-	( enter2pcoin [ c , c' ]  &&  c' . op  =  ENTER2PCOIN)
+	(enter2pcoin[c,c'] && c'.op = ENTER2PCOIN)
 	or
-	( buysmallcof [ c , c' ]  &&  c' . op  =  PUSHSMALLCOF)
+	(buysmallcof[c,c'] && c'.op = PUSHSMALLCOF)
 	or
-	( buylargecof [ c , c' ]  && c' . op  =  PUSHLARGECOF)
+	(buylargecof[c,c'] && c'.op = PUSHLARGECOF)
 	or
-	( getcof [ c , c' ]  &&  c' . op  =  GETCOF)
+	(getcof[c,c'] && c'.op = GETCOF)
 	or
-	( askchange [ c , c' ]  &&  c' . op = PUSHCHANGE)
+	(askchange[c,c'] && c'.op = PUSHCHANGE)
 	or
-	( reset2 [ c , c' ]  &&  c' . op  =  RESET)
+	(reset2[c,c'] && c'.op = RESET)
 	or
-	( reset [ c , c' ]  &&  c' . op  =  RESET) )
+	(reset [c,c'] && c'.op = RESET))
 
 }
 
-pred  transaction {
+pred transaction {
 
 	traces  &&
-	(CO/ last [ ] ) . op = RESET  &&
-	RESET ! in (Cof − CO/ last [ ] ) . op
+	(CO/last[ ]).op = RESET  &&
+	RESET! in (Cof − CO/last[ ]).op
 
 }
 
 one sig Goal{goals: set CofState}{goals = Coffee}
 one sig Subgoals{subgoals: set CofState}{subgoals = Change}
 
-assert  goalsmet  {
+assert goalsmet {
 
-	transaction => let m = CO/max [ state . ( Goal . goals ) ] |
+	transaction => let m = CO/max[state.(Goal.goals)] |
 	some m=>all sg: Subgoals.subgoals | state.sg in CO/prevs[m]
 	
 }
 
 // This generates a counterexample with 6
-check  goalsmet for 6
+check goalsmet for 6
 
 \end{verbatim}
 
 \section{E. Coffee machine - multiple coins}
 \begin{verbatim}
-module  SimpleCofMachine
-open  util / ordering [ Cof ]  as  CO
-open  util / integer  as  INT
-abstract  sig  CofState  {}
-one sig Reset, Coin, Coffee, GotCoffee, Change extends CofState {}
-abstract  sig  OP  {}
-one   sig  ENTER1PCOIN , ENTER2PCOIN , PUSHSMALLCOF , PUSHLARGECOF ,
-GETCOF , PUSHCHANGE , RESET extends OP  {}
-abstract  sig  CofType  {}
-one  sig  SmallCof , LargeCof extends CofType {}
+module SimpleCofMachine
+open util/ordering[Cof] as CO
+open util/integer as INT
+abstract sig CofState {}
+one sig Reset,Coin,Coffee,GotCoffee,Change extends CofState {}
+abstract sig OP {}
+one sig ENTER1PCOIN, ENTER2PCOIN, PUSHSMALLCOF, PUSHLARGECOF,
+GETCOF, PUSHCHANGE, RESET extends OP {}
+abstract sig CofType {}
+one sig SmallCof , LargeCof extends CofType {}
 
-sig  Cof  {
+sig Cof {
 
-	balance :  one  Int ,
-	state :  one  CofState ,
-	op :  OP,
-	dispenser :  lone  CofType
+	balance: one Int,
+	state: one CofState,
+	op: OP,
+	dispenser: lone  CofType
 }
 
-// Give us a quick example
-
-pred  show1 [ c : Cof ]  {}
+pred show1[c:Cof] {}
 run show1
 
-pred  enter2pcoin [ c , c' : Cof ]  {
+pred enter2pcoin[c,c':Cof] {
 
-	c . state  =  Reset  &&
-	c' . balance  =  INT / add [ c . balance , int ( 2 ) ]  &&
-	c' . dispenser  =  c . dispenser  &&
-	( c' . state  =  Coin  or  c' . state  =  Reset )
+	c.state = Reset &&
+	c'.balance = INT/add[c.balance,int(2)] &&
+	c'.dispenser = c.dispenser &&
+	(c'.state = Coin or c'.state = Reset)	
+}
+
+pred enter1pcoin[c,c':Cof] {
+
+	c.state = Reset &&
+	c'.balance = INT/add[c.balance,int(1)] &&
+	c'.dispenser = c.dispenser &&
+	(c'.state = Coin or c'.state = Reset)
+}
+
+pred buysmallcof[c,c':Cof] {
+
+	c.state = Coin &&
+	INT/gte[c.balance,int(1)] &&
+	c'.balance = INT/sub[c.balance,int(1)] &&
+	no c.dispenser &&
+	c'.dispenser = SmallCof
+	c'.state = Coffee
+}
+
+pred buylargecof[c,c':Cof] {
+	c.state = Coin &&
+	INT/gte[c.balance,int(2)] &&
+	c'.balance = INT/sub[c.balance,int(2)] &&
+	no c.dispenser &&
+	c'.dispenser = LargeCof
+	c'.state = Coffee
+}
+
+pred getcof[c,c':Cof] {
+
+	c.state = Coffee  &&
+	some c.dispenser  &&
+	no c'.dispenser  &&
+	c'.balance = c.balance 	
+}
+
+pred  askchange[c,c':Cof] {
+
+	c.state = GotCoffee
+	INT/gt[c.balance,0] &&
+	INT/zero[c'.balance] &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Change
+}
+
+pred reset[c,c':Cof] {
+
+	c.state = Change &&
+	c'.balance = c.balance &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Reset
+
+}
+
+pred reset2[c,c':Cof] {
+
+	c.state = Coffee &&
+	c.balance = 0 &&
+	c'.balance = c.balance &&
+	c'.dispenser = c.dispenser &&
+	c'.state = Reset
 	
 }
 
-pred  enter1pcoin [ c , c' : Cof ]  {
+pred init[c:Cof] {
 
-	c . state  =  Reset  &&
-	c' . balance  =  INT / add [ c . balance , int ( 1 ) ]  &&
-	c' . dispenser  =  c . dispenser  &&
-	( c' . state  =  Coin  or  c' . state  =  Reset )
-
+	c.balance = 0 &&
+	c.state = Reset &&
+	c.dispenser = none
 }
 
-pred buysmallcof [ c , c' : Cof ]  {
+pred traces {
 
-	c . state  =  Coin  &&
-	INT / gte [ c . balance , int ( 1 ) ]  &&
-	c' . balance  =  INT / sub [ c . balance , int ( 1 ) ]  &&
-	no  c . dispenser  &&
-	c' . dispenser  =  SmallCof
-	c' . state  =  Coffee
-
-}
-
-pred  buylargecof [ c , c' : Cof ]  {
-	c . state  =  Coin  &&
-	INT / gte [ c . balance , int ( 2 ) ]  &&
-	c' . balance  =  INT / sub [ c . balance , int ( 2 ) ]  &&
-	no  c . dispenser  &&
-	c' . dispenser  =  LargeCof
-	c' . state  =  Coffee
-
-}
-
-pred  getcof [ c , c' : Cof ]  {
-
-	c . state  =  Coffee  &&
-	some  c . dispenser  &&
-	no  c' . dispenser  &&
-	c' . balance  =  c . balance  &&
-	((INT/gte[c.balance, int(0)]=>c'.state=Coin) or c'.state=GotCoffee)
-	
-}
-
-pred  askchange [ c , c' : Cof ]  {
-
-	c . state  =  GotCoffee
-	INT / gt [ c . balance , 0 ]  &&
-	INT / zero [ c' . balance ]  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Change
-
-}
-
-pred  reset [ c , c' : Cof ]  {
-
-	c . state  =  Change  &&
-	c' . balance  =  c . balance  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Reset
-
-}
-
-pred  reset2 [ c , c' : Cof ]  {
-
-	c . state  =  Coffee  &&
-	c . balance  =  0  &&
-	c' . balance  =  c . balance  &&
-	c' . dispenser  =  c . dispenser  &&
-	c' . state  =  Reset
-	
-}
-
-pred  init [ c : Cof ]  {
-
-	c . balance  =  0  &&
-	c . state  =  Reset  &&
-	c . dispenser  =  none
-
-}
-
-pred  traces  {
-
-	init [CO / first [ ] ]  &&
-	all  c : Cof−CO/ last [ ] | let c'  =   CO / next [ c ] |
-	( ( enter1pcoin [ c , c' ]  &&  c' . op  =  ENTER1PCOIN)
+	init[CO/first[]] &&
+	all c:Cof−CO/last[]| let c' = CO/next[c] |
+	((enter1pcoin[c,c'] && c'.op = ENTER1PCOIN)
 	or
-	( enter2pcoin [ c , c' ]  &&  c' . op  =  ENTER2PCOIN)
+	(enter2pcoin[c,c'] && c'.op = ENTER2PCOIN)
 	or
-	( buysmallcof [ c , c' ]  &&  c' . op  =  PUSHSMALLCOF)
+	(buysmallcof[c,c'] && c'.op = PUSHSMALLCOF)
 	or
-	( buylargecof [ c , c' ]  &&  c' . op  =  PUSHLARGECOF)
+	(buylargecof[c,c'] && c'.op = PUSHLARGECOF)
 	or
-	( getcof [ c , c' ]  &&  c' . op  =  GETCOF)
+	(getcof[c,c'] && c'.op = GETCOF)
 	or
-	( askchange [ c , c' ]  &&  c' . op  =  PUSHCHANGE)
+	(askchange[c,c'] && c'.op = PUSHCHANGE)
 	or
-	( reset2 [ c , c' ]  &&  c' . op  =  RESET)
+	(reset2[c,c'] && c'.op = RESET)
 	or
-	( reset [ c , c' ]  &&  c' . op  =  RESET) )
+	(reset[c,c'] && c'.op = RESET))
 
 }
 
-pred  transaction  {
+pred transaction {
 
-	traces  &&
-	(CO / last [ ] ) . op  =  RESET  &&
-	RESET ! in (Cof − CO/ last [ ] ) . op
+	traces &&
+	(CO/last[]).op = RESET &&
+	RESET !in(Cof−CO/last[]).op
 	
 }
 
@@ -1414,12 +1995,12 @@ one sig Subgoals{subgoals: set CofState}{subgoals=Change}
 
 assert goalsmet {
 
-	transaction /=> let m = CO/max [ state . ( Goal . goals ) ] |
+	transaction=>let m = CO/max[state.(Goal.goals)] |
 	some m=>all sg: Subgoals.subgoals | state.sg in CO/prevs[m]
 
 }
-// This generates a counterexample with 6
-check  goalsmet for 7
+// This generates a counterexample with 5
+check  goalsmet for 5
 
 \end{verbatim}
 \end{document}
